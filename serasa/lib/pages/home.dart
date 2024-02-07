@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-import 'package:serasa/HOMEPAGE/Carousel.dart';
+import 'package:serasa/widgets/Carousel.dart';
 import 'package:serasa/widgets/kategori.dart';
 // import 'package:serasa/HOMEPAGE/test.dart';
 import 'package:serasa/pages/help.dart';

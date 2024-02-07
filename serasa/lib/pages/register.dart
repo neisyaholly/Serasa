@@ -453,10 +453,11 @@ class _RegisterPageState extends State<RegisterPage> {
                               final email = _emailController.text;
                               final telp = _telpController.text;
                               final password = _passwordController.text;
-                              final confirmPassword = _confirmPasswordController.text;
+                              final confirmPassword =
+                                  _confirmPasswordController.text;
                               FocusScope.of(context).unfocus();
-                              User? user = await registerUser(
-                                  name, tglLahir, telp, email, password, confirmPassword);
+                              User? user = await registerUser(name, tglLahir,
+                                  telp, email, password, confirmPassword);
                               if (user is User) {
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushReplacement(
