@@ -11,15 +11,15 @@ class UserController extends Controller
     public function registerUser(Request $R){
 
         $time = strtotime($R->tglLahir);
-        $newformat = date('Y-m-d',$time);
+        $newformat = date('Y-m-d', $time);
 
         try{
             $cred = new User();
             $cred->name = $R->name;
-            $cred->tglLahir = $newformat    ;
+            $cred->tglLahir = $newformat;
             $cred->telp = $R->telp;
             $cred->email = $R->email;
-            $cred->password = $R->password;
+            $cred->password = Hash::make($R->password);
             $cred->role = 1;
             $cred->save();
             $response = ['status' => 200, 'message' => 'Register Successfully! Welcome to Serasa'];
