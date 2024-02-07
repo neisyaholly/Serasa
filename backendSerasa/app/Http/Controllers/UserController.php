@@ -16,7 +16,7 @@ class UserController extends Controller
         try{
             $cred = new User();
             $cred->name = $R->name;
-            $cred->tglLahir = $newformat    ;
+            $cred->tglLahir = $newformat;
             $cred->telp = $R->telp;
             $cred->email = $R->email;
             $cred->password = $R->password;
