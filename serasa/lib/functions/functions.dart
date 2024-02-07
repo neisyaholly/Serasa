@@ -6,7 +6,7 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
     return "Password doesn't match!";
   }
 
-  User user = User(name, tglLahir, telp,, password);
+  User user = User(name, tglLahir, telp, email, password);
 
   int? request = await createUser(user);
 
