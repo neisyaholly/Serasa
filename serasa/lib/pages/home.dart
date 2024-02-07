@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/help.dart';
+import 'package:serasa/pages/payment.dart';
 // import 'package:get/get.dart';
 import 'package:serasa/widgets/carousel.dart';
 import 'package:serasa/widgets/kategori.dart';
-import 'package:serasa/pages/help.dart';
+// import 'package:serasa/pages/help.dart';
 import 'package:serasa/utils/color.dart';
 
 class HomePage extends StatefulWidget {
@@ -123,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HelpPage(),
+                        builder: (context) => const PaymentPage(),
                       ),
                     );
                   },

@@ -77,35 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: _selectedDate,
-  //     firstDate: DateTime(1900),
-  //     lastDate: DateTime.now(),
-  //     builder: (BuildContext context, Widget? child) {
-  //       return Theme(
-  //         data: ThemeData.light().copyWith(
-  //           colorScheme: const ColorScheme.light(
-  //             primary: Color(0xFFE45C50), // Change the primary color
-  //             onPrimary: Color(0xFFFFFEF8), // Change the text color on primary
-  //           ),
-  //           buttonTheme: const ButtonThemeData(
-  //             textTheme: ButtonTextTheme.primary,
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //   );
-  //   if (picked != null && picked != _selectedDate) {
-  //     setState(() {
-  //       _selectedDate = picked;
-  //     });
-  //   }
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +97,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
                 child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     children: [
                       const SizedBox(
