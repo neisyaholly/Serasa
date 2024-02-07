@@ -42,6 +42,11 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     _selectedDate = DateTime.now(); // Initialize with the current date
+    _tglLahirController.text = _formatDate(_selectedDate);
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}';
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -68,9 +73,38 @@ class _RegisterPageState extends State<RegisterPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+        _tglLahirController.text = _formatDate(picked);
       });
     }
   }
+
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: _selectedDate,
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //     builder: (BuildContext context, Widget? child) {
+  //       return Theme(
+  //         data: ThemeData.light().copyWith(
+  //           colorScheme: const ColorScheme.light(
+  //             primary: Color(0xFFE45C50), // Change the primary color
+  //             onPrimary: Color(0xFFFFFEF8), // Change the text color on primary
+  //           ),
+  //           buttonTheme: const ButtonThemeData(
+  //             textTheme: ButtonTextTheme.primary,
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //   );
+  //   if (picked != null && picked != _selectedDate) {
+  //     setState(() {
+  //       _selectedDate = picked;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,10 +224,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onTap: () {
                                   _selectDate(context);
                                 },
-                                controller: TextEditingController(
-                                  text:
-                                      '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                                ),
+                                controller: _tglLahirController,
+                                // controller: TextEditingController(
+                                //   text:
+                                //       '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+                                // ),
                                 decoration: const InputDecoration(
                                   labelText: 'Tgl Lahir',
                                   border: OutlineInputBorder(
@@ -223,9 +258,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 25,
                       ),
-                      const Row(
+                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 100,
                             child: Text(
                               'No. Telp',
@@ -236,14 +271,15 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Expanded(
                             child: SizedBox(
                               height: 32,
                               child: TextField(
-                                decoration: InputDecoration(
+                                controller: _telpController,
+                                decoration: const InputDecoration(
                                   labelText: 'No. Telp',
                                   border: OutlineInputBorder(
                                     borderRadius:
@@ -448,8 +484,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           ElevatedButton(
                             onPressed: () async {
+                              print('asdf');
                               final name = _nameController.text;
-                              final tglLahir = TextEditingController().text;
+                              final tglLahir = _tglLahirController.text;
                               final email = _emailController.text;
                               final telp = _telpController.text;
                               final password = _passwordController.text;
@@ -457,6 +494,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               FocusScope.of(context).unfocus();
                               User? user = await registerUser(
                                   name, tglLahir, telp, email, password, confirmPassword);
+
+                              // print(name + " - " + tglLahir + " - " + telp + " - " + email + " - " + password + " - " + confirmPassword);
                               if (user is User) {
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushReplacement(

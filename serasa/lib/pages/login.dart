@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
 
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   void _togglePasswordVisibility() {
@@ -67,9 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const Row(
+                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             'Email',
@@ -80,14 +80,15 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                           child: SizedBox(
                             height: 32,
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: _emailController,
+                              decoration: const InputDecoration(
                                 labelText: 'Email',
                                 border: OutlineInputBorder(
                                   borderRadius:
@@ -137,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 32,
                             child: TextField(
                               obscureText: _obscureText,
+                              controller: _passwordController,
                               decoration: InputDecoration(
                                 labelText: 'Kata Sandi',
                                 border: const OutlineInputBorder(
@@ -180,9 +182,12 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         ElevatedButton(
                           onPressed: () async {
-                            final username = _usernameController.text;
+                            final email = _emailController.text;
                             final password = _passwordController.text;
-                            User? user = await loginUser(username, password);
+
+                            // print(email + " - " + password);
+
+                            User? user = await loginUser(email, password);
                             if (user is User) {
                               // ignore: use_build_context_synchronously
                               FocusScope.of(context).unfocus();

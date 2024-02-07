@@ -8,7 +8,7 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
 
   User user = User(name, tglLahir, telp, email, password);
 
-  int? request = createUser(user) as int;
+  int? request = await createUser(user);
 
   if (request == 200) {
     print("User Registered Successfully!");
@@ -17,12 +17,13 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
     print("Failed To Register!");
     return null;
   }
+
 }
 
-Future<dynamic> loginUser(name, password) async {
+Future<User?> loginUser(email, password) async {
   // logika buat input
 
-  User user = User(name, null, password);
+  User user = User(null, null, null, email, password);
 
   int? request = await verifyUser(user);
 
@@ -31,6 +32,7 @@ Future<dynamic> loginUser(name, password) async {
     return user;
   }else{
     print("Failed To Log In!");
-    return 0;
+    return null;
   }
+  
 }
