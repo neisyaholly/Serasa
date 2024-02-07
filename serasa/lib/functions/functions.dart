@@ -6,7 +6,7 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
     return "Password doesn't match!";
   }
 
-  User user = User(name, tglLahir, telp, email, password);
+  User user = User(name, tglLahir, telp,, password);
 
   int? request = createUser(user) as int;
 
