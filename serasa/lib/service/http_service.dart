@@ -17,7 +17,6 @@ Future<int?> createUser(user) async {
   if (response.statusCode == 200) {
     return 200;
   }
-
   return 400;
 }
 
