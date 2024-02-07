@@ -490,7 +490,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               final email = _emailController.text;
                               final telp = _telpController.text;
                               final password = _passwordController.text;
-                              final confirmPassword = _confirmPasswordController.text;
+                              final confirmPassword =
+                                  _confirmPasswordController.text;
                               FocusScope.of(context).unfocus();
                               User? user = await registerUser(
                                   name, tglLahir, telp, email, password, confirmPassword);
