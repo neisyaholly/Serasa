@@ -88,6 +88,8 @@ flutter:
         - asset: assets/fonts/Poppins-Bold.ttf
         - asset: assets/fonts/Poppins-Medium.ttf
           weight : 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight : 700
         # - asset: fonts/Schyler-Italic.ttf
           # style: italic
     # - family: Trajan Pro

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:serasa/AkunPage/akun.dart';
+import 'package:serasa/pages/akun.dart';
+import 'package:serasa/pages/community.dart';
 import 'package:serasa/pages/home.dart';
+import 'package:serasa/pages/recycle.dart';
 // import 'package:serasa/RecyclePage/recycle.dart';
 import 'package:serasa/utils/color.dart';
 
@@ -19,16 +21,13 @@ class _BottomNavigationBarExampleState
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    // Recycle(),
+    Recycle(),
     Text(
       'Index 2: School',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: School',
-      style: optionStyle,
-    ),
-    // Akun(),
+    Community(),
+    Akun(),
   ];
 
   void _onItemTapped(int index) {

@@ -8,7 +8,7 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
-  final _controller = TextEditingController();
+  // final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
