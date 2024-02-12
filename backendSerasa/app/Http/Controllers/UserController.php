@@ -32,18 +32,17 @@ class UserController extends Controller
     public function loginUser(Request $request){
         $user = User::where('email', $request->email)->first(); //pake ->get() dapetnya user[0]
 
-        if ($user != '[]' && Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
             // return $user[0];
             $token = $user->createToken('Personal Access Token')->plainTextToken;
             $response = ['status' => 200, 'token' => $token, 'user' => $user, 'message' => 'Successfully Login! Welcome Back'];
-            return response()->json($response);
-        }else if($user == '[]'){
+            return response()->json($response, 200);
+        }else if(!$user){
             $response = ['status' => 500, 'message' => 'No account found with this email'];
-            return response()->json($response);
+            return response()->json($response, 500);
         }else{
-            $response = ['status' => 500, 'message' => 'Wrong email or password! Please try again'];
-            return response()->json($response);
+            $response = ['status' => 401, 'message' => 'Wrong email or password! Please try again'];
+            return response()->json($response, 400);
         }
-
     }
 }

@@ -30,9 +30,6 @@ Future<int?> verifyUser(user) async {
     body: jsonEncode(user),
   );
 
-  if(response.statusCode == 200){
-    return 200;
-  }else{
-    return 400;
-  }
+  return response.statusCode;
+
 }

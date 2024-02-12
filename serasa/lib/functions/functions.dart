@@ -30,8 +30,11 @@ Future<User?> loginUser(email, password) async {
   if(request == 200){
     print("User Logged In Successfully!");
     return user;
+  }else if(request == 500){
+    print("No user found with this email!");
+    return null;
   }else{
-    print("Failed To Log In!");
+    print("Failed to login! Wrong email or password.");
     return null;
   }
   
