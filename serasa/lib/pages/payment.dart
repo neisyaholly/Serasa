@@ -14,216 +14,214 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pembayaran'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PaymentPage(),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Color(0xFFED6055),
+              ),
+            ),
+            const Text(
+              'Pembayaran',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Opacity(
+              opacity: 0,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.arrow_back,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Column(
-        children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.all(25.0),
-              child: Text(
-                'Pilih Metode Pembayaran',
-                style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 19),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: 10.0, left: 30.0, right: 30.0, bottom: 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Pilih Metode Pembayaran',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 'ovo',
-                          groupValue: _selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedPaymentMethod = value!;
-                            });
-                          },
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'OVO',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 'GoPay',
-                          groupValue: _selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedPaymentMethod = value!;
-                            });
-                          },
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'GoPay',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 'ShopeePay',
-                          groupValue: _selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedPaymentMethod = value!;
-                            });
-                          },
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'ShopeePay',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 'Dana',
-                          groupValue: _selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedPaymentMethod = value!;
-                            });
-                          },
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'Dana',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value: 'Transfer Bank',
-                          groupValue: _selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedPaymentMethod = value!;
-                            });
-                          },
-                        ),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'Transfer Bank',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 342.0,
-            height: 44.0,
-            color: const Color(0xFFED6055),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
+              const SizedBox(
+                height: 20,
               ),
-              child: const Text(
-                "Pay Now",
-                style: TextStyle(color: Colors.white),
+              Wrap(
+                runSpacing: 20.0,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      title: const Text(
+                        'OVO',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'ovo',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      title: const Text(
+                        'GoPay',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'gopay',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      title: const Text(
+                        'ShopeePay',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'shopeepay',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      title: const Text(
+                        'Dana',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'dana',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      title: const Text(
+                        'Transfer Bank',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'transfer',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(
+                height: 280
+              ),
+              SizedBox(
+                width: 350,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFED6055),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 2,
+                    ),
+                    onPressed: () {
+                      // Handle form submission here
+                    },
+                    child: const Text(
+                      'Pilih',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFFFFAFA),
+                      ),
+                    ),
+                  ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
