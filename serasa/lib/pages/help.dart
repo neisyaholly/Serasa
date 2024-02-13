@@ -16,6 +16,7 @@ class _HelpPageState extends State<HelpPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFFFFEF8),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFFFFEF8),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

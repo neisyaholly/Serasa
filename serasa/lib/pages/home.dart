@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/checkout.dart';
 import 'package:serasa/pages/help.dart';
+import 'package:serasa/pages/menuFav.dart';
 // import 'package:serasa/pages/payment.dart';
 // import 'package:get/get.dart';
 import 'package:serasa/widgets/carousel.dart';
@@ -114,21 +116,23 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
                       ),
-                      suffixIcon: Transform.rotate(
-                        angle: 1.57079632679, // 180 degrees in radians
-                        child: const Icon(Icons.search,
-                            color: Colors.black, size: 20),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Checkout(),
+                            ),
+                          );
+                        },
+                        child: Transform.rotate(
+                          angle: 1.57079632679, // 180 degrees in radians
+                          child: const Icon(Icons.search,
+                              color: Colors.black, size: 20),
+                        ),
                       ),
                     ),
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HelpPage(),
-                        ),
-                      );
-                    },
                     style: const TextStyle(color: Colors.black),
                   ),
                 ),
@@ -229,22 +233,33 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Poppins'),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Lihat Semua",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            Transform.rotate(
-                                angle: 3.14159265358 * (3 / 2),
-                                child: const Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 20,
-                                )),
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MenuFav(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Lihat Semua",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Transform.rotate(
+                                  angle: 3.14159265358 * (3 / 2),
+                                  child: const Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 20,
+                                  )),
+                            ],
+                          ),
                         )
                       ],
                     ),

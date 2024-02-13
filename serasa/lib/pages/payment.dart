@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/checkout.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -13,7 +14,9 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFEF8),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFFFFEF8),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -22,7 +25,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PaymentPage(),
+                    builder: (context) => const Checkout(),
                   ),
                 );
               },
@@ -192,32 +195,30 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 280
-              ),
+              const SizedBox(height: 280),
               SizedBox(
                 width: 350,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFED6055),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      elevation: 2,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFED6055),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () {
-                      // Handle form submission here
-                    },
-                    child: const Text(
-                      'Pilih',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFFFFFAFA),
-                      ),
+                    elevation: 2,
+                  ),
+                  onPressed: () {
+                    // Handle form submission here
+                  },
+                  child: const Text(
+                    'Pilih',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFFFFFAFA),
                     ),
                   ),
+                ),
               ),
             ],
           ),
