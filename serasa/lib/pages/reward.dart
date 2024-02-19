@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/myreward.dart';
+import 'package:serasa/pages/myreward.dart';
 
 class Reward extends StatefulWidget {
   const Reward({super.key});

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/myreward.dart';
+import 'package:serasa/pages/myreward.dart';
 
 class Riwayatpenukaran extends StatefulWidget {
   const Riwayatpenukaran({super.key});
 
   @override
   State<Riwayatpenukaran> createState() {
-    // TODO: implement createState
-    // throw UnimplementedError();
     return _Riwayatpenukaran();
   }
   
@@ -93,7 +91,5 @@ class _Riwayatpenukaran extends State<Riwayatpenukaran> {
         ),
       ),
     );
-  }
-  
-  
+  } 
 }
