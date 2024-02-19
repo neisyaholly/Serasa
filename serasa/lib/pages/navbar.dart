@@ -7,16 +7,19 @@ import 'package:serasa/pages/recycle.dart';
 import 'package:serasa/utils/color.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+  final int initialIndex; 
+  const BottomNavigationBarExample({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+      // ignore: no_logic_in_create_state
+      _BottomNavigationBarExampleState(initialIndex);
 }
 
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
-  int _selectedIndex = 0;
+   int _selectedIndex;
+  _BottomNavigationBarExampleState(this._selectedIndex);
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[

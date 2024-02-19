@@ -7,8 +7,6 @@ class VoucherAktif extends StatefulWidget {
 
   @override
   State<VoucherAktif> createState() {
-    // TODO: implement createState
-    // throw UnimplementedError();
     return _VoucherAktif();
   }
 }
@@ -33,7 +31,7 @@ class _VoucherAktif extends State<VoucherAktif> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 60.0, left: 100.0),
+              padding: const EdgeInsets.only(top: 40.0, left: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,36 +56,57 @@ class _VoucherAktif extends State<VoucherAktif> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15.0),
+              padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MouseRegion(
                     onEnter: (_) => setState(() => _isHovered = true),
                     onExit: (_) => setState(() => _isHovered = false),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _isHovered
-                            ? Colors.red
-                            : const Color.fromARGB(255, 203, 219, 26),
-                        foregroundColor: Colors.black,
+                    child: SizedBox(
+                      width: 155,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                15), // Adjust the value as needed
+                          ),
+                          backgroundColor: _isHovered
+                              ? Colors.red
+                              : const Color.fromARGB(255, 203, 219, 26),
+                          foregroundColor: Colors.black,
+                        ),
+                        child: const Text("Voucher Aktif",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal)),
                       ),
-                      child: Text("Voucher Aktif"),
                     ),
                   ),
                   MouseRegion(
                     onEnter: (_) => setState(() => _isHovered = true),
                     onExit: (_) => setState(() => _isHovered = false),
-                    child: ElevatedButton(
-                      onPressed: () => toRiwayatpenukaran(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _isHovered
-                            ? Colors.red
-                            : const Color.fromARGB(255, 217, 217, 217),
-                        foregroundColor: Colors.black,
+                    child: SizedBox(
+                      width: 175,
+                      child: ElevatedButton(
+                        onPressed: () => toRiwayatpenukaran(context),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15), // Adjust the value as needed
+                          ),
+                          backgroundColor: _isHovered
+                              ? Colors.red
+                              : const Color.fromARGB(255, 217, 217, 217),
+                          foregroundColor: Colors.black,
+                        ),
+                        child: const Text("Riwayat Penukaran",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal)),
                       ),
-                      child: const Text("Riwayat Penukaran"),
                     ),
                   ),
                 ],

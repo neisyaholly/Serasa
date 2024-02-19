@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/akun.dart';
+import 'package:serasa/pages/navbar.dart';
 
 class HelpPage extends StatefulWidget {
   const HelpPage({super.key});
@@ -26,7 +26,7 @@ class _HelpPageState extends State<HelpPage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Akun(),
+                    builder: (context) => const BottomNavigationBarExample(initialIndex: 4,),
                   ),
                 );
               },

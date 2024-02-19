@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/akun.dart';
 import 'package:serasa/pages/myrewards1.dart';
+import 'package:serasa/pages/navbar.dart';
 
 class Rewards extends StatefulWidget {
   const Rewards({super.key});
 
   @override
   State<Rewards> createState() {
-    // TODO: implement createState
-    // throw UnimplementedError();
     return _Rewards();
   }
 }
@@ -50,7 +48,7 @@ class _Rewards extends State<Rewards> {
           children: [
             // const SizedBox(height: 40,),
             Padding(
-              padding: const EdgeInsets.only(top: 40.0, right: 25.0, left: 15),
+              padding: const EdgeInsets.only(top: 40.0, right: 30.0, left: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -60,7 +58,7 @@ class _Rewards extends State<Rewards> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Akun(),
+                          builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
                         ),
                       );
                     },
@@ -74,7 +72,7 @@ class _Rewards extends State<Rewards> {
                   const Expanded(
                     child: Align(
                         alignment: Alignment.topRight,
-                        child: Text("Hai, Nama!",
+                        child: Text("Hai, Nathasya!",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 15,
@@ -103,101 +101,45 @@ class _Rewards extends State<Rewards> {
                         fontSize: 96,
                         fontWeight: FontWeight.bold),
                   ),
-                  ElevatedButton(
-                    onPressed: () => toMyreward(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 244, 99, 88),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7),
+                  SizedBox(
+                    width: 140,
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: () => toMyreward(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 244, 99, 88),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 5),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      child: const Text("My Rewards",
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15)),
                     ),
-                    child: const Text("My Rewards",
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14)),
                   ),
                 ],
               ),
             ),
-            // Stack(
-            //   children: [
-            //     Positioned(
-            //       // bottom: 100,
-            //       child: Center(
-            //         child: Container(
-            //           // width: 1000,
-            //           height: 650,
-            //           decoration: const BoxDecoration(
-            //             image: DecorationImage(
-            //               image:
-            //                   AssetImage('assets/images/rewards/starlagi.png'),
-            //               fit: BoxFit.cover, // Fill the container
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     const Positioned(
-            //       // left: 0,
-            //       // top: 10,
-            //       // right: 0,
-            //       // bottom: 50,
-            //       child: Center(
-            //         child: Text(
-            //           "320",
-            //           style: TextStyle(
-            //               fontFamily: 'Poppins',
-            //               color: Color(0xFFED6055),
-            //               fontSize: 96,
-            //               fontWeight: FontWeight.bold),
-            //         ),
-            //       ),
-            //     ),
-            //     Positioned(
-            //       left: 0,
-            //       right: 0,
-            //       bottom: 138,
-            //       child: Center(
-            //         child: SizedBox(
-            //           width: 140,
-            //           height: 45,
-            //           child: ElevatedButton(
-            //             onPressed: () => toMyreward(context),
-            //             style: ElevatedButton.styleFrom(
-            //               backgroundColor:
-            //                   const Color.fromARGB(255, 244, 99, 88),
-            //               foregroundColor: Colors.white,
-            //               shape: RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(7),
-            //               ),
-            //               padding: const EdgeInsets.symmetric(
-            //                   vertical: 5, horizontal: 5),
-            //             ),
-            //             child: const Text("My Rewards",
-            //                 style: TextStyle(
-            //                     fontFamily: 'Poppins',
-            //                     fontWeight: FontWeight.bold,
-            //                     fontSize: 14)),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(height: 10,),
+
+            const SizedBox(
+              height: 15,
+            ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 25.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Voucher Teratas",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500)),
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: SizedBox(
@@ -208,7 +150,6 @@ class _Rewards extends State<Rewards> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           var imageAssetPath = _getImageAssetPathForItem(index);
-
                           return Container(
                             margin: const EdgeInsets.only(right: 15),
                             width: 250,
@@ -226,13 +167,15 @@ class _Rewards extends State<Rewards> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 25.0, top: 27.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Voucher Minggu Ini",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500)),
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: SizedBox(
@@ -243,7 +186,6 @@ class _Rewards extends State<Rewards> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           var imageAssetPath = _getImageAssetPathForItem(index);
-
                           return Container(
                             margin: const EdgeInsets.only(right: 15),
                             width: 250,

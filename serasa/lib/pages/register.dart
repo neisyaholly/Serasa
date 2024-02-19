@@ -474,7 +474,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const BottomNavigationBarExample(),
+                                        const BottomNavigationBarExample(initialIndex: 0),
                                   ),
                                 );
                               } else {
