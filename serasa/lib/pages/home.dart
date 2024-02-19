@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/checkout.dart';
-import 'package:serasa/pages/help.dart';
+// import 'package:serasa/pages/help.dart';
 import 'package:serasa/pages/menuFav.dart';
 // import 'package:serasa/pages/payment.dart';
 // import 'package:get/get.dart';
@@ -158,9 +158,9 @@ class _HomePageState extends State<HomePage> {
                     autoPlay: true,
                   ),
                   items: const [
-                    Carousel(imageURL: 'assets/images/carousel1.png'),
-                    Carousel(imageURL: 'assets/images/carousel2.png'),
-                    Carousel(imageURL: 'assets/images/carousel3.png'),
+                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel1.png'),
+                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel2.png'),
+                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel3.png'),
                   ],
                 ),
 
