@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:serasa/pages/home.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/test.dart';
 import 'package:serasa/widgets/widget_restoTerdekat.dart';
 
@@ -30,7 +30,7 @@ class _RestoTerdekatState extends State<RestoTerdekat> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => const BottomNavigationBarExample(initialIndex: 0),
                             ),
                           );
                         },

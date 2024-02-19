@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/checkout.dart';
 // import 'package:serasa/pages/help.dart';
 import 'package:serasa/pages/menuFav.dart';
@@ -35,10 +36,10 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 // ATAS
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.location_on,
@@ -56,24 +57,34 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.currency_bitcoin_rounded,
                           color: AppColors.color3,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text("320 Poin",
+                        const Text("320 Poin",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500)),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
-                          Icons.shopping_cart,
-                          color: Colors.black,
+                        GestureDetector(
+                          child: const Icon(
+                            Icons.shopping_cart,
+                            color: Colors.black,
+                          ),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Cart(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -159,9 +170,15 @@ class _HomePageState extends State<HomePage> {
                     autoPlay: true,
                   ),
                   items: const [
-                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel1.png'),
-                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel2.png'),
-                    Carousel(imageURL: 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel3.png'),
+                    Carousel(
+                        imageURL:
+                            'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel1.png'),
+                    Carousel(
+                        imageURL:
+                            'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel2.png'),
+                    Carousel(
+                        imageURL:
+                            'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/carousel3.png'),
                   ],
                 ),
 
