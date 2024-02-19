@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:serasa/pages/checkout.dart';
 // import 'package:serasa/pages/help.dart';
 import 'package:serasa/pages/menuFav.dart';
+import 'package:serasa/pages/restoTerdekat.dart';
 // import 'package:serasa/pages/payment.dart';
 // import 'package:get/get.dart';
 import 'package:serasa/widgets/carousel.dart';
@@ -178,22 +179,33 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Poppins'),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Lihat Semua",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            Transform.rotate(
-                                angle: 3.14159265358 * (3 / 2),
-                                child: const Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 20,
-                                )),
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RestoTerdekat(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Lihat Semua",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Transform.rotate(
+                                  angle: 3.14159265358 * (3 / 2),
+                                  child: const Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 20,
+                                  )),
+                            ],
+                          ),
                         )
                       ],
                     ),

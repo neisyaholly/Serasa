@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/akun.dart';
 
 class HelpPage extends StatefulWidget {
   const HelpPage({super.key});
@@ -25,13 +26,14 @@ class _HelpPageState extends State<HelpPage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HelpPage(),
+                    builder: (context) => const Akun(),
                   ),
                 );
               },
               icon: const Icon(
                 Icons.arrow_back,
                 color: Color(0xFFED6055),
+                size: 20,
               ),
             ),
             const Text(

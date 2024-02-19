@@ -9,7 +9,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  String _selectedPaymentMethod = 'ovo';
+  String _selectedPaymentMethod = '';
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 height: 20,
               ),
               Wrap(
-                runSpacing: 20.0,
+                runSpacing: 15.0,
                 children: [
                   Container(
                     decoration: const BoxDecoration(
@@ -84,29 +84,8 @@ class _PaymentPageState extends State<PaymentPage> {
                       shape: BoxShape.rectangle,
                     ),
                     child: RadioListTile<String>(
-                      title: const Text(
-                        'OVO',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      value: 'ovo',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
+                      contentPadding:
+                          const EdgeInsets.only(left: 15, right: 15),
                       title: const Text(
                         'GoPay',
                         style: TextStyle(
@@ -115,7 +94,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      value: 'gopay',
+                      value: 'GoPay',
                       groupValue: _selectedPaymentMethod,
                       onChanged: (value) {
                         setState(() {
@@ -130,6 +109,33 @@ class _PaymentPageState extends State<PaymentPage> {
                       shape: BoxShape.rectangle,
                     ),
                     child: RadioListTile<String>(
+                      contentPadding:
+                          const EdgeInsets.only(left: 15, right: 15),
+                      title: const Text(
+                        'OVO',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      value: 'OVO',
+                      groupValue: _selectedPaymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedPaymentMethod = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF4F6F8),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: RadioListTile<String>(
+                      contentPadding:
+                          const EdgeInsets.only(left: 15, right: 15),
                       title: const Text(
                         'ShopeePay',
                         style: TextStyle(
@@ -153,6 +159,8 @@ class _PaymentPageState extends State<PaymentPage> {
                       shape: BoxShape.rectangle,
                     ),
                     child: RadioListTile<String>(
+                      contentPadding:
+                          const EdgeInsets.only(left: 15, right: 15),
                       title: const Text(
                         'Dana',
                         style: TextStyle(
@@ -176,6 +184,8 @@ class _PaymentPageState extends State<PaymentPage> {
                       shape: BoxShape.rectangle,
                     ),
                     child: RadioListTile<String>(
+                      contentPadding:
+                          const EdgeInsets.only(left: 15, right: 15),
                       title: const Text(
                         'Transfer Bank',
                         style: TextStyle(

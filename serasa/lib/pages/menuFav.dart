@@ -16,6 +16,7 @@ class _MenuFavState extends State<MenuFav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFEF8),
       body: Column(
         children: [
           Container(
@@ -37,6 +38,7 @@ class _MenuFavState extends State<MenuFav> {
                       icon: const Icon(
                         Icons.arrow_back,
                         color: Color(0xFFED6055),
+                        size: 20,
                       ),
                     ),
                     const Text(

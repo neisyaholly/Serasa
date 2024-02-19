@@ -1,6 +1,7 @@
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/help.dart';
 // import 'package:get/utils.dart';
 import 'package:serasa/utils/color.dart';
 
@@ -229,7 +230,12 @@ class _AkunState extends State<Akun> {
 
               // Box Reward Saya
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 10,
+                  bottom: 10,
+                ),
                 width: 350,
                 height: 50,
                 decoration: BoxDecoration(
@@ -270,11 +276,43 @@ class _AkunState extends State<Akun> {
                             width: 75,
                             height: 75,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.amber),
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment(0.8, 0.8),
+                                colors: [Color(0xFFF7B3AB), Color(0xFFFFFDF8)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 1,
+                                  offset: const Offset(
+                                    2.5,
+                                    2.5,
+                                  ), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Your onTap logic here
+                                    },
+                                    child: const Icon(
+                                      Icons.edit_outlined,
+                                      color: Color(0xFFED6055),
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           const Text("Edit Profil",
                               style: TextStyle(
@@ -290,11 +328,43 @@ class _AkunState extends State<Akun> {
                             width: 75,
                             height: 75,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.amber),
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment(0.8, 0.8),
+                                colors: [Color(0xFFF7B3AB), Color(0xFFFFFDF8)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 1,
+                                  offset: const Offset(
+                                    2.5,
+                                    2.5,
+                                  ), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Your onTap logic here
+                                    },
+                                    child: const Icon(
+                                      Icons.home_outlined,
+                                      color: Color(0xFFED6055),
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           const Text("Alamat",
                               style: TextStyle(
@@ -310,11 +380,43 @@ class _AkunState extends State<Akun> {
                             width: 75,
                             height: 75,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.amber),
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment(0.8, 0.8),
+                                colors: [Color(0xFFF7B3AB), Color(0xFFFFFDF8)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 1,
+                                  offset: const Offset(
+                                    2.5,
+                                    2.5,
+                                  ), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Your onTap logic here
+                                    },
+                                    child: const Icon(
+                                      Icons.settings_outlined,
+                                      color: Color(0xFFED6055),
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           const Text("Pengaturan",
                               style: TextStyle(
@@ -330,11 +432,50 @@ class _AkunState extends State<Akun> {
                             width: 75,
                             height: 75,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.amber),
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment(0.8, 0.8),
+                                colors: [Color(0xFFF7B3AB), Color(0xFFFFFDF8)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 1,
+                                  offset: const Offset(
+                                    2.5,
+                                    2.5,
+                                  ), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HelpPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.help_outline_outlined,
+                                      color: Color(0xFFED6055),
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           const Text("Bantuan",
                               style: TextStyle(
