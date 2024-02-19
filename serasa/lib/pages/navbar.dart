@@ -4,7 +4,6 @@ import 'package:serasa/pages/community.dart';
 import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/pesanan.dart';
 import 'package:serasa/pages/recycle.dart';
-import 'package:serasa/utils/color.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
   final int initialIndex;
