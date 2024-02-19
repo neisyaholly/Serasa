@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/help.dart';
+import 'package:serasa/pages/reward.dart';
 // import 'package:get/utils.dart';
 import 'package:serasa/utils/color.dart';
 
@@ -229,38 +230,50 @@ class _AkunState extends State<Akun> {
               const SizedBox(height: 5),
 
               // Box Reward Saya
-              Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 15,
-                  top: 10,
-                  bottom: 10,
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    top: 10,
+                    bottom: 10,
+                  ),
+                  width: 350,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFED6055),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.confirmation_num_outlined,
+                        color: Color(0xFFFFFFFF),
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Reward Saya",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Poppins',
+                              fontSize: 17,
+                              color: Color(0xFFFFFFFF))),
+                    ],
+                  ),
                 ),
-                width: 350,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFED6055),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.confirmation_num_outlined,
-                      color: Color(0xFFFFFFFF),
-                      size: 30,
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Reward(),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Reward Saya",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            color: Color(0xFFFFFFFF))),
-                  ],
-                ),
+                  );
+                },
               ),
+
               const SizedBox(height: 20),
 
               // 4 Button

@@ -70,6 +70,16 @@ flutter:
     - assets/images/carousel2.png
     - assets/images/carousel3.png
     - assets/images/foodProducts/ayam.png
+    - assets/images/rewards/voucher.png
+    - assets/images/rewards/voucher2.png
+    - assets/images/rewards/voucher3.png
+    - assets/images/rewards/voucher4.png
+    - assets/images/rewards/voucher5.png
+    - assets/images/rewards/voucher6.png
+    - assets/images/rewards/voucher7.png
+    - assets/images/rewards/voucherriwayat.png
+    - assets/images/rewards/starlagi.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
