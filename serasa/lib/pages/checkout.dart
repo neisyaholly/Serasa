@@ -1,6 +1,7 @@
 // ignore: unnecessary_import
 import 'dart:ffi';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/payment.dart';
@@ -23,6 +24,7 @@ void sementara() {
 
 class _Checkout extends State<Checkout> {
   int qty = 1;
+  String _selectedPaymentMethod = '';
 
   void incrementQty() {
     setState(() {
@@ -67,6 +69,7 @@ class _Checkout extends State<Checkout> {
                         icon: const Icon(
                           Icons.arrow_back,
                           color: Color(0xFFED6055),
+                          size: 20,
                         ),
                       ),
                       const Text(
@@ -368,21 +371,106 @@ class _Checkout extends State<Checkout> {
                   ),
                 ),
                 const SizedBox(height: 33),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Pilih Pengambilan Makanan",
+                      const Text("Pilih Pengambilan Makanan",
                           style: TextStyle(
                               fontSize: 18,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Row(
+                      const SizedBox(height: 10),
+                      Wrap(
+                        runSpacing: 15.0,
                         children: [
-                          Text("copas punya ariya nanti disni",
-                              style: TextStyle(fontSize: 16)),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFF4F6F8),
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: RadioListTile<String>(
+                              contentPadding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              title: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Ambil Sendiri',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  ),
+                                  Text(
+                                    'Rp0',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  )
+                                ],
+                              ),
+                              value: 'Ambil Sendiri',
+                              groupValue: _selectedPaymentMethod,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedPaymentMethod = value!;
+                                });
+                              },
+                            ),
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFF4F6F8),
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: RadioListTile<String>(
+                              contentPadding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              title: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('GoSend',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            fontFamily: 'Poppins',
+                                          )),
+                                      Text('Diantar ke Alamat Utama',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w100,
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                          ))
+                                    ],
+                                  ),
+                                  Text('Rp9.000',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                      ))
+                                ],
+                              ),
+                              value: 'GoSend',
+                              groupValue: _selectedPaymentMethod,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedPaymentMethod = value!;
+                                });
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -405,7 +493,10 @@ class _Checkout extends State<Checkout> {
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold)),
                           IconButton(
-                              icon: const Icon(Icons.arrow_right),
+                              icon: const Icon(
+                                Icons.arrow_forward,
+                                size: 20,
+                              ),
                               onPressed: () {
                                 FocusScope.of(context).unfocus();
                                 Navigator.pushReplacement(
@@ -422,19 +513,20 @@ class _Checkout extends State<Checkout> {
                         children: [
                           Container(
                             width: 340,
-                            padding: const EdgeInsets.all(7.0),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 15, bottom: 15),
                             decoration: BoxDecoration(
-                              color: Color(0xFFF4F6F8),
+                              color: const Color(0xFFF4F6F8),
                               border: Border.all(
                                   color: const Color.fromARGB(0, 0, 0, 0),
                                   width: 2.0),
                               borderRadius: BorderRadius.circular(1.0),
                             ),
-                            child: const Text(
-                              "GoPay",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
+                            child: const Text("GoPay",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500)),
                           ),
                           // const Text("copas punya ariya nanti disni", style: TextStyle(fontSize: 16)),
                         ],
@@ -463,7 +555,9 @@ class _Checkout extends State<Checkout> {
                     ),
                     child: const Text("Check Out",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(

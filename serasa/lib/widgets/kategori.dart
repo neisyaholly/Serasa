@@ -16,10 +16,15 @@ class Kategori extends StatelessWidget {
               color: Colors.amberAccent,
               borderRadius: BorderRadius.circular(10)),
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Text(
           text,
           style: const TextStyle(
-              fontSize: 10, fontFamily: 'Poppins', fontWeight: FontWeight.normal),
+              fontSize: 10,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.normal),
         ),
       ],
     );
