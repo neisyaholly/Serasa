@@ -44,8 +44,28 @@ class WidgetMenuFav extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(nama),
-              Text(resto),
+              Text(
+                nama,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                resto,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 10,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 children: [
                   Text(
@@ -54,12 +74,22 @@ class WidgetMenuFav extends StatelessWidget {
                       color: Colors.red,
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Colors.red,
+                      fontFamily: 'Poppins',
+                      fontSize: 10,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  Text("Rp$harga2"),
+                  Text(
+                    "Rp$harga2",
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 10,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                 ],
               ),
             ],

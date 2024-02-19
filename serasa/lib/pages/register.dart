@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +201,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 //       '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
                                 // ),
                                 decoration: const InputDecoration(
-                                  labelText: 'Tgl Lahir',
+                                  labelText: 'Pilih Tanggal',
+                                  suffixIcon: Icon(Icons.arrow_drop_down_sharp),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -229,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 25,
                       ),
-                       Row(
+                      Row(
                         children: [
                           const SizedBox(
                             width: 100,
@@ -464,8 +465,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               final confirmPassword =
                                   _confirmPasswordController.text;
                               FocusScope.of(context).unfocus();
-                              User? user = await registerUser(
-                                  name, tglLahir, telp, email, password, confirmPassword);
+                              User? user = await registerUser(name, tglLahir,
+                                  telp, email, password, confirmPassword);
 
                               // print(name + " - " + tglLahir + " - " + telp + " - " + email + " - " + password + " - " + confirmPassword);
                               if (user is User) {

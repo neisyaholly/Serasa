@@ -76,11 +76,21 @@ class _MenuFavState extends State<MenuFav> {
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.sort),
-                      SizedBox(
-                        width: 10,
+                      Icon(
+                        Icons.sort,
+                        size: 20,
                       ),
-                      Text("Sort By"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Sort By",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -95,7 +105,7 @@ class _MenuFavState extends State<MenuFav> {
                       itemBuilder: (_, index) {
                         return const WidgetMenuFav(
                             nama: "nama",
-                            resto: "resto",
+                            resto: "nama restoran",
                             harga1: "harga1",
                             harga2: "harga2");
                       },
