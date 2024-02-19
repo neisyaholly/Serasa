@@ -456,7 +456,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           ElevatedButton(
                             onPressed: () async {
-                              print('asdf');
                               final name = _nameController.text;
                               final tglLahir = _tglLahirController.text;
                               final email = _emailController.text;

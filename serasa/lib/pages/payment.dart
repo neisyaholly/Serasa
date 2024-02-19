@@ -32,6 +32,7 @@ class _PaymentPageState extends State<PaymentPage> {
               icon: const Icon(
                 Icons.arrow_back,
                 color: Color(0xFFED6055),
+                size: 20,
               ),
             ),
             const Text(

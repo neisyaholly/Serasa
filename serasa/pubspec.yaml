@@ -79,6 +79,7 @@ flutter:
     - assets/images/rewards/voucher7.png
     - assets/images/rewards/voucherriwayat.png
     - assets/images/rewards/starlagi.png
+    - assets/images/rewards/starUpdated.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

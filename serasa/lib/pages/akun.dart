@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/help.dart';
-import 'package:serasa/pages/reward.dart';
+import 'package:serasa/pages/rewards.dart';
 // import 'package:get/utils.dart';
 import 'package:serasa/utils/color.dart';
 
@@ -268,7 +268,7 @@ class _AkunState extends State<Akun> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Reward(),
+                      builder: (context) => const Rewards(),
                     ),
                   );
                 },
