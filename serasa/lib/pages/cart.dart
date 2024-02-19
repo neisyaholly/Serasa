@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_cart.dart';
 
