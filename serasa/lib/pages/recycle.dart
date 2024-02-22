@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-// import '../utils/color.dart';
+import 'package:serasa/pages/bankSampahTerdekat.dart';
+import 'package:serasa/pages/riwayatPenukaran.dart';
 
 class Recycle extends StatefulWidget {
   const Recycle({super.key});
@@ -32,16 +32,17 @@ class _RecycleState extends State<Recycle> {
                   ),
                 ),
                 const SizedBox(height: 15),
-          
+
                 // Jumbotron
                 Container(
                   width: 350,
                   height: 150,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10), color: Colors.amber),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.amber),
                 ),
                 const SizedBox(height: 20),
-          
+
                 // Scan
                 Container(
                   alignment: Alignment.center,
@@ -69,7 +70,7 @@ class _RecycleState extends State<Recycle> {
                   ),
                 ),
                 const SizedBox(height: 15),
-          
+
                 // Box Poin
                 Container(
                   width: 300,
@@ -104,8 +105,8 @@ class _RecycleState extends State<Recycle> {
                               color: Colors.black.withOpacity(0.25),
                               spreadRadius: -2,
                               blurRadius: 8,
-                              offset:
-                                  const Offset(0, 2), // changes position of shadow
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
                             ),
                           ],
                           gradient: const LinearGradient(
@@ -171,7 +172,7 @@ class _RecycleState extends State<Recycle> {
                   ),
                 ),
                 const SizedBox(height: 20),
-          
+
                 Container(
                   margin: const EdgeInsets.only(left: 15, right: 15),
                   child: Column(
@@ -190,22 +191,31 @@ class _RecycleState extends State<Recycle> {
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      "Lihat Semua",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    Transform.rotate(
-                                        angle: 3.14159265358 * (3 / 2),
-                                        child: const Icon(
-                                          Icons.arrow_drop_down,
-                                          size: 20,
-                                        )),
-                                  ],
+                                GestureDetector(
+                                  child: Row(
+                                    children: [
+                                      const Text("Lihat Semua",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.normal)),
+                                      Transform.rotate(
+                                          angle: 3.14159265358 * (3 / 2),
+                                          child: const Icon(
+                                            Icons.arrow_drop_down,
+                                            size: 20,
+                                          )),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BankSampahTerdekat(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -217,7 +227,7 @@ class _RecycleState extends State<Recycle> {
                               padding: const EdgeInsets.only(
                                 top: 10,
                                 bottom: 10,
-                                left: 15,
+                                left: 20,
                                 right: 15,
                               ),
                               decoration: BoxDecoration(
@@ -225,19 +235,22 @@ class _RecycleState extends State<Recycle> {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF51BA6C).withOpacity(0.6),
-                                    spreadRadius: -2,
-                                    blurRadius: 8,
+                                    color: const Color(0xFF51BA6C)
+                                        .withOpacity(0.7),
+                                    spreadRadius: -1,
+                                    blurRadius: 5,
                                     offset: const Offset(
                                         0, 0), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text("Bank Sampah Serasa",
                                           style: TextStyle(
@@ -266,7 +279,7 @@ class _RecycleState extends State<Recycle> {
                       const SizedBox(
                         height: 15,
                       ),
-          
+
                       // Riwayat Penukaran
                       SizedBox(
                         child: Column(
@@ -279,20 +292,31 @@ class _RecycleState extends State<Recycle> {
                                         fontSize: 18,
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500)),
-                                Row(
-                                  children: [
-                                    const Text("Lihat Semua",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.normal)),
-                                    Transform.rotate(
-                                        angle: 3.14159265358 * (3 / 2),
-                                        child: const Icon(
-                                          Icons.arrow_drop_down,
-                                          size: 20,
-                                        )),
-                                  ],
+                                GestureDetector(
+                                  child: Row(
+                                    children: [
+                                      const Text("Lihat Semua",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.normal)),
+                                      Transform.rotate(
+                                          angle: 3.14159265358 * (3 / 2),
+                                          child: const Icon(
+                                            Icons.arrow_drop_down,
+                                            size: 20,
+                                          )),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const RiwayatPenukaranSampah(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -304,7 +328,7 @@ class _RecycleState extends State<Recycle> {
                               padding: const EdgeInsets.only(
                                 top: 10,
                                 bottom: 10,
-                                left: 15,
+                                left: 20,
                                 right: 15,
                               ),
                               decoration: BoxDecoration(
@@ -312,9 +336,10 @@ class _RecycleState extends State<Recycle> {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFFED6055).withOpacity(0.5),
-                                    spreadRadius: -2,
-                                    blurRadius: 8,
+                                    color: const Color(0xFFED6055)
+                                        .withOpacity(0.3),
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
                                     offset: const Offset(
                                         0, 0), // changes position of shadow
                                   ),
@@ -356,7 +381,7 @@ class _RecycleState extends State<Recycle> {
                               alignment: Alignment.topLeft,
                               padding: const EdgeInsets.only(
                                 top: 10,
-                                left: 15,
+                                left: 20,
                                 right: 15,
                                 bottom: 10,
                               ),
@@ -365,9 +390,10 @@ class _RecycleState extends State<Recycle> {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFFED6055).withOpacity(0.5),
-                                    spreadRadius: -2,
-                                    blurRadius: 8,
+                                    color: const Color(0xFFED6055)
+                                        .withOpacity(0.3),
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
                                     offset: const Offset(
                                         0, 0), // changes position of shadow
                                   ),

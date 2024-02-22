@@ -44,7 +44,7 @@ class WidgetPesanan extends StatelessWidget {
           Container(
             // decoration: const BoxDecoration(color: Colors.amber),
             width: MediaQuery.of(context).size.width * 0.59,
-            height: MediaQuery.of(context).size.width * 0.20,
+            height: MediaQuery.of(context).size.width * 0.18,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,9 +55,6 @@ class WidgetPesanan extends StatelessWidget {
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.normal,
                       fontSize: 14),
-                ),
-                const SizedBox(
-                  height: 4,
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -96,9 +93,6 @@ class WidgetPesanan extends StatelessWidget {
                       );
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 Text(
                   "Total Harga: Rp$harga",

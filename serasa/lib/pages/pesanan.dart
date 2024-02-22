@@ -12,6 +12,7 @@ class _PesananState extends State<Pesanan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFEF8),
       body: SafeArea(
         child: Column(
           children: [

@@ -32,15 +32,6 @@ class _Rewards extends State<Rewards> {
 
   @override
   Widget build(BuildContext context) {
-    void toMyreward(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const VoucherAktif()),
-      );
-    }
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -48,7 +39,8 @@ class _Rewards extends State<Rewards> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 30.0, left: 15),
+                padding:
+                    const EdgeInsets.only(top: 10.0, right: 30.0, left: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -58,7 +50,9 @@ class _Rewards extends State<Rewards> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
+                            builder: (context) =>
+                                const BottomNavigationBarExample(
+                                    initialIndex: 4),
                           ),
                         );
                       },
@@ -101,35 +95,37 @@ class _Rewards extends State<Rewards> {
                           fontSize: 96,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
-                      width: 140,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: () => toMyreward(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 244, 99, 88),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VoucherAktif(),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 5),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(140, 45),
+                        backgroundColor: const Color.fromARGB(255, 244, 99, 88),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7),
                         ),
-                        child: const Text("My Rewards",
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 5),
                       ),
+                      child: const Text("My Rewards",
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15)),
                     ),
                   ],
                 ),
               ),
-        
               const SizedBox(
                 height: 15,
               ),
-        
               Padding(
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Column(
@@ -149,15 +145,16 @@ class _Rewards extends State<Rewards> {
                           itemCount: 7,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (_, index) {
-                            var imageAssetPath = _getImageAssetPathForItem(index);
+                            var imageAssetPath =
+                                _getImageAssetPathForItem(index);
                             return Container(
                               margin: const EdgeInsets.only(right: 15),
                               width: 250,
                               decoration: BoxDecoration(
                                   // color: Colors.amberAccent,
                                   borderRadius: BorderRadius.circular(10)),
-                              child:
-                                  Image.asset(imageAssetPath, fit: BoxFit.cover),
+                              child: Image.asset(imageAssetPath,
+                                  fit: BoxFit.cover),
                             );
                           },
                         ),
@@ -185,15 +182,16 @@ class _Rewards extends State<Rewards> {
                           itemCount: 7,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (_, index) {
-                            var imageAssetPath = _getImageAssetPathForItem(index);
+                            var imageAssetPath =
+                                _getImageAssetPathForItem(index);
                             return Container(
                               margin: const EdgeInsets.only(right: 15),
                               width: 250,
                               decoration: BoxDecoration(
                                   // color: Colors.amberAccent,
                                   borderRadius: BorderRadius.circular(10)),
-                              child:
-                                  Image.asset(imageAssetPath, fit: BoxFit.cover),
+                              child: Image.asset(imageAssetPath,
+                                  fit: BoxFit.cover),
                             );
                           },
                         ),

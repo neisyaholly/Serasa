@@ -14,97 +14,96 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xFFFFFEF8),
         body: SafeArea(
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const BottomNavigationBarExample(initialIndex: 0),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Color(0xFFED6055),
-                    size: 20,
-                  ),
-                ),
-                const Row(
+          child: Column(
+            children: [
+              Container(
+                // color: Colors.black,
+                margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.shopping_cart),
-                    Text(
-                      ' Keranjang Belanja',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const BottomNavigationBarExample(
+                                    initialIndex: 0),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFFED6055),
+                        size: 20,
                       ),
                     ),
-                  ],
-                ),
-                Opacity(
-                  opacity: 0,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color(0xFFED6055),
+                    const Row(
+                      children: [
+                        Icon(Icons.shopping_cart),
+                        Text(
+                          ' Keranjang Belanja',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              child: Container(
-                margin: const EdgeInsets.only(left: 30, right: 30, bottom: 15),
-                child: Column(
-                  children: [
-                    // const Row(
-                    //   children: [
-                    //     Icon(Icons.sort),
-                    //     SizedBox(width: 10,),
-                    //     Text("Sort By"),
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 10,),
-                    Expanded(
-                      child: ListView.builder(
-                        // shrinkWrap: true,
-                        padding: const EdgeInsets.all(0),
-                        itemCount: 8,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (_, index) {
-                          return const WidgetCart(
-                              nama: "Nama Resto", jumlah: "1", jenis: "jenis");
-                        },
+                    Opacity(
+                      opacity: 0,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Color(0xFFED6055),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Checkout(),
+              Expanded(
+                child: GestureDetector(
+                  child: Container(
+                    // color: Colors.amber,
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            // shrinkWrap: true,
+                            padding: const EdgeInsets.all(0),
+                            itemCount: 8,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (_, index) {
+                              return const WidgetCart(
+                                  nama: "Nama Resto",
+                                  jumlah: "1",
+                                  jenis: "jenis");
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
-            ),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Checkout(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }

@@ -100,92 +100,120 @@ class _Checkout extends State<Checkout> {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 30, right: 10),
+                    // color: Colors.red,
+                    margin: const EdgeInsets.only(left: 35, right: 35),
+                    // width: MediaQuery.of(context).size.width * 1,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Image.asset('assets/images/foodProducts/ayam.png',
                             width: 100),
                         const SizedBox(width: 15),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Nama Makanan",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            const Text(
-                              "Description",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            const SizedBox(
-                              height: 17,
-                            ),
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                    "Rp100.000",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 118,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFFF4F6F8),
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                              123, 0, 0, 0)),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(
-                                          padding: const EdgeInsets.all(0),
-                                          onPressed: decrementQty,
-                                          icon: const Icon(
-                                            Icons.remove,
-                                            size: 20,
-                                          )),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        width: 20,
-                                        child: Text('$qty',
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Nama Makanan",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const Text(
+                                "Description",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              const SizedBox(
+                                height: 17,
+                              ),
+                              Container(
+                                // color: Colors.amber,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Rp100.000",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                      IconButton(
-                                          padding: const EdgeInsets.all(0),
-                                          onPressed: incrementQty,
-                                          icon: const Icon(
-                                            Icons.add,
-                                            size: 20,
-                                          )),
-                                    ],
-                                  ),
+                                    ),
+                                    // const SizedBox(
+                                    //   width: 8,
+                                    // ),
+                                    Container(
+                                      height: 32,
+                                      // margin: const EdgeInsets.only(right: 15),
+                                      // width: MediaQuery.of(context).size.width,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFEEEEEE),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                123, 0, 0, 0)),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            width: 35,
+                                            // color: Colors.blue,
+                                            child: IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                onPressed: decrementQty,
+                                                icon: const Icon(
+                                                  Icons.remove,
+                                                  size: 15,
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            // color: Colors.amber,
+                                            width: 20,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text('$qty',
+                                                    style: const TextStyle(
+                                                        fontSize: 17)),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 35,
+                                            // color: Colors.blue,
+                                            child: IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                onPressed: incrementQty,
+                                                icon: const Icon(
+                                                  Icons.add,
+                                                  size: 15,
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 20),
                       ],
                     ),
                   ),
