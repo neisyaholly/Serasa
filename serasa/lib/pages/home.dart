@@ -1,12 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/cart.dart';
-import 'package:serasa/pages/checkout.dart';
-// import 'package:serasa/pages/help.dart';
 import 'package:serasa/pages/menuFav.dart';
+import 'package:serasa/pages/pilihResto.dart';
 import 'package:serasa/pages/restoTerdekat.dart';
-// import 'package:serasa/pages/payment.dart';
-// import 'package:get/get.dart';
 import 'package:serasa/widgets/carousel.dart';
 import 'package:serasa/widgets/kategori.dart';
 import 'package:serasa/utils/color.dart';
@@ -128,21 +125,10 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
                       ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Checkout(),
-                            ),
-                          );
-                        },
-                        child: Transform.rotate(
-                          angle: 1.57079632679, // 180 degrees in radians
-                          child: const Icon(Icons.search,
-                              color: Colors.black, size: 20),
-                        ),
+                      suffixIcon: Transform.rotate(
+                        angle: 1.57079632679, // 180 degrees in radians
+                        child: const Icon(Icons.search,
+                            color: Colors.black, size: 20),
                       ),
                     ),
                     style: const TextStyle(color: Colors.black),
@@ -229,22 +215,33 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      height: 60,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (_, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(right: 15),
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.amberAccent,
-                                borderRadius: BorderRadius.circular(10)),
-                          );
-                        },
+                    GestureDetector(
+                      child: SizedBox(
+                        height: 60,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 10,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (_, index) {
+                            return Container(
+                              margin: const EdgeInsets.only(right: 15),
+                              width: 60,
+                              decoration: BoxDecoration(
+                                  color: Colors.amberAccent,
+                                  borderRadius: BorderRadius.circular(10)),
+                            );
+                          },
+                        ),
                       ),
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PilihResto(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

@@ -80,7 +80,11 @@ flutter:
     - assets/images/rewards/voucherriwayat.png
     - assets/images/rewards/starlagi.png
     - assets/images/rewards/starUpdated.png
-
+    - assets/images/detailProduk/cireng.jpg
+    - assets/images/detailProduk/personsymbol.png
+    - assets/images/detailProduk/locationsymbol.png
+    - assets/images/detailProduk/chatsymbol.png
+    - assets/images/bannerVoucher.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
