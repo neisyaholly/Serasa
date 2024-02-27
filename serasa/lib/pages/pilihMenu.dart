@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/home.dart';
-import 'package:serasa/widgets/widget_pr.dart';
+import 'package:serasa/widgets/widget_pm.dart';
 
 class PilihResto extends StatefulWidget {
   const PilihResto({super.key});
@@ -10,15 +10,15 @@ class PilihResto extends StatefulWidget {
 }
 
 class _PilihRestoState extends State<PilihResto> {
-  final List<WidgetPR> items = [
-    const WidgetPR(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPR(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  final List<WidgetPM> items = [
+    const WidgetPM(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
   ];
 
   @override
@@ -49,7 +49,10 @@ class _PilihRestoState extends State<PilihResto> {
                           child: Container(
                             margin: const EdgeInsets.only(
                                 left: 15, right: 15, top: 50),
-                            child: const Icon(Icons.arrow_back_rounded),
+                            child: const Icon(
+                              Icons.arrow_back_rounded,
+                              size: 20,
+                            ),
                           ),
                           onTap: () {
                             Navigator.pushReplacement(
@@ -221,7 +224,7 @@ class _PilihRestoState extends State<PilihResto> {
                 //   itemCount: items.length,
                 //   itemBuilder: (context, index) {
                 //     final item = items[index];
-                //       return WidgetPR(nama: item.nama, detail: item.detail, harga: item.harga);
+                //       return WidgetPM(nama: item.nama, detail: item.detail, harga: item.harga);
                 //   },
                 // ),
               ),

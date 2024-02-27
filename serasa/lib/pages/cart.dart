@@ -60,7 +60,6 @@ class _CartState extends State<Cart> {
                         onPressed: () {},
                         icon: const Icon(
                           Icons.arrow_back,
-                          color: Color(0xFFED6055),
                         ),
                       ),
                     ),

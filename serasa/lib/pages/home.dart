@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/menuFav.dart';
-import 'package:serasa/pages/pilihResto.dart';
+import 'package:serasa/pages/pilihMenu.dart';
 import 'package:serasa/pages/restoTerdekat.dart';
 import 'package:serasa/widgets/carousel.dart';
 import 'package:serasa/widgets/kategori.dart';
