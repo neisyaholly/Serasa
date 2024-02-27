@@ -4,6 +4,11 @@ import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/menuFav.dart';
 import 'package:serasa/pages/pilihResto.dart';
 import 'package:serasa/pages/restoTerdekat.dart';
+import 'package:serasa/pages/restoranCamilan.dart';
+import 'package:serasa/pages/restoranMie.dart';
+import 'package:serasa/pages/restoranMinuman.dart';
+import 'package:serasa/pages/restoranNasi.dart';
+import 'package:serasa/pages/restoranRoti.dart';
 import 'package:serasa/widgets/carousel.dart';
 import 'package:serasa/widgets/kategori.dart';
 import 'package:serasa/utils/color.dart';
@@ -137,14 +142,69 @@ class _HomePageState extends State<HomePage> {
 
                 const SizedBox(height: 15),
                 // KATEGORI
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Kategori(text: "Nasi"),
-                    Kategori(text: "Minuman"),
-                    Kategori(text: "Roti"),
-                    Kategori(text: "Mie"),
-                    Kategori(text: "Cemilan"),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RestoranNasi(),
+                          ),
+                        );
+                      },
+                      child: const Kategori(text: "Nasi", image: 'assets/images/kategori/nasi.png'),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RestoranMinuman(),
+                          ),
+                        );
+                      },
+                      child: const Kategori(text: "Minuman", image: 'assets/images/kategori/minuman.png'),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RestoranRoti(),
+                          ),
+                        );
+                      },
+                      child: const Kategori(text: "Roti", image: 'assets/images/kategori/roti.png' ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RestoranMie(),
+                          ),
+                        );
+                      },
+                      child: const Kategori(text: "Mie", image: 'assets/images/kategori/mie.png'),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RestoranCamilan(),
+                          ),
+                        );
+                      },
+                      child: const Kategori(text: "Camilan", image: 'assets/images/kategori/nasi.png'),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15),

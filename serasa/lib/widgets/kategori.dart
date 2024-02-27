@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Kategori extends StatelessWidget {
-  const Kategori({super.key, required this.text});
+  const Kategori({super.key, required this.text, required this.image});
+  final String image;
 
   final String text;
 
@@ -10,14 +11,11 @@ class Kategori extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 60,
-          height: 60,
+          width: 70,
+          height: 70,
           decoration: BoxDecoration(
-              color: Colors.amberAccent,
               borderRadius: BorderRadius.circular(10)),
-        ),
-        const SizedBox(
-          height: 10,
+          child: Image.asset(image),
         ),
         Text(
           text,

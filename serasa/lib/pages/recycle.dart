@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/bankSampahTerdekat.dart';
+import 'package:serasa/pages/qr.dart';
 import 'package:serasa/pages/riwayatPenukaran.dart';
 
 class Recycle extends StatefulWidget {
@@ -44,28 +45,39 @@ class _RecycleState extends State<Recycle> {
                 const SizedBox(height: 20),
 
                 // Scan
-                Container(
-                  alignment: Alignment.center,
-                  width: 250,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: <Color>[
-                        Color(0xFF6AB384),
-                        Color(0xFFF2A096),
-                      ],
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const QRPage(),
+                        ),
+                      );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 250,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: <Color>[
+                          Color(0xFF6AB384),
+                          Color(0xFFF2A096),
+                        ],
+                      ),
                     ),
-                  ),
-                  child: const Text(
-                    "SCAN UNTUK TUKAR SAMPAHMU",
-                    style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                    child: const Text(
+                      "SCAN UNTUK TUKAR SAMPAHMU",
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
