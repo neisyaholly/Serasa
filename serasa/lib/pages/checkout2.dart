@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/detailproduk.dart';
+import 'package:serasa/pages/paymentCommunity.dart';
+import 'package:serasa/pages/pesanan.dart';
 
 class Checkout2 extends StatefulWidget {
   const Checkout2({super.key});
@@ -178,6 +180,9 @@ class _Checkout2 extends State<Checkout2> {
                                       fontSize: 18,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Wrap(
                                 runSpacing: 15.0,
                                 children: [
@@ -321,7 +326,7 @@ class _Checkout2 extends State<Checkout2> {
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
                         const Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 140),
+                          padding: EdgeInsets.only(top: 15, bottom: 10),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -337,10 +342,79 @@ class _Checkout2 extends State<Checkout2> {
                             ],
                           ),
                         ),
+                        Container(
+                          height: 1.5,
+                          width: 1000,
+                          color: const Color.fromARGB(49, 152, 152, 152),
+                          margin: EdgeInsets.only(bottom: 10),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Pilih Metode Pembayaran",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.bold)),
+                                IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PaymentCommunity(),
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                            const SizedBox(height: 3),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 340,
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20, top: 15, bottom: 15),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF4F6F8),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(0, 0, 0, 0),
+                                        width: 2.0),
+                                    borderRadius: BorderRadius.circular(1.0),
+                                  ),
+                                  child: const Text("Cash on Delivery (CoD)",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500)),
+                                ),
+                                // const Text("copas punya ariya nanti disni", style: TextStyle(fontSize: 16)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         SizedBox(
-                          width: 300,
+                          width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
-                            onPressed: sementara,
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Pesanan(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 244, 99, 88),
@@ -348,7 +422,6 @@ class _Checkout2 extends State<Checkout2> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              padding: const EdgeInsets.all(10),
                             ),
                             child: const Text("Check Out",
                                 style: TextStyle(

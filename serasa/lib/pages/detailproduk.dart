@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/checkout2.dart';
 // import 'package:serasa/pages/checkout.dart';
@@ -150,51 +152,67 @@ class _Detailproduk extends State<Detailproduk> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 40.0, left: 40.0),
+                    Container(
+                      margin: const EdgeInsets.only(right: 40.0),
+                      // color: Colors.amber,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Row(
-                            children: [
-                              const Padding(padding: EdgeInsets.only(left: 24)),
-                              Image.asset(
-                                  'assets/images/detailProduk/locationsymbol.png',
-                                  width: 20),
-                              const Padding(padding: EdgeInsets.only(right: 5)),
-                              const Text("Lokasi",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500)),
-                            ],
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
-                                side: const BorderSide(
-                                    color: Color.fromARGB(187, 237, 95, 85)),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                          Container(
+                            width: 80,
+                            padding: EdgeInsets.only(left: 12, right: 5),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.asset(
-                                    'assets/images/detailProduk/chatsymbol.png',
+                                    'assets/images/detailProduk/locationsymbol.png',
                                     width: 20),
-                                const Padding(
-                                    padding: EdgeInsets.only(right: 5)),
-                                const Text("Chat",
+                                const Text("Lokasi",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500)),
                               ],
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 35,
+                            margin: EdgeInsets.only(top: 5),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  side: const BorderSide(
+                                      color: Color.fromARGB(187, 237, 95, 85)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              child: Container(
+                                // color: Colors.amberAccent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: Icon(
+                                        Icons.message_outlined,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text("Chat",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],
