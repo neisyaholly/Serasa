@@ -36,25 +36,19 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                   icon: const Icon(
                     Icons.arrow_back,
                     color: Color(0xFFFFFEF8),
+                    size: 20,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: 140,
                   height: 140,
-                  decoration: BoxDecoration(color: Colors.amber),
+                  decoration: const BoxDecoration(color: Colors.amber),
                 ),
                 Opacity(
                   opacity: 0,
                   child: IconButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Color(0xFFED6055),

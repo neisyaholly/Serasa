@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/menuFav.dart';
-import 'package:serasa/pages/pilihResto.dart';
+import 'package:serasa/pages/pilihMenu.dart';
 import 'package:serasa/pages/restoTerdekat.dart';
 import 'package:serasa/pages/restoranCamilan.dart';
 import 'package:serasa/pages/restoranMie.dart';

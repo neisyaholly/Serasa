@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/payment.dart';
+import 'package:serasa/pages/pesanan.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({super.key});
@@ -568,7 +569,14 @@ class _Checkout extends State<Checkout> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: sementara,
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Pesanan(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 244, 99, 88),
                         foregroundColor: Colors.white,

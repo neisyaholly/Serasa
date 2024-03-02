@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WidgetPR extends StatefulWidget {
-  const WidgetPR({
+class WidgetPM extends StatefulWidget {
+  const WidgetPM({
     super.key,
     required this.nama,
     required this.detail,
@@ -13,10 +13,10 @@ class WidgetPR extends StatefulWidget {
   final String harga;
 
   @override
-  State<WidgetPR> createState() => _WidgetPRState();
+  State<WidgetPM> createState() => _WidgetPMState();
 }
 
-class _WidgetPRState extends State<WidgetPR> {
+class _WidgetPMState extends State<WidgetPM> {
   int qty = 0;
 
   void incrementQty() {

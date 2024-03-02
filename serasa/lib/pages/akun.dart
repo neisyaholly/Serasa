@@ -1,7 +1,10 @@
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/alamat.dart';
+import 'package:serasa/pages/editProfil.dart';
 import 'package:serasa/pages/help.dart';
+import 'package:serasa/pages/pengaturan.dart';
 import 'package:serasa/pages/rewards.dart';
 // import 'package:get/utils.dart';
 import 'package:serasa/utils/color.dart';
@@ -312,7 +315,14 @@ class _AkunState extends State<Akun> {
                                 Positioned.fill(
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Your onTap logic here
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EditProfil(),
+                                        ),
+                                      );
                                     },
                                     child: const Icon(
                                       Icons.edit_outlined,
@@ -364,7 +374,14 @@ class _AkunState extends State<Akun> {
                                 Positioned.fill(
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Your onTap logic here
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AddressPage(),
+                                        ),
+                                      );
                                     },
                                     child: const Icon(
                                       Icons.home_outlined,
@@ -416,7 +433,14 @@ class _AkunState extends State<Akun> {
                                 Positioned.fill(
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Your onTap logic here
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Pengaturan(),
+                                        ),
+                                      );
                                     },
                                     child: const Icon(
                                       Icons.settings_outlined,
