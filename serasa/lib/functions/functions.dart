@@ -1,12 +1,14 @@
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/service/http_service.dart';
 
+User? currentUser;
+
 Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassword) async {
   if (password != confirmPassword) {
     return "Password doesn't match!";
   }
 
-  User user = User(name, tglLahir, telp, email, password);
+  User user = User(null, name, tglLahir, telp, email, password);
 
   int? request = await createUser(user);
 
@@ -20,22 +22,28 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
 
 }
 
-Future<User?> loginUser(email, password) async {
+Future<dynamic> loginUser(email, password) async {
   // logika buat input
 
-  User user = User(null, null, null, email, password);
+  User user = User(null, null, null, null, email, password);
 
-  int? request = await verifyUser(user);
+  dynamic request = await verifyUser(user);
 
-  if(request == 200){
+  if(request is User){
+    currentUser = User(request.id, request.name, request.tglLahir, request.telp, request.email, request.password);
+    print(currentUser!.id);
     print("User Logged In Successfully!");
-    return user;
-  }else if(request == 500){
-    print("No user found with this email!");
-    return null;
+    return request;
   }else{
-    print("Failed to login! Wrong email or password.");
-    return null;
+    print("No user found!");
   }
+  
+  // else if(request == 500){
+  //   print("No user found with this email!");
+  //   return null;
+  // }else{
+  //   print("Failed to login! Wrong email or password.");
+  //   return null;
+  // }
   
 }

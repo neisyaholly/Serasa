@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/menuFav.dart';
 import 'package:serasa/pages/pilihResto.dart';
@@ -97,16 +98,16 @@ class _HomePageState extends State<HomePage> {
                 // TEXT SAMBUTAN
                 Container(
                   alignment: Alignment.topLeft,
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Hai, Nathasya!",
-                          style: TextStyle(
+                      Text("Hai, ${currentUser!.name!}!",
+                          style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
                             fontFamily: 'Poppins',
                           )),
-                      Text("Sudah Siap Menjadi Food Hero Hari Ini?",
+                      const Text("Sudah Siap Menjadi Food Hero Hari Ini?",
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,

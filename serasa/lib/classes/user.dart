@@ -1,4 +1,5 @@
 class User {
+  int? id;
   String? name;
   String? tglLahir;
   String? telp;
@@ -6,6 +7,7 @@ class User {
   String? password;
 
   User(
+    this.id,
     this.name,
     this.tglLahir,
     this.telp,
@@ -15,6 +17,7 @@ class User {
 
   //buat ngubah objek user di atas jadi string json
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "tglLahir": tglLahir,
         "telp": telp,
@@ -25,6 +28,7 @@ class User {
   //buat ubah data berparameter json jadi objek user
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      json['id'],
       json["name"],
       json["tglLahir"],
       json["telp"],

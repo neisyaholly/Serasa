@@ -36,7 +36,8 @@ class UserController extends Controller
             // return $user[0];
             $token = $user->createToken('Personal Access Token')->plainTextToken;
             $response = ['status' => 200, 'token' => $token, 'user' => $user, 'message' => 'Successfully Login! Welcome Back'];
-            return response()->json($response, 200);
+            return $user;
+            // return response()->json($response, 200);
         }else if(!$user){
             $response = ['status' => 500, 'message' => 'No account found with this email'];
             return response()->json($response, 500);
