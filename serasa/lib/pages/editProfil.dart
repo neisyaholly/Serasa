@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/akun.dart';
+import 'package:serasa/pages/navbar.dart';
 
 class EditProfil extends StatefulWidget {
   const EditProfil({super.key});
@@ -28,7 +28,7 @@ class _EditProfilState extends State<EditProfil> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Akun(),
+                          builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
                         ),
                       );
                     },

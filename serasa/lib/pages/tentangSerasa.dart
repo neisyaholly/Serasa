@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/akun.dart';
-import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/pengaturan.dart';
 
 class TentangSerasa extends StatefulWidget {

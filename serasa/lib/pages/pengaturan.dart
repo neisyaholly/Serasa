@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:serasa/pages/akun.dart';
 import 'package:serasa/pages/login.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/tentangSerasa.dart';

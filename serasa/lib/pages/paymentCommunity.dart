@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/checkout.dart';
 import 'package:serasa/pages/checkout2.dart';
 
 class PaymentCommunity extends StatefulWidget {

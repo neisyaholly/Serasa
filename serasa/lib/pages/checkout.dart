@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/cart.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/payment.dart';
-import 'package:serasa/pages/pesanan.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({super.key});
@@ -553,7 +553,6 @@ class _Checkout extends State<Checkout> {
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500)),
                             ),
-                            // const Text("copas punya ariya nanti disni", style: TextStyle(fontSize: 16)),
                           ],
                         ),
                       ],
@@ -569,11 +568,13 @@ class _Checkout extends State<Checkout> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Pesanan(),
+                            builder: (context) =>
+                                const BottomNavigationBarExample(
+                                    initialIndex: 2),
                           ),
                         );
                       },
@@ -601,4 +602,5 @@ class _Checkout extends State<Checkout> {
           ),
         ));
   }
+
 }

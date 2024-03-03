@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/checkout2.dart';
-// import 'package:serasa/pages/checkout.dart';
 import 'package:serasa/pages/navbar.dart';
 
 class Detailproduk extends StatefulWidget {
