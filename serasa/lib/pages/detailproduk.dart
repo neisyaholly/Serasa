@@ -190,10 +190,10 @@ class _Detailproduk extends State<Detailproduk> {
                                   )),
                               child: Container(
                                 // color: Colors.amberAccent,
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       child: Icon(
                                         Icons.message_outlined,
                                         size: 20,
@@ -265,7 +265,7 @@ class _Detailproduk extends State<Detailproduk> {
                     ),
                     padding: const EdgeInsets.all(10),
                   ),
-                  child: const Text("Check Out",
+                  child: const Text("Beli",
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'Poppins',
