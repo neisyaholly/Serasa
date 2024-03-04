@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/payment.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({super.key});
@@ -568,7 +569,9 @@ class _Checkout extends State<Checkout> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () async {
+                      onPressed: () {
+                        final player = AudioPlayer();
+                        player.play(AssetSource('audios/cring.mp3'));
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -602,5 +605,4 @@ class _Checkout extends State<Checkout> {
           ),
         ));
   }
-
 }
