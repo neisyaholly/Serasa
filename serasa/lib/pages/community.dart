@@ -76,7 +76,7 @@ class _CommunityState extends State<Community> {
                   const SizedBox(
                     height: 15,
                   ),
-        
+
                   // Search and Location
                   SizedBox(
                     child: Row(
@@ -115,7 +115,8 @@ class _CommunityState extends State<Community> {
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
-                              bottom: 3.0), // Adjust the bottom padding as needed
+                              bottom:
+                                  3.0), // Adjust the bottom padding as needed
                           child: Icon(
                             Icons.location_on,
                             color: Color(0xFFE45C50),
