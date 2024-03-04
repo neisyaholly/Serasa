@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text("320 Poin",
-                            style: TextStyle(
+                        Text("${currentUser!.poin!} Poin",
+                            style: const TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500)),

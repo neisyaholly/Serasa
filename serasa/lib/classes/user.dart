@@ -5,6 +5,8 @@ class User {
   String? telp;
   String? email;
   String? password;
+  int? poin;
+  int? role;
 
   User(
     this.id,
@@ -13,6 +15,8 @@ class User {
     this.telp,
     this.email,
     this.password,
+    this.poin,
+    this.role,
   );
 
   //buat ngubah objek user di atas jadi string json
@@ -23,6 +27,8 @@ class User {
         "telp": telp,
         "email": email,
         "password": password,
+        "poin": poin,
+        "role": role,
       };
 
   //buat ubah data berparameter json jadi objek user
@@ -34,6 +40,8 @@ class User {
       json["telp"],
       json["email"],
       json["password"],
+      json["poin"],
+      json["role"],
     );
   }
 }

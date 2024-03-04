@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/akun.dart';
+import 'package:serasa/pages/alamat.dart';
 
 class TambahAlamat extends StatefulWidget {
   const TambahAlamat({super.key});
@@ -9,6 +12,14 @@ class TambahAlamat extends StatefulWidget {
 }
 
 class _TambahAlamatState extends State<TambahAlamat> {
+  final _namaController = TextEditingController();
+  final _jalanController = TextEditingController();
+  final _kelController = TextEditingController();
+  final _kecController = TextEditingController();
+  final _kabkotaController = TextEditingController();
+  final _provinsiController = TextEditingController();
+  final _kodeposController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +93,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _namaController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -132,6 +144,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _jalanController,
                           decoration: InputDecoration(
                             fillColor: Color(0xFFFACFC7),
                             filled: true,
@@ -180,6 +193,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _kelController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -230,6 +244,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _kecController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -280,6 +295,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _kabkotaController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -330,6 +346,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _provinsiController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -380,6 +397,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _kodeposController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -411,7 +429,30 @@ class _TambahAlamatState extends State<TambahAlamat> {
                     height: 50,
                   ),
                   ElevatedButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      final nama = _namaController.text;
+                      final jalan = _jalanController.text;
+                      final kel = _kelController.text;
+                      final kec = _kecController.text;
+                      final kabkota = _kabkotaController.text;
+                      final provinsi = _provinsiController.text;
+                      final kodepos = _kodeposController.text;
+                      final userID = currentUser!.id!;
+
+                      FocusScope.of(context).unfocus();
+                      Alamat? alamat = await addAlamat(nama, jalan, kel, kec,
+                          kabkota, provinsi, kodepos, userID);
+
+                      if (alamat is Alamat) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AddressPage(),
+                          ),
+                        );
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: const MaterialStatePropertyAll(
                         Color(0xFFE45C50),
