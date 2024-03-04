@@ -1,3 +1,4 @@
+import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/service/http_service.dart';
 
@@ -8,13 +9,14 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
     return "Password doesn't match!";
   }
 
-  User user = User(null, name, tglLahir, telp, email, password);
+  User user = User(null, name, tglLahir, telp, email, password, null, null);
 
-  int? request = await createUser(user);
+  dynamic request = await createUser(user);
 
-  if (request == 200) {
+  if (request is User) {
+    currentUser = User(request.id, request.name, request.tglLahir, request.telp, request.email, request.password, request.poin, request.role);
     print("User Registered Successfully!");
-    return user;
+    return request;
   } else {
     print("Failed To Register!");
     return null;
@@ -25,12 +27,12 @@ Future<dynamic> registerUser(name, tglLahir, telp, email, password, confirmPassw
 Future<dynamic> loginUser(email, password) async {
   // logika buat input
 
-  User user = User(null, null, null, null, email, password);
+  User user = User(null, null, null, null, email, password, null, null);
 
   dynamic request = await verifyUser(user);
 
   if(request is User){
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp, request.email, request.password);
+    currentUser = User(request.id, request.name, request.tglLahir, request.telp, request.email, request.password, request.poin, request.role);
     print(currentUser!.id);
     print("User Logged In Successfully!");
     return request;
@@ -38,12 +40,20 @@ Future<dynamic> loginUser(email, password) async {
     print("No user found!");
   }
   
-  // else if(request == 500){
-  //   print("No user found with this email!");
-  //   return null;
-  // }else{
-  //   print("Failed to login! Wrong email or password.");
-  //   return null;
-  // }
-  
+}
+
+Future<dynamic> addAlamat(nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID) async {
+
+  Alamat alamat = Alamat(null, nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID, null);
+
+  dynamic request = await createAlamat(alamat);
+
+  if (request is Alamat) {
+    print("Address added Successfully!");
+    return request;
+  } else {
+    print("Failed To Register!");
+    return null;
+  }
+
 }
