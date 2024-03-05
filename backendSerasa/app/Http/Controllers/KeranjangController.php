@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Keranjang;
 use App\Models\DetailKeranjang;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
 
 
@@ -33,9 +34,9 @@ class KeranjangController extends Controller
 
     public function updateKeranjang(Request $R, Int $id){
         try{
-            $keranjang = Keranjang::where('userID',  $request->userID);
+            $keranjang = Keranjang::where('userID',  $R->userID);
 
-            foreach($request->detailKeranjang as $detail){
+            foreach($R->detailKeranjang as $detail){
                 $detailKeranjang = detailKeranjang::where('keranjangID', $keranjang->id)->where('keranjangID', $detail['keranjangID']);
                 
                 $detailKeranjang->qty = $detail['qty'];
@@ -49,5 +50,9 @@ class KeranjangController extends Controller
             $response = ['status' => 500, 'message' => $e->getMessage()];
             return response()->json($response, 500);
         }
+    }
+    public function getKeranjang(){
+        $keranjang = Pesanan::all();
+        return response()->json($keranjang, 200);
     }
 }

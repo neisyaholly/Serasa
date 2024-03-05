@@ -8,11 +8,26 @@ class Cart extends StatefulWidget {
 
   @override
   State<Cart> createState() => _CartState();
+
+  static fromJson(json) {}
 }
 
 class _CartState extends State<Cart> {
-  
-  
+  // int? id;
+  // int? userID;
+
+  // int? id;
+  // int? keranjangID;
+  // int? produkID;
+  // int? qty;
+
+  // List<Cart> cartItems = [];
+
+  // void addItemToCart(String nama, String jumlah, String jenis) {
+  //   setState(() {
+  //     cartItems.add(Cart(nama, jumlah, jenis));
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
