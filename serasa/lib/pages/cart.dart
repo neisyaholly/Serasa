@@ -53,6 +53,11 @@ class _CartState extends State<Cart> {
     setState(() {
       _keranjangs = fetchedKeranjangs;
     });
+    _keranjangs = _keranjangs
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
   }
 
   void _fetchDetailKeranjangs() async {
