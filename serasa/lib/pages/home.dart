@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/menuFav.dart';
@@ -23,8 +24,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isExpanded = false;
-
   final ScrollController _scrollController = ScrollController();
+
+  late List<Resto> _restos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRestos();
+  }
+
+  void _fetchRestos() async {
+    List<Resto> fetchedRestos = await fetchRestos();
+    setState(() {
+      _restos = fetchedRestos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +171,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Kategori(text: "Nasi", image: 'assets/images/kategori/nasi.png'),
+                      child: const Kategori(
+                          text: "Nasi",
+                          image: 'assets/images/kategori/nasi.png'),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -168,7 +185,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Kategori(text: "Minuman", image: 'assets/images/kategori/minuman.png'),
+                      child: const Kategori(
+                          text: "Minuman",
+                          image: 'assets/images/kategori/minuman.png'),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -180,7 +199,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Kategori(text: "Roti", image: 'assets/images/kategori/roti.png' ),
+                      child: const Kategori(
+                          text: "Roti",
+                          image: 'assets/images/kategori/roti.png'),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -192,7 +213,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Kategori(text: "Mie", image: 'assets/images/kategori/mie.png'),
+                      child: const Kategori(
+                          text: "Mie", image: 'assets/images/kategori/mie.png'),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -204,7 +226,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Kategori(text: "Camilan", image: 'assets/images/kategori/nasi.png'),
+                      child: const Kategori(
+                          text: "Camilan",
+                          image: 'assets/images/kategori/nasi.png'),
                     ),
                   ],
                 ),
@@ -431,12 +455,18 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: List.generate(5, (index) {
+                                int adjustedIndex = (rowIndex * 5) + index;
                                 return Container(
                                   width: 60,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    color: Colors.amberAccent,
+                                    // color: Colors.amberAccent,
                                     borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          _restos[adjustedIndex].logo!),
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 );
                               }),
@@ -458,12 +488,17 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(5, (index) {
+                              int adjustedIndex = (rowIndex * 5) + index + 10;
                               return Container(
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: Colors.amberAccent,
                                   borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          _restos[adjustedIndex].logo!),
+                                      fit: BoxFit.contain,
+                                    ),
                                 ),
                               );
                             }),

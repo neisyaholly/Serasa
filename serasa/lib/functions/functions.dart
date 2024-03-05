@@ -1,6 +1,7 @@
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/service/http_service.dart';
 
@@ -13,7 +14,6 @@ Future<dynamic> registerUser(
   }
 
   User user = User(null, name, tglLahir, telp, email, password, null, null);
-
   dynamic request = await createUser(user);
 
   if (request is User) {
@@ -29,9 +29,7 @@ Future<dynamic> registerUser(
 
 Future<dynamic> loginUser(email, password) async {
   // logika buat input
-
   User user = User(null, null, null, null, email, password, null, null);
-
   dynamic request = await verifyUser(user);
 
   if (request is User) {
@@ -45,11 +43,9 @@ Future<dynamic> loginUser(email, password) async {
   }
 }
 
-Future<dynamic> addAlamat(
-    nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID) async {
-  Alamat alamat = Alamat(
-      null, nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID, null);
+Future<dynamic> addAlamat(nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID) async {
 
+  Alamat alamat = Alamat(null, nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID, null);
   dynamic request = await createAlamat(alamat);
 
   if (request is Alamat) {
@@ -81,3 +77,14 @@ Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
     return null;
   }
 }
+
+Future<List<Resto>> fetchRestos() async {
+    try {
+      List<Resto> restos = await getResto();
+      print(restos.length);
+      return restos;
+    } catch (e) {
+      print('Error fetching restos: $e');
+      return [];
+    }
+  }

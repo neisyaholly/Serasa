@@ -35,7 +35,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.9',
                 'kategori' => 'Nasi, Mie, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/marugame.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/marugame.jpg',
             ],
             [
                 'nama' => "Solaria",
@@ -43,7 +43,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.7',
                 'kategori' => 'Nasi, Mie, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/solaria.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/solaria.jpg',
             ],
             [
                 'nama' => "Krispy Kreme",
@@ -59,7 +59,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.9',
                 'kategori' => 'Roti, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/subway.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/subway.jpg',
             ],
             [
                 'nama' => "Hokben",
@@ -83,7 +83,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.9',
                 'kategori' => 'Nasi, Mie, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/bakmi_naga.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/bakmi_naga.jpg',
             ],
             [
                 'nama' => "Boost Juice Bar",
@@ -91,7 +91,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.9',
                 'kategori' => 'Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/boost.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/boost.jpg',
             ],
             [
                 'nama' => "Chatime",
@@ -139,7 +139,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'AEON Mall Sentul City, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.7',
                 'kategori' => 'Camilan',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/haagen-dazs.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/haagen-dazs.jpg',
             ],
             [
                 'nama' => "Baskin Robbins",
@@ -163,7 +163,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'Jl. Raya Jakarta-Bogor No. 4, Cimandala, Kec. Sukaraja, Kab. Bogor, Jawa Barat 16810',
                 'rating' => '4.7',
                 'kategori' => 'Nasi, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/burger_king.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/burger_king.jpeg',
             ],
             [
                 'nama' => "Mie Gacoan",
@@ -171,7 +171,7 @@ class RestoSeeder extends Seeder
                 'lokasi' => 'Jl. Raya Pajajaran No .63, Bantarjati, Kec. Bogor Utara, Kota Bogor, Jawa Barat 16810',
                 'rating' => '4.6',
                 'kategori' => 'Nasi, Minuman',
-                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/gacoan.png',
+                'logo' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/gacoan.jpeg',
             ],
         ]);
     }
