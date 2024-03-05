@@ -1,5 +1,7 @@
 import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
@@ -43,9 +45,10 @@ Future<dynamic> loginUser(email, password) async {
   }
 }
 
-Future<dynamic> addAlamat(nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID) async {
-
-  Alamat alamat = Alamat(null, nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID, null);
+Future<dynamic> addAlamat(
+    nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID) async {
+  Alamat alamat = Alamat(
+      null, nama, jalan, kel, kec, kab_kota, provinsi, kode_pos, userID, null);
   dynamic request = await createAlamat(alamat);
 
   if (request is Alamat) {
@@ -79,12 +82,34 @@ Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
 }
 
 Future<List<Resto>> fetchRestos() async {
-    try {
-      List<Resto> restos = await getResto();
-      print(restos.length);
-      return restos;
-    } catch (e) {
-      print('Error fetching restos: $e');
-      return [];
-    }
+  try {
+    List<Resto> restos = await getResto();
+    print(restos.length);
+    return restos;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
   }
+}
+
+Future<List<Keranjang>> fetchKeranjangs() async {
+  try {
+    List<Keranjang> keranjangs = await getKeranjang();
+    print(keranjangs.length);
+    return keranjangs;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
+  try {
+    List<DetailKeranjang> detailKeranjangs = await getDetailKeranjang();
+    print(detailKeranjangs.length);
+    return detailKeranjangs;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}

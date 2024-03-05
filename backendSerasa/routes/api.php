@@ -37,3 +37,4 @@ Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
 Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);
 Route::post('/create-keranjang', [KeranjangController::class, 'createKeranjang']);
 Route::get('/get-keranjang', [KeranjangController::class, 'getKeranjang']);
+Route::get('/get-detailKeranjang', [KeranjangController::class, 'getDetailKeranjang']);

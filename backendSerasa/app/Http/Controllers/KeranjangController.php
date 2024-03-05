@@ -52,7 +52,11 @@ class KeranjangController extends Controller
         }
     }
     public function getKeranjang(){
-        $keranjang = Pesanan::all();
+        $keranjang = Keranjang::all();
         return response()->json($keranjang, 200);
+    }
+    public function getDetailKeranjang(){
+        $detailKeranjang = DetailKeranjang::all();
+        return response()->json($detailKeranjang, 200);
     }
 }

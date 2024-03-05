@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pesanan.dart';
@@ -144,6 +145,23 @@ Future<List<Keranjang>> getKeranjang() async {
   if (response.statusCode == 200) {
     Iterable data = json.decode(response.body);
     return data.map((json) => Keranjang.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load carts');
+  }
+}
+
+Future<List<DetailKeranjang>> getDetailKeranjang() async {
+  final response = await http.get(
+    Uri.parse("$url/get-detailKeranjang"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => DetailKeranjang.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load carts');
   }

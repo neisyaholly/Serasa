@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_keranjang.dart';
+import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_cart.dart';
@@ -28,6 +31,31 @@ class _CartState extends State<Cart> {
   //     cartItems.add(Cart(nama, jumlah, jenis));
   //   });
   // }
+
+  late List<Keranjang> _keranjangs = [];
+  late List<DetailKeranjang> _detailKeranjangs = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchKeranjangs();
+    _fetchDetailKeranjangs();
+  }
+
+  void _fetchKeranjangs() async {
+    List<Keranjang> fetchedKeranjangs = await fetchKeranjangs();
+    setState(() {
+      _keranjangs = fetchedKeranjangs;
+    });
+  }
+
+  void _fetchDetailKeranjangs() async {
+    List<DetailKeranjang> fetchedDetailKeranjangs =
+        await fetchDetailKeranjangs();
+    setState(() {
+      _detailKeranjangs = fetchedDetailKeranjangs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +124,14 @@ class _CartState extends State<Cart> {
                           child: ListView.builder(
                             // shrinkWrap: true,
                             padding: const EdgeInsets.all(0),
-                            itemCount: 8,
+                            itemCount: _keranjangs.length,
                             scrollDirection: Axis.vertical,
-                            itemBuilder: (_, index) {
+                            itemBuilder: (context, index) {
+                              Keranjang keranjang = _keranjangs[index];
+                              DetailKeranjang detailKeranjang =
+                                  _detailKeranjangs[index];
                               return const WidgetCart(
-                                  nama: "Nama Resto",
-                                  jumlah: "1",
-                                  jenis: "jenis");
+                                  nama: "kera", jumlah: "1", jenis: "jenis");
                             },
                           ),
                         ),
