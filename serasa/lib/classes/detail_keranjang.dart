@@ -1,12 +1,12 @@
-class DetailPesanan {
+class DetailKeranjang {
   int? id;
-  int? pesananID;
+  int? keranjangID;
   int? produkID;
   int? qty;
 
-  DetailPesanan(
+  DetailKeranjang(
     this.id,
-    this.pesananID,
+    this.keranjangID,
     this.produkID,
     this.qty,
   );
@@ -14,15 +14,15 @@ class DetailPesanan {
   //buat ngubah objek user di atas jadi string json
   Map<String, dynamic> toJson() => {
         "id": id,
-        "pesananID": pesananID,
+        "KeranjangID": keranjangID,
         "produkID": produkID,
         "qty": qty,
       };
 
-  factory DetailPesanan.fromJson(Map<String, dynamic> json) {
-    return DetailPesanan(
+  factory DetailKeranjang.fromJson(Map<String, dynamic> json) {
+    return DetailKeranjang(
       json['id'],
-      json["pesananID"],
+      json["keranjangID"],
       json["produkID"],
       json["qty"],
     );

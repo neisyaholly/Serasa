@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -31,3 +33,8 @@ Route::post('/input-bantuan', [BantuanController::class, 'inputBantuan']);
 Route::post('/create-produkKomunitas', [ProdukKomunitasController::class, 'createProdukKomunitas']);
 Route::post('/get-voucher', [VoucherController::class, 'getVoucher']);
 Route::post('/get-bankSampah', [BankSampahController::class, 'getBankSampah']);
+Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
+Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);
+Route::post('/create-keranjang', [KeranjangController::class, 'createKeranjang']);
+Route::get('/get-keranjang', [KeranjangController::class, 'getKeranjang']);
+Route::get('/get-detailKeranjang', [KeranjangController::class, 'getDetailKeranjang']);
