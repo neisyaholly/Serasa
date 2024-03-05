@@ -92,7 +92,7 @@ class _Detailproduk extends State<Detailproduk> {
               ),
               const Padding(
                 padding: EdgeInsets.only(
-                    right: 50.0, top: 15.0, left: 40.0, bottom: 25.0),
+                    right: 50.0, top: 15.0, left: 40.0, bottom: 5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -111,6 +111,27 @@ class _Detailproduk extends State<Detailproduk> {
                   ],
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.only(
+                    right: 50.0, top: 5.0, left: 40.0, bottom: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Tanggal Kedaluwarsa",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.normal)),
+                    Text(
+                      "DD/MM/YYYY",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 height: 1.5,
                 width: 400,
@@ -122,12 +143,16 @@ class _Detailproduk extends State<Detailproduk> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        Image.asset(
-                            "assets/images/detailProduk/personsymbol.png",
-                            width: 30),
-                        const Align(
+                        Icon(
+                          Icons.person_outlined,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Align(
                           alignment: Alignment.centerLeft,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -158,7 +183,7 @@ class _Detailproduk extends State<Detailproduk> {
                         children: [
                           Container(
                             width: 80,
-                            padding: EdgeInsets.only(left: 12, right: 5),
+                            padding: const EdgeInsets.only(left: 12, right: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

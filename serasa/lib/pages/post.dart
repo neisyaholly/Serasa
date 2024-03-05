@@ -70,7 +70,8 @@ class _Post extends State<Post> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15, left: 15.0),
+                  padding:
+                      const EdgeInsets.only(top: 15, left: 15.0, right: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -154,15 +155,16 @@ class _Post extends State<Post> {
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.normal),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                width: 350,
-                                color: Color.fromARGB(39, 0, 0, 0),
-                              ))),
+                              border: InputBorder.none),
                         ),
                       ),
                     ],
                   ),
+                ),
+                Container(
+                  height: 1.5,
+                  width: 350,
+                  color: const Color.fromARGB(39, 0, 0, 0),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 15, left: 30),
@@ -190,17 +192,18 @@ class _Post extends State<Post> {
                                       fontSize: 14,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal),
-                                  border: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                    width: 350,
-                                    color: Color.fromARGB(39, 0, 0, 0),
-                                  ))),
+                                  border: InputBorder.none),
                             ),
                           ),
                         ],
                       ),
                     ],
                   ),
+                ),
+                Container(
+                  height: 1.5,
+                  width: 350,
+                  color: const Color.fromARGB(39, 0, 0, 0),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -212,7 +215,7 @@ class _Post extends State<Post> {
                               fontSize: 14,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500)),
-                      const Padding(padding: EdgeInsets.only(bottom: 10)),
+                      const Padding(padding: EdgeInsets.only(bottom: 20)),
                       // Expanded(
                       SizedBox(
                         width: 350,
@@ -256,17 +259,116 @@ class _Post extends State<Post> {
                   width: 350,
                   color: const Color.fromARGB(67, 152, 152, 152),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 30),
-                  child: Container(
-                    width: 350,
-                    height: 160,
-                    decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(child: Text("location")),
+                const Padding(
+                  padding: EdgeInsets.only(top: 15, left: 30, bottom: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Lokasi",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500)),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.location_on),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            width: 330,
+                            child: Text(
+                              'Jl. Pakuan No.3, Sumur Batu, Kec. Babakan Madang, Kabupaten Bogor, Jawa Barat 16810',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
+                ),
+                Container(
+                  height: 1.5,
+                  width: 350,
+                  color: const Color.fromARGB(67, 152, 152, 152),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Deskripsi",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500)),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors
+                              .white, // Set the background color of the container
+                          borderRadius: BorderRadius.circular(
+                              5), // Set the border radius of the container
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(
+                                  0.6), // Set the shadow color with opacity
+                              spreadRadius:
+                                  0.5, // Set the spread radius of the shadow
+                              blurRadius:
+                                  3, // Set the blur radius of the shadow
+                              offset: const Offset(
+                                  0, 0.1), // Set the offset of the shadow
+                            ),
+                          ],
+                        ),
+                        child: const TextField(
+                          maxLines: 5, // Set the maximum number of lines
+                          decoration: InputDecoration(
+                            hintText: 'Ketik deskripsi produk',
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFFFFFFF),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 7.0, horizontal: 12.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color.fromRGBO(0, 0, 0, 0.6),
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            // Add a border around the text field
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 1.5,
+                  width: 350,
+                  color: const Color.fromARGB(67, 152, 152, 152),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 SizedBox(
                   width: 342,
@@ -294,6 +396,9 @@ class _Post extends State<Post> {
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold)),
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),
