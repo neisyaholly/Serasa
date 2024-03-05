@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('cabang');
             $table->string('lokasi');
-            $table->float('rating');
+            $table->string('rating');
             $table->string('kategori');
             $table->string('logo');
         });

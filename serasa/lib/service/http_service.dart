@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
 
 String url = "http://10.0.2.2:8000/api";
@@ -67,5 +68,23 @@ Future<Alamat?> createAlamat(alamat) async {
   }
   
   return null;
+
+}
+
+Future<List<Resto>> getResto() async {
+  final response = await http.get(
+    Uri.parse("$url/get-resto"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+      Iterable data = json.decode(response.body);
+      return data.map((json) => Resto.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load restos');
+    }
 
 }
