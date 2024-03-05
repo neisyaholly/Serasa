@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VoucherUserSeeder::class);
         $this->call(BankSampahSeeder::class);
         $this->call(RiwayatTukarSampahSeeder::class);
-        $this->call(RiwayatTukarVoucherSeeder::class);
         $this->call(KeranjangSeeder::class);
         $this->call(DetailKeranjangSeeder::class);
         $this->call(PesananSeeder::class);

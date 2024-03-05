@@ -1,10 +1,10 @@
-class Alamat {
+class DetailPesanan {
   int? id;
   int? pesananID;
   int? produkID;
   int? qty;
 
-  Alamat(
+  DetailPesanan(
     this.id,
     this.pesananID,
     this.produkID,
@@ -19,8 +19,8 @@ class Alamat {
         "qty": qty,
       };
 
-  factory Alamat.fromJson(Map<String, dynamic> json) {
-    return Alamat(
+  factory DetailPesanan.fromJson(Map<String, dynamic> json) {
+    return DetailPesanan(
       json['id'],
       json["pesananID"],
       json["produkID"],

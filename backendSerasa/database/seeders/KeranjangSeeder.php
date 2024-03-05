@@ -15,12 +15,18 @@ class KeranjangSeeder extends Seeder
         DB::table('keranjangs')->insert([
             [
                 'userID' => '1',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'userID' => '1',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'userID' => '2',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // Add more dummy users as needed
         ]);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/detailproduk.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
-import 'package:serasa/pages/pesanan.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Checkout2 extends StatefulWidget {
@@ -414,7 +414,7 @@ class _Checkout2 extends State<Checkout2> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Pesanan(),
+                                  builder: (context) => const BottomNavigationBarExample(initialIndex: 2),
                                 ),
                               );
                             },

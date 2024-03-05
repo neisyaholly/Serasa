@@ -5,7 +5,6 @@ class Pesanan {
   int? pembayaranID;
   int? jenis;
   int? selesai;
-  DateTime? createdAt;
 
   Pesanan(
     this.id,
@@ -14,7 +13,6 @@ class Pesanan {
     this.pembayaranID,
     this.jenis,
     this.selesai,
-    this.createdAt,
   );
 
   //buat ngubah objek user di atas jadi string json
@@ -25,7 +23,6 @@ class Pesanan {
         "pembayaranID": pembayaranID,
         "jenis": jenis,
         "selesai": selesai,
-        "createdAt": createdAt,
       };
 
   factory Pesanan.fromJson(Map<String, dynamic> json) {
@@ -36,7 +33,6 @@ class Pesanan {
       json["pembayaranID"],
       json["jenis"],
       json["selesai"],
-      json["createdAt"],
     );
   }
 }

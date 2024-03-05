@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/akun.dart';
 import 'package:serasa/pages/alamat.dart';
+import 'package:serasa/pages/navbar.dart';
 
 class TambahAlamat extends StatefulWidget {
   const TambahAlamat({super.key});
@@ -39,7 +39,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Akun(),
+                          builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
                         ),
                       );
                     },
