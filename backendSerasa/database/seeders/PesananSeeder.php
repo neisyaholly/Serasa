@@ -19,6 +19,8 @@ class PesananSeeder extends Seeder
                 'pembayaranID' => '1',
                 'jenis' => '1',
                 'selesai' => '1',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // Add more dummy users as needed
         ]);
