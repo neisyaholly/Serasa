@@ -60,8 +60,7 @@ class _HomePageState extends State<HomePage> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Color(0xFFED6055)),
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFED6055)),
             ))
           : SafeArea(
               child: SingleChildScrollView(

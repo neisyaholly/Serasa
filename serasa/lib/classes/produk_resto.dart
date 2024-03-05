@@ -1,5 +1,6 @@
 class ProdukResto {
   int? id;
+  int? restoID;
   String? nama;
   String? deskripsi;
   int? harga;
@@ -8,6 +9,7 @@ class ProdukResto {
 
   ProdukResto(
     this.id,
+    this.restoID,
     this.nama,
     this.deskripsi,
     this.harga,
@@ -18,6 +20,7 @@ class ProdukResto {
   //buat ngubah objek user di atas jadi string json
   Map<String, dynamic> toJson() => {
         "id": id,
+        "restoID": restoID,
         "nama": nama,
         "deskripsi": deskripsi,
         "harga": harga,
@@ -29,6 +32,7 @@ class ProdukResto {
   factory ProdukResto.fromJson(Map<String, dynamic> json) {
     return ProdukResto(
       json['id'],
+      json['restoID'],
       json["nama"],
       json["deskripsi"],
       json["harga"],

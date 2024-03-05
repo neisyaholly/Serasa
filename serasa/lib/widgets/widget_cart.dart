@@ -1,15 +1,43 @@
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
-class WidgetCart extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_keranjang.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/resto.dart';
+import 'package:serasa/functions/functions.dart';
+
+class WidgetCart extends StatefulWidget {
   const WidgetCart(
       {super.key,
       required this.nama,
       required this.jumlah,
-      required this.jenis});
+      required this.jenis,
+      required this.count});
 
-  final String nama;
-  final String jumlah;
-  final String jenis;
+  final Resto nama;
+  final List<DetailKeranjang> jumlah;
+  final List<DetailKeranjang> jenis;
+  final int count;
+
+  @override
+  State<WidgetCart> createState() => _WidgetCartState();
+}
+
+class _WidgetCartState extends State<WidgetCart> {
+  late List<ProdukResto> _produkRestos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProdukRestos();
+  }
+
+  void _fetchProdukRestos() async {
+    List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+    setState(() {
+      _produkRestos = fetchedProdukRestos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +64,9 @@ class WidgetCart extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                  image: DecorationImage(
+                      image: NetworkImage(widget.nama.logo!),
+                      fit: BoxFit.contain)),
               width: 75,
               height: 75,
             ),
@@ -53,7 +83,7 @@ class WidgetCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    nama,
+                    widget.nama.nama!,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.normal,
@@ -62,15 +92,21 @@ class WidgetCart extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 5),
-                      itemCount: 3,
+                      itemCount: widget.count,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (_, index) {
+                        ProdukResto produkResto = _produkRestos.firstWhere(
+                          (detail) => detail.id == widget.jenis[index].produkID,
+                          orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
+                              ""), // Default value if not found
+                        );
+
                         return Row(
                           children: [
                             Row(
                               children: [
                                 Text(
-                                  jumlah,
+                                  widget.jumlah[index].qty.toString(),
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal,
@@ -86,7 +122,7 @@ class WidgetCart extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              jenis,
+                              produkResto.nama!,
                               style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.normal,

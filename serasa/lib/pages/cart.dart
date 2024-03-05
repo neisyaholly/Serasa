@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout.dart';
 import 'package:serasa/pages/navbar.dart';
@@ -34,12 +36,16 @@ class _CartState extends State<Cart> {
 
   late List<Keranjang> _keranjangs = [];
   late List<DetailKeranjang> _detailKeranjangs = [];
+  late List<ProdukResto> _produkRestos = [];
+  late List<Resto> _restos = [];
 
   @override
   void initState() {
     super.initState();
     _fetchKeranjangs();
     _fetchDetailKeranjangs();
+    _fetchProdukRestos();
+    _fetchRestos();
   }
 
   void _fetchKeranjangs() async {
@@ -54,6 +60,20 @@ class _CartState extends State<Cart> {
         await fetchDetailKeranjangs();
     setState(() {
       _detailKeranjangs = fetchedDetailKeranjangs;
+    });
+  }
+
+  void _fetchProdukRestos() async {
+    List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+    setState(() {
+      _produkRestos = fetchedProdukRestos;
+    });
+  }
+
+  void _fetchRestos() async {
+    List<Resto> fetchedRestos = await fetchRestos();
+    setState(() {
+      _restos = fetchedRestos;
     });
   }
 
@@ -128,10 +148,46 @@ class _CartState extends State<Cart> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               Keranjang keranjang = _keranjangs[index];
+
+                              // Find the matching DetailKeranjang where keranjangID matches id
                               DetailKeranjang detailKeranjang =
-                                  _detailKeranjangs[index];
-                              return const WidgetCart(
-                                  nama: "kera", jumlah: "1", jenis: "jenis");
+                                  _detailKeranjangs.firstWhere(
+                                (detail) => detail.keranjangID == keranjang.id,
+                                orElse: () => DetailKeranjang(-1, -1, -1,
+                                    -1), // Default value if not found
+                              );
+
+                              ProdukResto produkResto =
+                                  _produkRestos.firstWhere(
+                                (produkResto) =>
+                                    produkResto.id == detailKeranjang.produkID,
+                                orElse: () => ProdukResto(-1, -1, "", "", -1,
+                                    -1, ""), // Default value if not found
+                              );
+
+                              // Find the matching Resto based on the found ProdukResto's restoID
+                              Resto resto = _restos.firstWhere(
+                                (resto) => resto.id == produkResto.restoID,
+                                orElse: () => Resto(-1, "", "", "", "", "",
+                                    ""), // Default value if not found
+                              );
+
+                              // Use the restaurant name (nama) from the Resto
+
+                              List<DetailKeranjang> detailsForKeranjang =
+                                  _detailKeranjangs
+                                      .where(
+                                        (detail) =>
+                                            detail.keranjangID == keranjang.id,
+                                      )
+                                      .toList();
+
+                              return WidgetCart(
+                                nama: resto,
+                                jumlah: detailsForKeranjang,
+                                jenis: detailsForKeranjang,
+                                count: detailsForKeranjang.length,
+                              );
                             },
                           ),
                         ),
