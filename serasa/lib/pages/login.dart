@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/functions/functions.dart';
+import 'package:serasa/pages/cart.dart';
 // import 'package:serasa/HOMEPAGE/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/register.dart';
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 50,
                     ),
-                     Row(
+                    Row(
                       children: [
                         const SizedBox(
                           width: 100,
@@ -196,7 +197,8 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const BottomNavigationBarExample(initialIndex: 0),
+                                      const BottomNavigationBarExample(
+                                          initialIndex: 0),
                                 ),
                               );
                             } else {

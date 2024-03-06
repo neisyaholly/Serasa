@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/recycle.dart';
 import 'package:serasa/widgets/widget_bankSampahTerdekat.dart';
 
@@ -29,7 +29,7 @@ class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Recycle(),
+                          builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
                         ),
                       );
                     },

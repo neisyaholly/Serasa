@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\DetailPesanan;
+use App\Models\Pembayaran;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 
@@ -37,5 +38,10 @@ class PesananController extends Controller
     
     public function updatePesanan(Request $R, Int $id){
         $pesanan = Pesanan::where('id', $id)->update(['selesai'=>1]);
+    }
+
+    public function getPembayaran(){
+        $pembayaran = Pembayaran::all();
+        return response()->json($pembayaran, 200);
     }
 }

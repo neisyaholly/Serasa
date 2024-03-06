@@ -1,36 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/resto.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/post.dart';
 import 'package:serasa/widgets/widget_pm.dart';
 import 'package:flutter/rendering.dart';
 
 class PilihResto extends StatefulWidget {
-  const PilihResto({super.key});
+  const PilihResto({super.key, required this.resto});
+
+  final Resto resto;
 
   @override
   State<PilihResto> createState() => _PilihRestoState();
 }
 
 class _PilihRestoState extends State<PilihResto> {
-  final List<WidgetPM> items = [
-    const WidgetPM(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-    const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  ];
+  String extractLastWordBeforeLastComma() {
+    String lokasi = widget.resto.lokasi!;
+    int lastCommaIndex = lokasi.lastIndexOf(',');
 
-  final ScrollController _controller = ScrollController();
-  bool _isVisible = true;
+    if (lastCommaIndex != -1) {
+      // String substringAfterLastComma =
+      //     lokasi.substring(lastCommaIndex + 1).trim();
 
+      int secondLastCommaIndex = lokasi.lastIndexOf(',', lastCommaIndex - 1);
+
+      if (secondLastCommaIndex != -1) {
+        // Extract the substring between the second last comma and the last comma
+        String substringBetweenCommas =
+            lokasi.substring(secondLastCommaIndex + 1, lastCommaIndex).trim();
+
+        List<String> words = substringBetweenCommas.split(' ');
+
+        // Get the last word before the last comma
+        if (words.isNotEmpty) {
+          return words.last;
+        }
+      }
+    }
+    return "Word not found";
+  }
+
+  late List<ProdukResto> _produkRestos = [];
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_scrollListener);
+    _fetchProdukRestos();
+        _controller.addListener(_scrollListener);
+
   }
+
+  void _fetchProdukRestos() async {
+    List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+    setState(() {
+      _produkRestos = fetchedProdukRestos;
+    });
+  }
+
+  void addItemWidgetsToList(
+    List<Widget> itemWidgets, List<ProdukResto> produkResto, items) {
+    int index = 0;
+    while (index < items) {
+      itemWidgets.add(
+        WidgetPM(
+          nama: produkResto[index].nama!,
+          detail: produkResto[index].deskripsi!,
+          harga: produkResto[index].harga!,
+          foto: produkResto[index].foto!,
+        ),
+      );
+      index++;
+    }
+  }
+
+  List<Widget> itemWidgets = [];
+
+  // final List<WidgetPM> items = [
+  //   const WidgetPM(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
+  // ];
+
+  final ScrollController _controller = ScrollController();
+  bool _isVisible = true;
 
   @override
   void dispose() {
@@ -66,6 +125,12 @@ class _PilihRestoState extends State<PilihResto> {
 
   @override
   Widget build(BuildContext context) {
+    List<ProdukResto> produkResto = _produkRestos
+        .where(
+          (detail) => detail.restoID == widget.resto.id,
+        )
+        .toList();
+    addItemWidgetsToList(itemWidgets, produkResto, produkResto.length);
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       body: Stack(
@@ -131,7 +196,11 @@ class _PilihRestoState extends State<PilihResto> {
                                         decoration: BoxDecoration(
                                             color: Colors.amber,
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                                BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.resto.logo!), fit: BoxFit.contain),),
+                                                
                                       ),
                                       const Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -146,8 +215,8 @@ class _PilihRestoState extends State<PilihResto> {
                                           Row(
                                             children: [
                                               Icon(Icons.arrow_drop_down),
-                                              Text(
-                                                "Sentul City, Bogor",
+                                              const Text(
+                                            '${widget.resto.cabang}, ${extractLastWordBeforeLastComma()}',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
                                                     fontSize: 14,
@@ -162,14 +231,14 @@ class _PilihRestoState extends State<PilihResto> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  const Text(
-                                    "Starbucks, Sentul City",
-                                    style: TextStyle(
+                                  Text(
+                                '${widget.resto.nama}, ${widget.resto.cabang}',
+                                    style: const TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700),
                                   ),
-                                  const Row(
+                                  Row(
                                     children: [
                                       Icon(
                                         Icons.star,
@@ -177,7 +246,7 @@ class _PilihRestoState extends State<PilihResto> {
                                         size: 15,
                                       ),
                                       Text(
-                                        " 4,9",
+                                    widget.resto.rating!,
                                         style: TextStyle(
                                             fontFamily: 'Poppins',
                                             fontSize: 10,
@@ -265,7 +334,7 @@ class _PilihRestoState extends State<PilihResto> {
                 const SizedBox(
                   height: 20,
                 ),
-                for (var item in items) ...[
+                for (var item in itemWidgets) ...[
                   Container(
                     width: MediaQuery.of(context).size.width,
                     // margin: const EdgeInsets.only(left: 30, right: 30, top: 10),

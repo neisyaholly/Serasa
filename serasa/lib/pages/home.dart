@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
@@ -27,22 +28,25 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
   late List<Resto> _restos = [];
+  late List<ProdukResto> _produkrestos = [];
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchRestos();
+    _fetchData();
   }
 
-  void _fetchRestos() async {
+  void _fetchData() async {
     setState(() {
       _isLoading = true;
     });
     try {
       List<Resto> fetchedRestos = await fetchRestos();
+      List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
       setState(() {
         _restos = fetchedRestos;
+        _produkrestos = fetchedProdukRestos;
         _isLoading = false;
       });
     } catch (error) {
@@ -319,34 +323,39 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          GestureDetector(
-                            child: SizedBox(
-                              height: 60,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 10,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (_, index) {
-                                  return Container(
-                                    margin: const EdgeInsets.only(right: 15),
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: Colors.amberAccent,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  );
-                                },
-                              ),
+                          SizedBox(
+                            height: 60,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 10,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (_, index) {
+                                return GestureDetector(
+                                  child: Container(
+                                      margin: const EdgeInsets.only(right: 15),
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.amberAccent,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              _restos[index].logo.toString()),
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )),
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PilihResto(resto: _restos[index]),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const PilihResto(),
-                                ),
-                              );
-                            },
                           ),
                         ],
                       ),
@@ -408,8 +417,14 @@ class _HomePageState extends State<HomePage> {
                                   margin: const EdgeInsets.only(right: 15),
                                   width: 60,
                                   decoration: BoxDecoration(
-                                      color: Colors.amberAccent,
-                                      borderRadius: BorderRadius.circular(10)),
+                                    // color: Colors.amberAccent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          _produkrestos[index].foto.toString()),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
                                 );
                               },
                             ),

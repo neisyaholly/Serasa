@@ -4,6 +4,7 @@ import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
@@ -152,6 +153,65 @@ Future<List<ProdukResto>> getProdukResto() async {
   }
 }
 
+Future<Keranjang?> createKeranjang(
+    Keranjang, List<DetailPesanan> detailKeranjang) async {
+  final requestData = {
+    "keranjang": Keranjang.toJson(),
+    "detailKeranjang": detailKeranjang.map((detail) => detail.toJson()).toList(),
+  };
+
+  final response = await http.post(
+    Uri.parse("$url/create-keranjang"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(requestData),
+  );
+
+  if (response.statusCode == 200) {
+    return Keranjang.fromJson(jsonDecode(response.body));
+  } else {
+    print("Adding keranjang failed!");
+  }
+
+  return null;
+}
+
+Future<List<Keranjang>> updateQtyDetail() async {
+  final response = await http.get(
+    Uri.parse("$url/update-qtyDetail/{id}"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Keranjang.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load carts');
+  }
+}
+
+Future<List<Keranjang>> updateProductCart() async {
+  final response = await http.get(
+    Uri.parse("$url/updateProductCart/{id}"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Keranjang.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load carts');
+  }
+}
+
 Future<List<Keranjang>> getKeranjang() async {
   final response = await http.get(
     Uri.parse("$url/get-keranjang"),
@@ -181,6 +241,23 @@ Future<List<DetailKeranjang>> getDetailKeranjang() async {
   if (response.statusCode == 200) {
     Iterable data = json.decode(response.body);
     return data.map((json) => DetailKeranjang.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load carts');
+  }
+}
+
+Future<List<Pembayaran>> getPembayaran() async {
+  final response = await http.get(
+    Uri.parse("$url/get-pembayaran"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Pembayaran.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load carts');
   }

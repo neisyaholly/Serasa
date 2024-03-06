@@ -19,8 +19,8 @@ class KeranjangController extends Controller
             foreach ($request->detailKeranjang as $detail){
                 $detailKeranjang = new DetailKeranjang();
                 $detailKeranjang->keranjangID = $keranjang->id;
-                $detailKeranjang->keranjangID = $detail('keranjangID');
-                $detailKeranjang->keranjangID = $detail('qty');
+                $detailKeranjang->produkID = $detail('produkID');
+                $detailKeranjang->qty = $detail('qty');
                 $detailKeranjang->save();
             }
         
@@ -32,29 +32,60 @@ class KeranjangController extends Controller
         }
     }
 
-    public function updateKeranjang(Request $R, Int $id){
+    public function updateQtyDetail(Request $R, Int $id){
         try{
-            $keranjang = Keranjang::where('userID',  $R->userID);
-
-            foreach($R->detailKeranjang as $detail){
-                $detailKeranjang = detailKeranjang::where('keranjangID', $keranjang->id)->where('keranjangID', $detail['keranjangID']);
-                
-                $detailKeranjang->qty = $detail['qty'];
-                if(!$detailKeranjang->save()){
-                    throw new Exception('Failed to update cart item quantity');
-                }
-            }
-            
-            $response = ['status' => 200, 'message' => 'Cart updated successfully'];
-        }catch (Exception $e){
+            $detailKeranjang = DetailKeranjang::where('id', $id)->update(['qty'=>$R->qty]);
+                $response = ['status' => 200, 'message' => 'Cart product updated successfully'];
+                return response()->json($response, 200);
+            }catch (Exception $e){
             $response = ['status' => 500, 'message' => $e->getMessage()];
             return response()->json($response, 500);
         }
     }
+
+    public function updateProductCart(Request $request, Int $id){
+        try{
+            // $keranjang = Keranjang::where('id', $request->id);
+            
+            foreach ($request->detailKeranjang as $detail){
+                // $detailKeranjang = DetailKeranjang::where('keranjangID', $keranjang->id)->where('keranjangID', $detail['keranjangID'])->first();
+                
+                // if($detailKeranjang){
+                //     $detailKeranjang->qty = $detail['qty'];
+                //     $detailKeranjang->save();
+                //     continue;
+                // }
+                
+                $newDetailKeranjang = new DetailKeranjang();
+                $newDetailKeranjang->keranjangID = $id;
+                $newDetailKeranjang->produkID = $detail['produkID'];
+                $newDetailKeranjang->qty = $detail['qty'];
+                $newDetailKeranjang->save();
+
+                // if ($detailKeranjang) {
+                //     $detailKeranjang->update(['qty' => $detail['qty']]);
+                // } else {
+                //     DetailKeranjang::create([
+                //         'keranjangID' => $keranjang->id,
+                //         'id' => $detail['keranjangID'],
+                //         'qty' => $detail['qty']
+                //     ]);
+                // }
+            }
+            
+            $response = ['status' => 200, 'message' => 'Cart updated successfully'];
+            return response()->json($response, 200);
+        }catch (Exception $e){
+            $response = ['status' => 500, 'message' => $e ->getMessage()];
+            return response()->json($response, 500);
+        }
+    }
+
     public function getKeranjang(){
         $keranjang = Keranjang::all();
         return response()->json($keranjang, 200);
     }
+
     public function getDetailKeranjang(){
         $detailKeranjang = DetailKeranjang::all();
         return response()->json($detailKeranjang, 200);

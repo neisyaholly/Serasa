@@ -28,6 +28,16 @@ class DetailKeranjangSeeder extends Seeder
                 'produkID' => '1',
                 'qty' => '2',
             ],
+            [
+                'keranjangID' => '3',
+                'produkID' => '1',
+                'qty' => '2',
+            ],
+            [
+                'keranjangID' => '3',
+                'produkID' => '6',
+                'qty' => '2',
+            ],
             // Add more dummy users as needed
         ]);
     }

@@ -2,6 +2,7 @@ import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
@@ -75,7 +76,7 @@ Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
   dynamic request = await createPesanan(pesanan, detailPesananList);
 
   if (request is Pesanan) {
-    print("Address added Successfully!");
+    print("Order added Successfully!");
     return request;
   } else {
     print("Failed To Register!");
@@ -127,6 +128,7 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
   }
 }
 
+<<<<<<< HEAD
 Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   
   try {
@@ -139,3 +141,15 @@ Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
     return [];
   }
 }
+=======
+Future<List<Pembayaran>> fetchPembayarans() async {
+  try {
+    List<Pembayaran> pembayarans = await getPembayaran();
+    print(pembayarans.length);
+    return pembayarans;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+>>>>>>> 5e6a99aedd5d46bb37353e3a731e68c1e2abcf23
