@@ -607,6 +607,60 @@ class _Checkout extends State<Checkout> {
                   const SizedBox(
                     height: 30,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Pilih Metode Pembayaran",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold)),
+                            IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_forward,
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const PaymentPage(),
+                                    ),
+                                  );
+                                }),
+                          ],
+                        ),
+                        const SizedBox(height: 3),
+                        Row(
+                          children: [
+                            Container(
+                              width: 340,
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 15, bottom: 15),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF4F6F8),
+                                border: Border.all(
+                                    color: const Color.fromARGB(0, 0, 0, 0),
+                                    width: 2.0),
+                                borderRadius: BorderRadius.circular(1.0),
+                              ),
+                              child: const Text("GoPay",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 30),
                   Container(
                     height: 1.5,
