@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_keranjang.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/payment.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Checkout extends StatefulWidget {
-  const Checkout({super.key});
+  const Checkout(
+      {super.key, required this.resto, required this.detailkeranjangs});
+
+  final Resto resto;
+  final List<DetailKeranjang> detailkeranjangs;
 
   @override
   State<Checkout> createState() {
@@ -89,12 +95,12 @@ class _Checkout extends State<Checkout> {
                       ],
                     ),
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "McDonald’s Sentul City",
-                        style: TextStyle(
+                        widget.resto.nama!,
+                        style: const TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700),

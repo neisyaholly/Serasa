@@ -18,22 +18,6 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  // int? id;
-  // int? userID;
-
-  // int? id;
-  // int? keranjangID;
-  // int? produkID;
-  // int? qty;
-
-  // List<Cart> cartItems = [];
-
-  // void addItemToCart(String nama, String jumlah, String jenis) {
-  //   setState(() {
-  //     cartItems.add(Cart(nama, jumlah, jenis));
-  //   });
-  // }
-
   late List<Keranjang> _keranjangs = [];
   late List<DetailKeranjang> _detailKeranjangs = [];
   late List<ProdukResto> _produkRestos = [];
@@ -139,75 +123,76 @@ class _CartState extends State<Cart> {
               ),
               Expanded(
                 child: GestureDetector(
-                  child: Container(
-                    // color: Colors.amber,
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            // shrinkWrap: true,
-                            padding: const EdgeInsets.all(0),
-                            itemCount: _keranjangs.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              Keranjang keranjang = _keranjangs[index];
+                    child: Container(
+                  // color: Colors.amber,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          // shrinkWrap: true,
+                          padding: const EdgeInsets.all(0),
+                          itemCount: _keranjangs.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            Keranjang keranjang = _keranjangs[index];
 
-                              // Find the matching DetailKeranjang where keranjangID matches id
-                              DetailKeranjang detailKeranjang =
-                                  _detailKeranjangs.firstWhere(
-                                (detail) => detail.keranjangID == keranjang.id,
-                                orElse: () => DetailKeranjang(-1, -1, -1,
-                                    -1), // Default value if not found
-                              );
+                            // Find the matching DetailKeranjang where keranjangID matches id
+                            DetailKeranjang detailKeranjang =
+                                _detailKeranjangs.firstWhere(
+                              (detail) => detail.keranjangID == keranjang.id,
+                              orElse: () => DetailKeranjang(
+                                  -1, -1, -1, -1), // Default value if not found
+                            );
 
-                              ProdukResto produkResto =
-                                  _produkRestos.firstWhere(
-                                (produkResto) =>
-                                    produkResto.id == detailKeranjang.produkID,
-                                orElse: () => ProdukResto(-1, -1, "", "", -1,
-                                    -1, ""), // Default value if not found
-                              );
+                            ProdukResto produkResto = _produkRestos.firstWhere(
+                              (produkResto) =>
+                                  produkResto.id == detailKeranjang.produkID,
+                              orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
+                                  ""), // Default value if not found
+                            );
 
-                              // Find the matching Resto based on the found ProdukResto's restoID
-                              Resto resto = _restos.firstWhere(
-                                (resto) => resto.id == produkResto.restoID,
-                                orElse: () => Resto(-1, "", "", "", "", "",
-                                    ""), // Default value if not found
-                              );
+                            // Find the matching Resto based on the found ProdukResto's restoID
+                            Resto resto = _restos.firstWhere(
+                              (resto) => resto.id == produkResto.restoID,
+                              orElse: () => Resto(-1, "", "", "", "", "",
+                                  ""), // Default value if not found
+                            );
 
-                              // Use the restaurant name (nama) from the Resto
+                            // Use the restaurant name (nama) from the Resto
 
-                              List<DetailKeranjang> detailsForKeranjang =
-                                  _detailKeranjangs
-                                      .where(
-                                        (detail) =>
-                                            detail.keranjangID == keranjang.id,
-                                      )
-                                      .toList();
+                            List<DetailKeranjang> detailsForKeranjang =
+                                _detailKeranjangs
+                                    .where(
+                                      (detail) =>
+                                          detail.keranjangID == keranjang.id,
+                                    )
+                                    .toList();
 
-                              return WidgetCart(
-                                nama: resto,
-                                jumlah: detailsForKeranjang,
-                                jenis: detailsForKeranjang,
-                                count: detailsForKeranjang.length,
-                              );
-                            },
-                          ),
+                            return WidgetCart(
+                              nama: resto,
+                              jumlah: detailsForKeranjang,
+                              jenis: detailsForKeranjang,
+                              count: detailsForKeranjang.length,
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Checkout(
+                                      resto: resto,
+                                      detailkeranjangs: detailsForKeranjang,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Checkout(),
                       ),
-                    );
-                  },
-                ),
+                    ],
+                  ),
+                )),
               ),
             ],
           ),
