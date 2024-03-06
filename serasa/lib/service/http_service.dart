@@ -4,6 +4,7 @@ import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
@@ -244,5 +245,19 @@ Future<List<DetailKeranjang>> getDetailKeranjang() async {
   }
 }
 
+Future<List<Pembayaran>> getPembayaran() async {
+  final response = await http.get(
+    Uri.parse("$url/get-pembayaran"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
 
-
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Pembayaran.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load carts');
+  }
+}
