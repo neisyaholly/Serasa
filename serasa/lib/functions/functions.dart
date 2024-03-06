@@ -127,13 +127,13 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
 }
 
 Future<dynamic> createKeranjang(userID,
-    List<Map<String, dynamic>> detailKeranjang) async {
+    List<DetailKeranjang> detailKeranjang) async {
   Keranjang keranjang =
       Keranjang(null, userID);
 
   List<DetailKeranjang> detailKeranjangList = detailKeranjang
       .map((detail) => DetailKeranjang(
-          null, detail['keranjangID'], detail['produkID'], detail['qty']))
+          null, detail.keranjangID, detail.produkID, detail.qty))
       .toList();
 
   dynamic request = await createKeranjang(keranjang, detailKeranjangList);
@@ -147,4 +147,12 @@ Future<dynamic> createKeranjang(userID,
   }
 }
 
+// keranjang: ariya
+// - id
+// - userID
 
+// detail_keranjang: ariya
+// - id
+// - keranjangID
+// - produkID
+// - qty
