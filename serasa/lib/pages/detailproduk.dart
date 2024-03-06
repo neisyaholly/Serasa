@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout2.dart';
 import 'package:serasa/pages/navbar.dart';
 
 class Detailproduk extends StatefulWidget {
-  const Detailproduk({super.key});
+  const Detailproduk({super.key, required this.produkKomunitas});
+
+  final ProdukKomunitas produkKomunitas;
 
   @override
   State<Detailproduk> createState() {
@@ -12,16 +16,12 @@ class Detailproduk extends StatefulWidget {
 }
 
 class _Detailproduk extends State<Detailproduk> {
+
+
+
   @override
   Widget build(BuildContext context) {
-    // void toCheckout(BuildContext context) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) =>
-    //             const Checkout()), // Assuming Checkout is a StatelessWidget
-    //   );
-    // }
+    ProdukKomunitas produk = widget.produkKomunitas;
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
@@ -75,34 +75,27 @@ class _Detailproduk extends State<Detailproduk> {
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: Container(
                   width: 350,
-                  height: 180,
+                  height: 200,
                   decoration: BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Center(
-                      child: Image.asset(
-                          "assets/images/detailProduk/cireng.jpg",
-                          fit: BoxFit.fill),
-                    ),
-                  ),
+                  child: Image.network(produk.foto!, fit: BoxFit.fill),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(
                     right: 50.0, top: 15.0, left: 40.0, bottom: 5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Nama Makanan",
+                    Text(produk.nama!,
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700)),
                     Text(
-                      "Rp10.000",
+                      produk.harga!.toString(),
                       style: TextStyle(
                           fontSize: 12,
                           fontFamily: 'Poppins',
@@ -111,7 +104,7 @@ class _Detailproduk extends State<Detailproduk> {
                   ],
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(
                     right: 50.0, top: 5.0, left: 40.0, bottom: 25.0),
                 child: Row(
@@ -123,7 +116,7 @@ class _Detailproduk extends State<Detailproduk> {
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.normal)),
                     Text(
-                      "DD/MM/YYYY",
+                      produk.exp!,
                       style: TextStyle(
                           fontSize: 12,
                           fontFamily: 'Poppins',
@@ -143,7 +136,7 @@ class _Detailproduk extends State<Detailproduk> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Icon(
                           Icons.person_outlined,
@@ -164,7 +157,7 @@ class _Detailproduk extends State<Detailproduk> {
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal)),
-                              Text("Nama",
+                              Text(currentUser!.name!,
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
@@ -248,7 +241,7 @@ class _Detailproduk extends State<Detailproduk> {
                 width: 400,
                 color: const Color.fromARGB(67, 152, 152, 152),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(
                     right: 40.0, top: 20.0, left: 40.0, bottom: 80.0),
                 child: Column(
@@ -260,8 +253,7 @@ class _Detailproduk extends State<Detailproduk> {
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500)),
                     Padding(padding: EdgeInsets.only(bottom: 8)),
-                    Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    Text(produk.deskripsi!,
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Poppins',

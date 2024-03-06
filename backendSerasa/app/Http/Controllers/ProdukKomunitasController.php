@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 class ProdukKomunitasController extends Controller
 {
-    public function createProdukKomunitas(){
-        //sementara
+    public function getProdukKomunitas(){
+
         $produkKomunitas = ProdukKomunitas::all();
         return response()->json($produkKomunitas, 200);
     }
+
 }

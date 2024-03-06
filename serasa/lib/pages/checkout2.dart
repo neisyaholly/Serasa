@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/detailproduk.dart';
+import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -38,7 +39,7 @@ class _Checkout2 extends State<Checkout2> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Detailproduk(),
+                            builder: (context) => const HomePage(),
                             ),
                           );
                         },
