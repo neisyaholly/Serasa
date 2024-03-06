@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/classes/produk_komunitas.dart';
 
 class WidgetCommunity extends StatelessWidget {
   const WidgetCommunity(

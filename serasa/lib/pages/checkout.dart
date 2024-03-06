@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';

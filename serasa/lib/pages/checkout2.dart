@@ -22,24 +22,7 @@ void sementara() {
 
 class _Checkout2 extends State<Checkout2> {
   String _selectedPaymentMethod = '';
-  // ProdukKomunitas produkKomunitas = ProdukKomunitas();
-
-
-
-  List<ProdukKomunitas> _produkKomunitass = [];
-
-  void initState() {
-    super.initState();
-    _fetchProdukKomunitas();
-  }
-
-  void _fetchProdukKomunitas() async {
-    List<ProdukKomunitas> fetchedProdukKomunitass =
-        await fetchProdukKomunitass();
-    setState(() {
-      _produkKomunitass = fetchedProdukKomunitass;
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
