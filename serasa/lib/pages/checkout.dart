@@ -9,12 +9,19 @@ import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/payment.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+// ignore: must_be_immutable
 class Checkout extends StatefulWidget {
-  const Checkout(
-      {super.key, required this.resto, required this.detailkeranjangs});
+  Checkout(
+      {super.key,
+      required this.resto,
+      required this.detailkeranjangs,
+      this.selectedPaymentMethod,
+      this.selectedPaymentIndex});
 
   final Resto resto;
   final List<DetailKeranjang> detailkeranjangs;
+  String? selectedPaymentMethod;
+  int? selectedPaymentIndex;
 
   @override
   State<Checkout> createState() {
@@ -29,10 +36,13 @@ void sementara() {
 
 class _Checkout extends State<Checkout> {
   late List<ProdukResto> _produkRestos = [];
+
   @override
   void initState() {
     super.initState();
     _fetchProdukRestos();
+    widget.selectedPaymentIndex = 0;
+    widget.selectedPaymentMethod = 'Gopay';
   }
 
   void _fetchProdukRestos() async {
@@ -42,18 +52,20 @@ class _Checkout extends State<Checkout> {
     });
   }
 
-  String _selectedPaymentMethod = '';
+  String _selectedPaymentMethod = 'GoSend';
 
-  void incrementQty(int qty) {
+  void incrementQty(int index) {
     setState(() {
-      qty++;
+      widget.detailkeranjangs[index].qty =
+          widget.detailkeranjangs[index].qty! + 1;
     });
   }
 
-  void decrementQty(int qty) {
+  void decrementQty(int index) {
     setState(() {
-      if (qty > 1) {
-        qty--;
+      if (widget.detailkeranjangs[index].qty! > 1) {
+        widget.detailkeranjangs[index].qty =
+            widget.detailkeranjangs[index].qty! - 1;
       }
     });
   }
@@ -85,6 +97,20 @@ class _Checkout extends State<Checkout> {
     total = 0.0;
     total = subtotal + pajak + ongkosKirim;
     return total;
+  }
+
+  double calculateListViewHeight() {
+    double totalHeight = 0;
+    for (int i = 0; i < widget.detailkeranjangs.length; i++) {
+      totalHeight += calculateItemHeight(i);
+    }
+    return totalHeight;
+  }
+
+  double calculateItemHeight(int index) {
+    // Calculate the height of each item based on its content
+    // For example, you can estimate the height based on the content or use a fixed value
+    return 135; // Use your own calculation here
   }
 
   @override
@@ -140,189 +166,194 @@ class _Checkout extends State<Checkout> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
+                  Container(
+                      alignment: Alignment.center,
+                      child: Text(
                         widget.resto.nama!,
                         style: const TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
+                      )),
                   Container(
-                    child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 5),
-                        itemCount: widget.detailkeranjangs.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (_, index) {
-                          ProdukResto produkResto = _produkRestos.firstWhere(
-                            (detail) =>
-                                detail.id ==
-                                widget.detailkeranjangs[index].produkID,
-                            orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
-                                ""), // Default value if not found
-                          );
-                          return Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(left: 35, right: 35),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.network(
-                                      widget.resto.logo!,
-                                      width: 100,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    const SizedBox(width: 15),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.detailkeranjangs[index].qty
-                                                .toString(),
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            produkResto.deskripsi!,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.normal),
-                                          ),
-                                          const SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            // color: Colors.amber,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                  width: 100,
-                                                  child: Text(
-                                                    produkResto.harga
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        fontSize: 16,
-                                                        fontFamily: 'Poppins',
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 32,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xFFEEEEEE),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    border: Border.all(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            123, 0, 0, 0)),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Container(
-                                                        width: 35,
-                                                        // color: Colors.blue,
-                                                        child: IconButton(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            onPressed: () {
-                                                              decrementQty(widget
-                                                                  .detailkeranjangs[
-                                                                      index]
-                                                                  .qty!);
-                                                            },
-                                                            icon: const Icon(
-                                                              Icons.remove,
-                                                              size: 15,
-                                                              color:
-                                                                  Colors.black,
-                                                            )),
-                                                      ),
-                                                      Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        // color: Colors.amber,
-                                                        width: 20,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                                widget
-                                                                    .detailkeranjangs[
-                                                                        index]
-                                                                    .qty
-                                                                    .toString(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            17)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: 35,
-                                                        // color: Colors.blue,
-                                                        child: IconButton(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            onPressed: () {
-                                                              incrementQty(widget
-                                                                  .detailkeranjangs[
-                                                                      index]
-                                                                  .qty!);
-                                                            },
-                                                            icon: const Icon(
-                                                              Icons.add,
-                                                              size: 15,
-                                                              color:
-                                                                  Colors.black,
-                                                            )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                    width: 400,
+                    height: calculateListViewHeight(),
+                    margin: EdgeInsets.symmetric(horizontal: 40),
+                    // decoration: BoxDecoration(color: Colors.amber),
+                    child: Expanded(
+                      child: ListView.builder(
+                          padding: const EdgeInsets.only(top: 5),
+                          itemCount: widget.detailkeranjangs.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (_, index) {
+                            ProdukResto produkResto = _produkRestos.firstWhere(
+                              (detail) =>
+                                  detail.id ==
+                                  widget.detailkeranjangs[index].produkID,
+                              orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
+                                  ""), // Default value if not found
+                            );
+                            return Column(
+                              children: [
+                                Container(
+                                  // margin:
+                                  //     const EdgeInsets.only(left: 35, right: 35),
+                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 100,
+                                        height: 100,
+                                        child: Image.network(
+                                          produkResto.foto!,
+                                          // width: 100,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              produkResto.nama!,
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              produkResto.deskripsi!,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                            const SizedBox(
+                                              height: 17,
+                                            ),
+                                            Container(
+                                              // color: Colors.amber,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 100,
+                                                    child: Text(
+                                                      produkResto.harga
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 32,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xFFEEEEEE),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      border: Border.all(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              123, 0, 0, 0)),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Container(
+                                                          width: 35,
+                                                          // color: Colors.blue,
+                                                          child: IconButton(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(0),
+                                                              onPressed: () {
+                                                                decrementQty(
+                                                                    index);
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.remove,
+                                                                size: 15,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ),
+                                                        Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          // color: Colors.amber,
+                                                          width: 20,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                  widget
+                                                                      .detailkeranjangs[
+                                                                          index]
+                                                                      .qty
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          17)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: 35,
+                                                          // color: Colors.blue,
+                                                          child: IconButton(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(0),
+                                                              onPressed: () {
+                                                                incrementQty(
+                                                                    index);
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.add,
+                                                                size: 15,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                height: 1.5,
-                                width: 340,
-                                color: const Color.fromARGB(49, 152, 152, 152),
-                              ),
-                            ],
-                          );
-                        }),
+                                Container(
+                                  height: 1.5,
+                                  width: 345,
+                                  margin: EdgeInsets.only(top: 5),
+                                  color:
+                                      const Color.fromARGB(49, 152, 152, 152),
+                                ),
+                              ],
+                            );
+                          }),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -482,7 +513,7 @@ class _Checkout extends State<Checkout> {
                                             ))
                                       ],
                                     ),
-                                    Text('Rp9.000',
+                                    Text('Rp9000',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16,
@@ -548,7 +579,7 @@ class _Checkout extends State<Checkout> {
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.normal)),
-                            Text("Rp${calculatePajak(subtotal).toString()}",
+                            Text("Rp${calculatePajak(subtotal).toInt()}",
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
@@ -595,7 +626,7 @@ class _Checkout extends State<Checkout> {
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.normal)),
                         Text(
-                          "Rp${calculateTotal(subtotal, pajak, ongkosKirim)}",
+                          "Rp${calculateTotal(subtotal, pajak, ongkosKirim).toInt()}",
                           style: const TextStyle(
                               fontSize: 20,
                               fontFamily: 'Poppins',
@@ -630,7 +661,13 @@ class _Checkout extends State<Checkout> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const PaymentPage(),
+                                      builder: (context) => PaymentPage(
+                                        resto: widget.resto,
+                                        detailkeranjangs:
+                                            widget.detailkeranjangs,
+                                        selectedPaymentMethod:
+                                            widget.selectedPaymentMethod,
+                                      ),
                                     ),
                                   );
                                 }),
@@ -650,8 +687,9 @@ class _Checkout extends State<Checkout> {
                                     width: 2.0),
                                 borderRadius: BorderRadius.circular(1.0),
                               ),
-                              child: const Text("GoPay",
-                                  style: TextStyle(
+                              child: Text(
+                                  widget.selectedPaymentMethod.toString(),
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500)),

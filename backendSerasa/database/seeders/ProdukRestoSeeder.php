@@ -59,7 +59,7 @@ class ProdukRestoSeeder extends Seeder
                 'deskripsi' => 'Java Chip + Espresso + Milk',
                 'harga' => '60000',
                 'qty' => '10',
-                'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_resto/lemonade.jpeg',
+                'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_resto/javachip.jpeg',
             ],
             [
                 'restoID' => '2',

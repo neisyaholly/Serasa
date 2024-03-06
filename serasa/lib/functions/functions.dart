@@ -2,6 +2,7 @@ import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
@@ -126,33 +127,15 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
   }
 }
 
-Future<dynamic> createKeranjang(userID,
-    List<DetailKeranjang> detailKeranjang) async {
-  Keranjang keranjang =
-      Keranjang(null, userID);
-
-  List<DetailKeranjang> detailKeranjangList = detailKeranjang
-      .map((detail) => DetailKeranjang(
-          null, detail.keranjangID, detail.produkID, detail.qty))
-      .toList();
-
-  dynamic request = await createKeranjang(keranjang, detailKeranjangList);
-
-  if (request is Keranjang) {
-    print("Keranjang added Successfully!");
-    return request;
-  } else {
-    print("Failed To added!");
-    return null;
+Future<List<Pembayaran>> fetchPembayarans() async {
+  try {
+    List<Pembayaran> pembayarans = await getPembayaran();
+    print(pembayarans.length);
+    return pembayarans;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
   }
 }
 
-// keranjang: ariya
-// - id
-// - userID
 
-// detail_keranjang: ariya
-// - id
-// - keranjangID
-// - produkID
-// - qty
