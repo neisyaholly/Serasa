@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   late List<Resto> _restos = [];
   late List<ProdukResto> _produkrestos = [];
+  late List<Alamat> _alamats = [];
   bool _isLoading = false;
 
   @override
@@ -44,9 +46,11 @@ class _HomePageState extends State<HomePage> {
     try {
       List<Resto> fetchedRestos = await fetchRestos();
       List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+      List<Alamat> fetchedAlamats = await fetchAlamats();
       setState(() {
         _restos = fetchedRestos;
         _produkrestos = fetchedProdukRestos;
+        _alamats = fetchedAlamats;
         _isLoading = false;
       });
     } catch (error) {
@@ -59,6 +63,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<Alamat> alamatUser = _alamats
+        .where(
+          (detail) => detail.userID == currentUser!.id!,
+        )
+        .toList();
+    Alamat? alamatUtama = alamatUser.firstWhere(
+      (alamat) => alamat.utama == 1,
+      orElse: () => Alamat(-1, "", "", "", "", "", "", "", -1, -1),
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       body: _isLoading
@@ -78,15 +93,15 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.location_on,
                                 color: AppColors.color2,
                               ),
                               Text(
-                                "Lokasi",
-                                style: TextStyle(
+                                alamatUtama.kab_kota!,
+                                style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
