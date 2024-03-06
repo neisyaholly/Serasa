@@ -125,3 +125,26 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
     return [];
   }
 }
+
+// Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
+//     List<Map<String, dynamic>> detailPesanan) async {
+//   Pesanan pesanan =
+//       Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
+
+//   List<DetailPesanan> detailPesananList = detailPesanan
+//       .map((detail) => DetailPesanan(
+//           null, detail['pesananID'], detail['produkID'], detail['qty']))
+//       .toList();
+
+//   dynamic request = await createPesanan(pesanan, detailPesananList);
+
+//   if (request is Pesanan) {
+//     print("Address added Successfully!");
+//     return request;
+//   } else {
+//     print("Failed To Register!");
+//     return null;
+//   }
+// }
+
+
