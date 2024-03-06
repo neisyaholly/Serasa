@@ -2,6 +2,7 @@ import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
@@ -120,6 +121,17 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
     List<DetailKeranjang> detailKeranjangs = await getDetailKeranjang();
     print(detailKeranjangs.length);
     return detailKeranjangs;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<List<Pembayaran>> fetchPembayarans() async {
+  try {
+    List<Pembayaran> pembayarans = await getPembayaran();
+    print(pembayarans.length);
+    return pembayarans;
   } catch (e) {
     print('Error fetching restos: $e');
     return [];
