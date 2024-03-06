@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/pages/home.dart';
 import 'package:serasa/widgets/widget_pm.dart';
 
 class PilihResto extends StatefulWidget {
-  const PilihResto({super.key});
+  const PilihResto({super.key, required this.resto});
+
+  final Resto resto;
 
   @override
   State<PilihResto> createState() => _PilihRestoState();
 }
 
 class _PilihRestoState extends State<PilihResto> {
+
+  String extractLastWordBeforeLastComma() {
+    String lokasi = widget.resto.lokasi!;
+    int lastCommaIndex = lokasi.lastIndexOf(',');
+
+    if (lastCommaIndex != -1) {
+      
+      // String substringAfterLastComma =
+      //     lokasi.substring(lastCommaIndex + 1).trim();
+
+      int secondLastCommaIndex = lokasi.lastIndexOf(',', lastCommaIndex - 1);
+
+      if (secondLastCommaIndex != -1) {
+        // Extract the substring between the second last comma and the last comma
+        String substringBetweenCommas =
+            lokasi.substring(secondLastCommaIndex + 1, lastCommaIndex).trim();
+
+        List<String> words = substringBetweenCommas.split(' ');
+
+        // Get the last word before the last comma
+        if (words.isNotEmpty) {
+          return words.last;
+        }
+      }
+    }
+    return "Word not found";
+  }
+
   final List<WidgetPM> items = [
     const WidgetPM(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
     const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
@@ -77,14 +108,16 @@ class _PilihRestoState extends State<PilihResto> {
                                     width: 60,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
+                                        // color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.resto.logo!))),
                                   ),
-                                  const Column(
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Location",
                                         style: TextStyle(
                                             fontFamily: 'Poppins',
@@ -93,10 +126,10 @@ class _PilihRestoState extends State<PilihResto> {
                                       ),
                                       Row(
                                         children: [
-                                          Icon(Icons.arrow_drop_down),
+                                          const Icon(Icons.arrow_drop_down),
                                           Text(
-                                            "Sentul City, Bogor",
-                                            style: TextStyle(
+                                            '${widget.resto.cabang}, ${extractLastWordBeforeLastComma()}',
+                                            style: const TextStyle(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w700),
@@ -117,35 +150,35 @@ class _PilihRestoState extends State<PilihResto> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700),
                               ),
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.star,
                                     color: Color(0xFFD5AB55),
                                     size: 15,
                                   ),
                                   Text(
-                                    " 4,9",
+                                    widget.resto.rating!,
+                                    style: const TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  const Text(
+                                    " (150)",
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 10,
                                         fontWeight: FontWeight.normal),
                                   ),
-                                  Text(
-                                    "(150)",
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  Text(
+                                  const Text(
                                     " | ",
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 10,
                                         fontWeight: FontWeight.normal),
                                   ),
-                                  Text(
+                                  const Text(
                                     "5 km",
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
@@ -203,7 +236,7 @@ class _PilihRestoState extends State<PilihResto> {
                       width: 320,
                       height: 140,
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          // color: Colors.black,
                           borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
