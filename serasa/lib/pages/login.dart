@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/cart.dart';
 // import 'package:serasa/HOMEPAGE/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/register.dart';

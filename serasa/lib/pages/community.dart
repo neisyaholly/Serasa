@@ -4,7 +4,6 @@ import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/post.dart';
-import 'package:serasa/service/http_service.dart';
 import 'package:serasa/widgets/test.dart';
 import 'package:serasa/widgets/widget_Community.dart';
 import '../utils/color.dart';
@@ -179,12 +178,7 @@ class _CommunityState extends State<Community> {
                                 _produkKomunitass[index];
 
                             return GestureDetector(
-                              child: WidgetCommunity(
-                                  nama: produkKomunitas.nama!,
-                                  harga: produkKomunitas.harga!,
-                                  exp: produkKomunitas.exp!,
-                                  foto: produkKomunitas.foto!,
-                                  jarak: "5"),
+                              child: WidgetCommunity(nama: produkKomunitas.nama!, harga: produkKomunitas.harga!, exp: produkKomunitas.exp!, foto: produkKomunitas.foto!, jarak: "5"),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 Navigator.pushReplacement(
