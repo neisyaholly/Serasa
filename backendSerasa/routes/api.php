@@ -44,3 +44,5 @@ Route::get('/get-keranjang', [KeranjangController::class, 'getKeranjang']);
 Route::get('/get-detailKeranjang', [KeranjangController::class, 'getDetailKeranjang']);
 Route::get('/get-pembayaran', [PesananController::class, 'getPembayaran']);
 Route::get('/get-komunitas', [ProdukKomunitasController::class, 'getProdukKomunitas']);
+Route::get('/get-pesanan', [PesananController::class, 'getPesanan']);
+Route::post('/create-detailPesananKomunitas', [PesananController::class,'createDetailPesananKomunitas']);

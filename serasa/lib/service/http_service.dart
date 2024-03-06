@@ -102,7 +102,8 @@ Future<DetailPesanan?> createDetailPesanan(
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
-    body: jsonEncode(detailPesanans.map((detailPesanan) => detailPesanan.toJson()).toList()),
+    body: jsonEncode(
+        detailPesanans.map((detailPesanan) => detailPesanan.toJson()).toList()),
   );
 
   if (response.statusCode == 200) {
@@ -112,6 +113,26 @@ Future<DetailPesanan?> createDetailPesanan(
     print("Adding detail pesanan failed!");
     return null;
   }
+}
+
+Future<DetailPesanan?> createDetailPesananKomunitas(
+    DetailPesanan detailPesanan) async {
+  final response = await http.post(
+    Uri.parse("$url/create-detailPesananKomunitas"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(detailPesanan),
+  );
+
+  if (response.statusCode == 200) {
+    return DetailPesanan.fromJson(jsonDecode(response.body));
+  } else {
+    print("Adding pesanan failed!");
+  }
+
+  return null;
 }
 
 Future<Pesanan?> updatePesanan(pesanan) async {
@@ -320,6 +341,23 @@ Future<List<Alamat>> getAlamat() async {
   if (response.statusCode == 200) {
     Iterable data = json.decode(response.body);
     return data.map((json) => Alamat.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load alamats');
+  }
+}
+
+Future<List<Pesanan>> getPesanan() async {
+  final response = await http.get(
+    Uri.parse("$url/get-pesanan"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Pesanan.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load alamats');
   }

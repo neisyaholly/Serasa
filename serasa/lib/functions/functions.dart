@@ -86,6 +86,19 @@ Future<dynamic> addAlamat(
 //   }
 // }
 
+Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
+  DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
+  dynamic request = await createAlamat(detailPesanan);
+
+  if (request is DetailPesanan) {
+    print("Address added Successfully!");
+    return request;
+  } else {
+    print("Failed To Register!");
+    return null;
+  }
+}
+
 Future<List<Resto>> fetchRestos() async {
   try {
     List<Resto> restos = await getResto();
@@ -131,7 +144,6 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
 }
 
 Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
-  
   try {
     List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
     print(produkKomunitass.length);
@@ -154,10 +166,9 @@ Future<List<Pembayaran>> fetchPembayarans() async {
   }
 }
 
-Future<dynamic> createKeranjang(userID,
-    List<DetailKeranjang> detailKeranjang) async {
-  Keranjang keranjang =
-      Keranjang(null, userID);
+Future<dynamic> createKeranjang(
+    userID, List<DetailKeranjang> detailKeranjang) async {
+  Keranjang keranjang = Keranjang(null, userID);
 
   List<DetailKeranjang> detailKeranjangList = detailKeranjang
       .map((detail) => DetailKeranjang(
@@ -176,7 +187,6 @@ Future<dynamic> createKeranjang(userID,
 }
 
 void updateQtyDetail(int id) async {
-
   try {
     updateQtyDetail(id);
     print('Product quantity updated successfully');
@@ -186,7 +196,6 @@ void updateQtyDetail(int id) async {
 }
 
 void updateProductCart(int id) async {
-
   try {
     updateProductCart(id);
     print('Product updated successfully');
@@ -200,6 +209,17 @@ Future<List<Alamat>> fetchAlamats() async {
     List<Alamat> alamats = await getAlamat();
     print(alamats.length);
     return alamats;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<List<Pesanan>> fetchPesanans() async {
+  try {
+    List<Pesanan> pesanans = await getPesanan();
+    print(pesanans.length);
+    return pesanans;
   } catch (e) {
     print('Error fetching restos: $e');
     return [];

@@ -40,10 +40,11 @@ class WidgetCommunity extends StatelessWidget {
           Container(
             height: 102,
             decoration: BoxDecoration(
-                color: Colors.amberAccent,
-                borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: NetworkImage(foto), fit: BoxFit.fill),),
+              color: Colors.amberAccent,
+              borderRadius: BorderRadius.circular(10),
+              image:
+                  DecorationImage(image: NetworkImage(foto), fit: BoxFit.fill),
+            ),
           ),
           Text(
             nama,
