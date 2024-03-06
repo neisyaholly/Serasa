@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/pembayaran.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout2.dart';
 
+// ignore: must_be_immutable
 class PaymentCommunity extends StatefulWidget {
-  const PaymentCommunity({super.key});
+  PaymentCommunity({super.key, required this.selectedPaymentMethod});
+
+  String? selectedPaymentMethod;
 
   @override
   State<PaymentCommunity> createState() => _PaymentCommunityState();
 }
 
 class _PaymentCommunityState extends State<PaymentCommunity> {
-  String _selectedPaymentMethod = '';
+  late List<Pembayaran> _pembayarans = [];
+  @override
+  void initState() {
+    super.initState();
+    _fetchPembayarans();
+  }
+
+  void _fetchPembayarans() async {
+    List<Pembayaran> fetchedPembayarans = await fetchPembayarans();
+    setState(() {
+      _pembayarans = fetchedPembayarans;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +39,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Checkout2(),
-                  ),
-                );
+                Navigator.pop(context, widget.selectedPaymentMethod);
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -78,160 +90,41 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
               ),
               Wrap(
                 runSpacing: 15.0,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'Cash on Delivery (CoD)',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
+                children: List.generate(
+                  _pembayarans.length,
+                  (index) {
+                    if (index == 0) {
+                      return SizedBox(); // Skip generating this item
+                    }
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF4F6F8),
+                        shape: BoxShape.rectangle,
                       ),
-                      value: 'Cash on Delivery (CoD)',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'GoPay',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+                      child: RadioListTile<String>(
+                        contentPadding:
+                            const EdgeInsets.only(left: 15, right: 15),
+                        title: Text(
+                          _pembayarans[index].jenis.toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
+                        value: _pembayarans[index].jenis.toString(),
+                        groupValue: widget.selectedPaymentMethod,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.selectedPaymentMethod = value!;
+                          });
+                        },
                       ),
-                      value: 'GoPay',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'OVO',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      value: 'OVO',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'ShopeePay',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      value: 'shopeepay',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'Dana',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      value: 'dana',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F6F8),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: RadioListTile<String>(
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      title: const Text(
-                        'Transfer Bank',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      value: 'transfer',
-                      groupValue: _selectedPaymentMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPaymentMethod = value!;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+                    );
+                  },
+                ),
               ),
-              const SizedBox(height: 240),
+              const SizedBox(height: 280),
               SizedBox(
                 width: 350,
                 child: ElevatedButton(
@@ -243,7 +136,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
                     elevation: 2,
                   ),
                   onPressed: () {
-                    // Handle form submission here
+                    Navigator.pop(context, widget.selectedPaymentMethod);
                   },
                   child: const Text(
                     'Pilih',
