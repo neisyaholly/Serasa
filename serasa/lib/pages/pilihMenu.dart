@@ -3,7 +3,6 @@ import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
-import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_pm.dart';
 import 'package:flutter/rendering.dart';

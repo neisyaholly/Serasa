@@ -194,3 +194,14 @@ void updateProductCart(int id) async {
     print('Error updating product : $e');
   }
 }
+
+Future<List<Alamat>> fetchAlamats() async {
+  try {
+    List<Alamat> alamats = await getAlamat();
+    print(alamats.length);
+    return alamats;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}

@@ -201,7 +201,6 @@ Future<void> updateQtyDetail(int id) async {
   }
 }
 
-
 Future<void> updateProductCart(int id) async {
   try {
     final response = await http.put(
@@ -291,5 +290,22 @@ Future<List<ProdukKomunitas>> getProdukKomunitas() async {
     return data.map((json) => ProdukKomunitas.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load produk komunitas');
+  }
+}
+
+Future<List<Alamat>> getAlamat() async {
+  final response = await http.get(
+    Uri.parse("$url/get-address"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Alamat.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load alamats');
   }
 }
