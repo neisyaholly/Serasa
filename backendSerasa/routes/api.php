@@ -34,6 +34,7 @@ Route::post('/input-bantuan', [BantuanController::class, 'inputBantuan']);
 Route::post('/create-produkKomunitas', [ProdukKomunitasController::class, 'createProdukKomunitas']);
 Route::post('/get-voucher', [VoucherController::class, 'getVoucher']);
 Route::post('/get-bankSampah', [BankSampahController::class, 'getBankSampah']);
+Route::post('/get-riwayatTukarSampah', [BankSampahController::class, 'geRiwayatTukarSampah']);
 Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
 Route::post('/create-detailPesanan', [PesananController::class,'createDetailPesanan']);
 Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);

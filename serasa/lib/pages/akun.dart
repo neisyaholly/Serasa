@@ -1,12 +1,11 @@
-// import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/alamat.dart';
 import 'package:serasa/pages/editProfil.dart';
 import 'package:serasa/pages/help.dart';
 import 'package:serasa/pages/pengaturan.dart';
 import 'package:serasa/pages/rewards.dart';
-// import 'package:get/utils.dart';
 import 'package:serasa/utils/color.dart';
 
 class Akun extends StatefulWidget {
@@ -19,7 +18,7 @@ class Akun extends StatefulWidget {
 class _AkunState extends State<Akun> {
   bool _expanded1 = false; // Flag to track if the container is expanded
   bool _expanded2 = false;
-  bool _expanded3 = false; // Flag to track if the container is expanded
+  bool _expanded3 = false;
   bool _expanded4 = false;
 
   void _toggleExpanded1() {
@@ -46,8 +45,33 @@ class _AkunState extends State<Akun> {
     });
   }
 
+  late List<Alamat> _alamats = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAlamat();
+  }
+
+  void _fetchAlamat() async {
+    List<Alamat> fetchedAlamats = await fetchAlamats();
+    setState(() {
+      _alamats = fetchedAlamats;
+    });
+    _alamats = _alamats
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Alamat? alamatUtama = _alamats.firstWhere(
+      (alamat) => alamat.utama == 1,
+      orElse: () => Alamat(-1, "", "", "", "", "", "", "", -1, -1),
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       body: SingleChildScrollView(
@@ -69,30 +93,32 @@ class _AkunState extends State<Akun> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.amber),
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.amber,
+                            // image: DecorationImage(image: NetworkImage()),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
-                          "Nathasya Rizandi",
-                          style: TextStyle(
+                        Text(
+                          currentUser!.name!,
+                          style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 15,
                               fontWeight: FontWeight.w700),
                         ),
-                        const Row(
+                        Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.currency_bitcoin_rounded,
                               color: AppColors.color3,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Text("320 Poin",
-                                style: TextStyle(
+                            Text("${currentUser!.poin} Poin",
+                                style: const TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500)),
@@ -102,61 +128,63 @@ class _AkunState extends State<Akun> {
                     ),
                   ),
                   Container(
+                    // color: Colors.amber,
+                    alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(
                       top: 55,
                       right: 45,
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("AKUN",
+                        const Text("AKUN",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Poppins',
                                 fontSize: 18)),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text("Nomor Telepon",
+                        const Text("Nomor Telepon",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins',
                                 fontSize: 14)),
-                        Text("+6285290153677",
-                            style: TextStyle(
+                        Text(currentUser!.telp!,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontFamily: 'Poppins',
                                 fontSize: 10,
                                 color: Color(0xFFED6055))),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text("Email",
+                        const Text("Email",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins',
                                 fontSize: 14)),
-                        Text("Nathasya.edu@gmail.com",
-                            style: TextStyle(
+                        Text(currentUser!.email!,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontFamily: 'Poppins',
                                 fontSize: 10,
                                 color: Color(0xFFED6055))),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text("Alamat utama",
+                        const Text("Alamat utama",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins',
                                 fontSize: 14)),
-                        Text("Rumah Talenta BCA",
-                            style: TextStyle(
+                        Text(alamatUtama.nama!,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontFamily: 'Poppins',
                                 fontSize: 10,
                                 color: Color(0xFFED6055))),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -598,7 +626,7 @@ class _AkunState extends State<Akun> {
                                   color: Colors.black,
                                 ),
                                 Text(
-                                  "Text lainnya...",
+                                  "Kamu dapat menukarkan sampah organik kamu ke Bank Sampah Serasa terdekat, ya. Kamu bisa cek letak Bank Sampah di dekatmu melalui halaman Daur Ulang. Terima kasih sudah berkontribusi :)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -628,7 +656,8 @@ class _AkunState extends State<Akun> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                  "Bagaimana cara menukarkan sampah organik saya?",
+                                  "Jenis makanan apa yang bisa saya jual di Komunitas?",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -661,7 +690,8 @@ class _AkunState extends State<Akun> {
                                   color: Colors.black,
                                 ),
                                 Text(
-                                  "Text lainnya...",
+                                  "Pada halaman Komunitas, kamu dapat menjual jenis makanan apa pun yang masih layak konsumsi.",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -691,7 +721,8 @@ class _AkunState extends State<Akun> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                  "Bagaimana cara menukarkan sampah organik saya?",
+                                  "Apakah saya bisa mengganti alamat utama saya?",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -724,7 +755,8 @@ class _AkunState extends State<Akun> {
                                   color: Colors.black,
                                 ),
                                 Text(
-                                  "Text lainnya...",
+                                  "Tentu, kamu bisa menggantinya pada menu Alamat yang ada pada halaman Akun, ya. Kamu bisa memilih alamat yang kamu inginkan untuk menjadi alamat utama.",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -754,7 +786,7 @@ class _AkunState extends State<Akun> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                  "Bagaimana cara menukarkan sampah organik saya?",
+                                  "Adakah jaminan harga murah pada aplikasi Serasa?",
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
@@ -787,7 +819,8 @@ class _AkunState extends State<Akun> {
                                   color: Colors.black,
                                 ),
                                 Text(
-                                  "Text lainnya...",
+                                  "Ada! Serasa bakal kasih kamu potongan harga sampai dengan 50% untuk setiap pembelian pada aplikasi Serasa. Serasa berharap, setiap orang dapat memiliki akses makanan yang lebih mudah dan terjangkau melalui Serasa^^",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Poppins',
