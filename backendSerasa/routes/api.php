@@ -36,5 +36,7 @@ Route::post('/get-bankSampah', [BankSampahController::class, 'getBankSampah']);
 Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
 Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);
 Route::post('/create-keranjang', [KeranjangController::class, 'createKeranjang']);
+Route::put('/update-qtyDetail/{id}', [KeranjangController::class, 'updateQtyDetail']);
+Route::put('/updateProductCart/{id}', [KeranjangController::class, 'updateProductCart']);
 Route::get('/get-keranjang', [KeranjangController::class, 'getKeranjang']);
 Route::get('/get-detailKeranjang', [KeranjangController::class, 'getDetailKeranjang']);
