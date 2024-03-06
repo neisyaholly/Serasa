@@ -6,6 +6,7 @@ class ProdukKomunitas {
   int? harga;
   String? exp;
   String? foto;
+  String? name;
 
   ProdukKomunitas(
     this.id,
@@ -15,6 +16,7 @@ class ProdukKomunitas {
     this.harga,
     this.exp,
     this.foto,
+    this.name
   );
 
   //buat ngubah objek user di atas jadi string json
@@ -26,6 +28,7 @@ class ProdukKomunitas {
         "harga": harga,
         "exp": exp,
         "foto": foto,
+        "userName": name,
       };
 
   //buat ubah data berparameter json jadi objek user
@@ -38,6 +41,7 @@ class ProdukKomunitas {
       json['harga'] as int,
       json['exp'],
       json['foto'],
+      json['name']
     );
   }
 }

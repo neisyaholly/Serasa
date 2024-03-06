@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
@@ -19,8 +22,16 @@ void sementara() {
 
 class _Checkout2 extends State<Checkout2> {
   String _selectedPaymentMethod = '';
+  
+
   @override
   Widget build(BuildContext context) {
+
+
+  // for (var i in _produkKomunitass.length){
+  //   ProdukKomunitas produkKomunitas = _produkKomunitass[i];
+  // }
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -35,11 +46,11 @@ class _Checkout2 extends State<Checkout2> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.pop(
                             context,
-                            MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                            ),
+                            // MaterialPageRoute(
+                            // builder: (context) =>  Detailproduk(produkKomunitas: produkKomunitas),
+                            // ),
                           );
                         },
                         icon: const Icon(

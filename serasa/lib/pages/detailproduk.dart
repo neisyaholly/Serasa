@@ -9,6 +9,7 @@ class Detailproduk extends StatefulWidget {
 
   final ProdukKomunitas produkKomunitas;
 
+
   @override
   State<Detailproduk> createState() {
     return _Detailproduk();
@@ -16,8 +17,6 @@ class Detailproduk extends StatefulWidget {
 }
 
 class _Detailproduk extends State<Detailproduk> {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +156,7 @@ class _Detailproduk extends State<Detailproduk> {
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal)),
-                              Text(currentUser!.name!,
+                              Text(produk.name!,
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
@@ -267,7 +266,7 @@ class _Detailproduk extends State<Detailproduk> {
                 child: ElevatedButton(
                   onPressed: () {
                     FocusScope.of(context).unfocus();
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const Checkout2(),
