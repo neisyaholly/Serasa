@@ -62,26 +62,26 @@ Future<dynamic> addAlamat(
   }
 }
 
-Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
-    List<Map<String, dynamic>> detailPesanan) async {
-  Pesanan pesanan =
-      Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
+// Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
+//     List<DetailPesanan> detailPesanan) async {
+//   Pesanan pesanan =
+//       Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
 
-  List<DetailPesanan> detailPesananList = detailPesanan
-      .map((detail) => DetailPesanan(
-          null, detail['pesananID'], detail['produkID'], detail['qty']))
-      .toList();
+//   List<DetailPesanan> detailPesananList = detailPesanan
+//       .map((detail) =>
+//           DetailPesanan(null, detail.pesananID, detail.produkID, detail.qty))
+//       .toList();
 
-  dynamic request = await createPesanan(pesanan, detailPesananList);
+//   dynamic request = await createPesanan(pesanan, detailPesananList);
 
-  if (request is Pesanan) {
-    print("Order added Successfully!");
-    return request;
-  } else {
-    print("Failed To Register!");
-    return null;
-  }
-}
+//   if (request is Pesanan) {
+//     print("Order added Successfully!");
+//     return request;
+//   } else {
+//     print("Failed To Checkout!");
+//     return null;
+//   }
+// }
 
 Future<List<Resto>> fetchRestos() async {
   try {

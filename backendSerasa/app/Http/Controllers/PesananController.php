@@ -19,16 +19,25 @@ class PesananController extends Controller
             $pesanan->jenis = $request->jenis;
             $pesanan->selesai = 0;
             $pesanan->save();
-    
+            $response = ['status' => 200, 'message' => 'Pesanan created successfully'];
+            return response()->json($response, 200);
+        }catch(Exception $e){
+            $response = ['status' => 500, 'message' => $e->getMessage()];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function createDetailPesanan(Request $request){
+        try{
             foreach ($request->detailPesanan as $detail) {
                 $detailPesanan = new DetailPesanan();
-                $detailPesanan->pesananID = $pesanan->id;
+                $detailPesanan->pesananID = $request->pesananID;
                 $detailPesanan->produkID = $detail['produkID'];
                 $detailPesanan->qty = $detail['qty'];
                 $detailPesanan->save();
             }
     
-            $response = ['status' => 200, 'message' => 'Pesanan created successfully'];
+            $response = ['status' => 200, 'message' => 'Detail Pesanan created successfully'];
             return response()->json($response, 200);
         }catch(Exception $e){
             $response = ['status' => 500, 'message' => $e->getMessage()];

@@ -34,6 +34,7 @@ Route::post('/create-produkKomunitas', [ProdukKomunitasController::class, 'creat
 Route::post('/get-voucher', [VoucherController::class, 'getVoucher']);
 Route::post('/get-bankSampah', [BankSampahController::class, 'getBankSampah']);
 Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
+Route::post('/create-detailPesanan', [PesananController::class,'createDetailPesanan']);
 Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);
 Route::post('/create-keranjang', [KeranjangController::class, 'createKeranjang']);
 Route::put('/update-qtyDetail/{id}', [KeranjangController::class, 'updateQtyDetail']);
