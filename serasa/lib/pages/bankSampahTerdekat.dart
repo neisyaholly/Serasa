@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/navbar.dart';
-import 'package:serasa/pages/recycle.dart';
 import 'package:serasa/widgets/widget_bankSampahTerdekat.dart';
 
 class BankSampahTerdekat extends StatefulWidget {

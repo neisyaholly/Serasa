@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
+import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/home.dart';
-import 'package:serasa/pages/post.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_pm.dart';
 import 'package:flutter/rendering.dart';
 
@@ -76,17 +77,6 @@ class _PilihRestoState extends State<PilihResto> {
   }
 
   List<Widget> itemWidgets = [];
-
-  // final List<WidgetPM> items = [
-  //   const WidgetPM(nama: "Nama 1", detail: "Detail 1", harga: "Harga 1"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  //   const WidgetPM(nama: "Nama 2", detail: "Detail 2", harga: "Harga 2"),
-  // ];
 
   final ScrollController _controller = ScrollController();
   bool _isVisible = true;
@@ -175,7 +165,7 @@ class _PilihRestoState extends State<PilihResto> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const HomePage(),
+                                    builder: (context) => const BottomNavigationBarExample(initialIndex: 0),
                                   ),
                                 );
                               },
@@ -240,33 +230,33 @@ class _PilihRestoState extends State<PilihResto> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.star,
                                         color: Color(0xFFD5AB55),
                                         size: 15,
                                       ),
                                       Text(
                                     widget.resto.rating!,
+                                        style: const TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                      const Text(
+                                        " (150)",
                                         style: TextStyle(
                                             fontFamily: 'Poppins',
                                             fontSize: 10,
                                             fontWeight: FontWeight.normal),
                                       ),
-                                      Text(
-                                        "(150)",
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                      Text(
+                                      const Text(
                                         " | ",
                                         style: TextStyle(
                                             fontFamily: 'Poppins',
                                             fontSize: 10,
                                             fontWeight: FontWeight.normal),
                                       ),
-                                      Text(
+                                      const Text(
                                         "5 km",
                                         style: TextStyle(
                                             fontFamily: 'Poppins',
@@ -325,7 +315,8 @@ class _PilihRestoState extends State<PilihResto> {
                           height: 140,
                           decoration: BoxDecoration(
                               color: Colors.black,
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(image: NetworkImage("https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/restoran/banner.png"), fit: BoxFit.cover)),
                         ),
                       ),
                     ],
@@ -367,7 +358,7 @@ class _PilihRestoState extends State<PilihResto> {
                     borderRadius: BorderRadius.circular(100)),
                 child: const Icon(
                   Icons.shopping_cart,
-                  size: 50,
+                  size: 40,
                   color: Colors.white,
                 ),
               ),
@@ -376,7 +367,7 @@ class _PilihRestoState extends State<PilihResto> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Post(),
+                    builder: (context) => const Cart(),
                   ),
                 );
               },
