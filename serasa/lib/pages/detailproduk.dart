@@ -8,7 +8,6 @@ class Detailproduk extends StatefulWidget {
 
   final ProdukKomunitas produkKomunitas;
 
-
   @override
   State<Detailproduk> createState() {
     return _Detailproduk();
@@ -16,7 +15,6 @@ class Detailproduk extends StatefulWidget {
 }
 
 class _Detailproduk extends State<Detailproduk> {
-
   @override
   Widget build(BuildContext context) {
     ProdukKomunitas produk = widget.produkKomunitas;
@@ -240,19 +238,19 @@ class _Detailproduk extends State<Detailproduk> {
                 color: const Color.fromARGB(67, 152, 152, 152),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     right: 40.0, top: 20.0, left: 40.0, bottom: 80.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Deskripsi",
+                    const Text("Deskripsi",
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500)),
-                    Padding(padding: EdgeInsets.only(bottom: 8)),
+                    const Padding(padding: EdgeInsets.only(bottom: 8)),
                     Text(produk.deskripsi!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.normal),
@@ -268,7 +266,9 @@ class _Detailproduk extends State<Detailproduk> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Checkout2(),
+                        builder: (context) => Checkout2(
+                          produkKomunitas: widget.produkKomunitas,
+                        ),
                       ),
                     );
                   },
