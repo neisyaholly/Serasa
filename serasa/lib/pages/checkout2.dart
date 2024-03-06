@@ -24,12 +24,13 @@ void sementara() {
 }
 
 class _Checkout2 extends State<Checkout2> {
-  String _selectedPaymentMethod = 'Cash on Delivery (CoD)';
+  String selectedPaymentMethod = 'Cash on Delivery (CoD)';
 
   List<Pesanan> _pesanans = [];
 
   late Pesanan pesanan;
   late DetailPesanan detailPesanan;
+  String selectedPengambilanMethod = 'GoSend';
 
   @override
   void initState() {
@@ -268,10 +269,10 @@ class _Checkout2 extends State<Checkout2> {
                                         ],
                                       ),
                                       value: 'Ambil Sendiri',
-                                      groupValue: _selectedPaymentMethod,
+                                      groupValue: selectedPengambilanMethod,
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedPaymentMethod = value!;
+                                          selectedPengambilanMethod = value!;
                                           ongkosKirim = 0;
                                         });
                                       },
@@ -316,10 +317,10 @@ class _Checkout2 extends State<Checkout2> {
                                         ],
                                       ),
                                       value: 'GoSend',
-                                      groupValue: _selectedPaymentMethod,
+                                      groupValue: selectedPengambilanMethod,
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedPaymentMethod = value!;
+                                          selectedPengambilanMethod = value!;
                                           ongkosKirim = 9000;
                                         });
                                       },
@@ -359,15 +360,15 @@ class _Checkout2 extends State<Checkout2> {
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
                               ),
-                              const Row(
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Ongkos Kirim",
+                                  const Text("Ongkos Kirim",
                                       style: TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
-                                  Text("Rp20.000",
-                                      style: TextStyle(
+                                  Text("Rp${ongkosKirim.toString()}",
+                                      style: const TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
                               ),
@@ -379,17 +380,18 @@ class _Checkout2 extends State<Checkout2> {
                           width: 1000,
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(top: 15, bottom: 10),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Total",
+                              const Text("Total",
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'Poppins')),
-                              Text("Rp10.020.000",
-                                  style: TextStyle(
+                              Text(
+                                  "Rp${calculateTotal(subtotal, ongkosKirim).toInt()}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
@@ -400,7 +402,7 @@ class _Checkout2 extends State<Checkout2> {
                           height: 1.5,
                           width: 1000,
                           color: const Color.fromARGB(49, 152, 152, 152),
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,11 +422,14 @@ class _Checkout2 extends State<Checkout2> {
                                     ),
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const PaymentCommunity(),
+                                              PaymentCommunity(
+                                            selectedPaymentMethod:
+                                                selectedPaymentMethod,
+                                          ),
                                         ),
                                       );
                                     }),
