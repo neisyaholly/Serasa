@@ -202,10 +202,10 @@ class _PilihRestoState extends State<PilihResto> {
                                                 widget.resto.logo!), fit: BoxFit.contain),),
                                                 
                                       ),
-                                      const Column(
+                                      Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Location",
                                             style: TextStyle(
                                                 fontFamily: 'Poppins',
@@ -214,10 +214,10 @@ class _PilihRestoState extends State<PilihResto> {
                                           ),
                                           Row(
                                             children: [
-                                              Icon(Icons.arrow_drop_down),
-                                              const Text(
+                                              const Icon(Icons.arrow_drop_down),
+                                              Text(
                                             '${widget.resto.cabang}, ${extractLastWordBeforeLastComma()}',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontFamily: 'Poppins',
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w700),

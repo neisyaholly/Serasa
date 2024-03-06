@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
@@ -128,7 +130,6 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
   }
 }
 
-<<<<<<< HEAD
 Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   
   try {
@@ -141,7 +142,7 @@ Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
     return [];
   }
 }
-=======
+
 Future<List<Pembayaran>> fetchPembayarans() async {
   try {
     List<Pembayaran> pembayarans = await getPembayaran();
@@ -152,4 +153,3 @@ Future<List<Pembayaran>> fetchPembayarans() async {
     return [];
   }
 }
->>>>>>> 5e6a99aedd5d46bb37353e3a731e68c1e2abcf23
