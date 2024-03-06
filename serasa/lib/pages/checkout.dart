@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
+import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/cart.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/payment.dart';
@@ -25,21 +28,63 @@ void sementara() {
 }
 
 class _Checkout extends State<Checkout> {
-  int qty = 1;
+  late List<ProdukResto> _produkRestos = [];
+  @override
+  void initState() {
+    super.initState();
+    _fetchProdukRestos();
+  }
+
+  void _fetchProdukRestos() async {
+    List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+    setState(() {
+      _produkRestos = fetchedProdukRestos;
+    });
+  }
+
   String _selectedPaymentMethod = '';
 
-  void incrementQty() {
+  void incrementQty(int qty) {
     setState(() {
       qty++;
     });
   }
 
-  void decrementQty() {
+  void decrementQty(int qty) {
     setState(() {
       if (qty > 1) {
         qty--;
       }
     });
+  }
+
+  int subtotal = 0;
+  int calculateSubtotal() {
+    subtotal = 0;
+    widget.detailkeranjangs.forEach((detailKeranjang) {
+      ProdukResto produkResto = _produkRestos.firstWhere(
+        (detail) => detail.id == detailKeranjang.produkID,
+        orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
+      );
+      subtotal += produkResto.harga! * detailKeranjang.qty!;
+    });
+    return subtotal;
+  }
+
+  double pajak = 0;
+  double calculatePajak(int subtotal) {
+    pajak = 0;
+    pajak = subtotal * 0.11;
+    return pajak;
+  }
+
+  int ongkosKirim = 0;
+
+  double total = 0.0;
+  double calculateTotal(int subtotal, double pajak, int ongkosKirim) {
+    total = 0.0;
+    total = subtotal + pajak + ongkosKirim;
+    return total;
   }
 
   @override
@@ -108,110 +153,161 @@ class _Checkout extends State<Checkout> {
                     ],
                   ),
                   Container(
-                    // color: Colors.red,
-                    margin: const EdgeInsets.only(left: 35, right: 35),
-                    // width: MediaQuery.of(context).size.width * 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset('assets/images/foodProducts/ayam.png',
-                            width: 100),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView.builder(
+                        padding: const EdgeInsets.only(top: 5),
+                        itemCount: widget.detailkeranjangs.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (_, index) {
+                          ProdukResto produkResto = _produkRestos.firstWhere(
+                            (detail) =>
+                                detail.id ==
+                                widget.detailkeranjangs[index].produkID,
+                            orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
+                                ""), // Default value if not found
+                          );
+                          return Column(
                             children: [
-                              const Text(
-                                "Nama Makanan",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const Text(
-                                "Description",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              const SizedBox(
-                                height: 17,
-                              ),
                               Container(
-                                // color: Colors.amber,
+                                margin:
+                                    const EdgeInsets.only(left: 35, right: 35),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    const SizedBox(
+                                    Image.network(
+                                      widget.resto.logo!,
                                       width: 100,
-                                      child: Text(
-                                        "Rp100.000",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                      fit: BoxFit.contain,
                                     ),
-                                    // const SizedBox(
-                                    //   width: 8,
-                                    // ),
-                                    Container(
-                                      height: 32,
-                                      // margin: const EdgeInsets.only(right: 15),
-                                      // width: MediaQuery.of(context).size.width,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFEEEEEE),
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: const Color.fromARGB(
-                                                123, 0, 0, 0)),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                    const SizedBox(width: 15),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            width: 35,
-                                            // color: Colors.blue,
-                                            child: IconButton(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                onPressed: decrementQty,
-                                                icon: const Icon(
-                                                  Icons.remove,
-                                                  size: 15,
-                                                  color: Colors.black,
-                                                )),
+                                          Text(
+                                            widget.detailkeranjangs[index].qty
+                                                .toString(),
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            produkResto.deskripsi!,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                          const SizedBox(
+                                            height: 17,
                                           ),
                                           Container(
-                                            alignment: Alignment.center,
                                             // color: Colors.amber,
-                                            width: 20,
-                                            child: Column(
+                                            child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Text('$qty',
+                                                SizedBox(
+                                                  width: 100,
+                                                  child: Text(
+                                                    produkResto.harga
+                                                        .toString(),
                                                     style: const TextStyle(
-                                                        fontSize: 17)),
+                                                        fontSize: 16,
+                                                        fontFamily: 'Poppins',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 32,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xFFEEEEEE),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            123, 0, 0, 0)),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Container(
+                                                        width: 35,
+                                                        // color: Colors.blue,
+                                                        child: IconButton(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(0),
+                                                            onPressed: () {
+                                                              decrementQty(widget
+                                                                  .detailkeranjangs[
+                                                                      index]
+                                                                  .qty!);
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.remove,
+                                                              size: 15,
+                                                              color:
+                                                                  Colors.black,
+                                                            )),
+                                                      ),
+                                                      Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        // color: Colors.amber,
+                                                        width: 20,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                                widget
+                                                                    .detailkeranjangs[
+                                                                        index]
+                                                                    .qty
+                                                                    .toString(),
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            17)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: 35,
+                                                        // color: Colors.blue,
+                                                        child: IconButton(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(0),
+                                                            onPressed: () {
+                                                              incrementQty(widget
+                                                                  .detailkeranjangs[
+                                                                      index]
+                                                                  .qty!);
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.add,
+                                                              size: 15,
+                                                              color:
+                                                                  Colors.black,
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                          ),
-                                          Container(
-                                            width: 35,
-                                            // color: Colors.blue,
-                                            child: IconButton(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                onPressed: incrementQty,
-                                                icon: const Icon(
-                                                  Icons.add,
-                                                  size: 15,
-                                                  color: Colors.black,
-                                                )),
                                           ),
                                         ],
                                       ),
@@ -219,118 +315,17 @@ class _Checkout extends State<Checkout> {
                                   ],
                                 ),
                               ),
+                              Container(
+                                height: 1.5,
+                                width: 340,
+                                color: const Color.fromARGB(49, 152, 152, 152),
+                              ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 1.5,
-                    width: 340,
-                    color: const Color.fromARGB(49, 152, 152, 152),
+                          );
+                        }),
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ringkasan Pesanan",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Subtotal",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            Text("Rp10.000.000",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal)),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Pajak",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal)),
-                            Text("Rp100.000",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal)),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Ongkos Kirim",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal)),
-                            Text("Rp20.000",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.normal)),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 1.5,
-                    width: 340,
-                    color: const Color.fromARGB(49, 152, 152, 152),
-                  ),
-                  const SizedBox(height: 25),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Total",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.normal)),
-                        Text(
-                          "Rp10.120.000",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -452,6 +447,7 @@ class _Checkout extends State<Checkout> {
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedPaymentMethod = value!;
+                                    ongkosKirim = 0;
                                   });
                                 },
                               ),
@@ -499,6 +495,7 @@ class _Checkout extends State<Checkout> {
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedPaymentMethod = value!;
+                                    ongkosKirim = 9000;
                                   });
                                 },
                               ),
@@ -510,6 +507,105 @@ class _Checkout extends State<Checkout> {
                   ),
                   const SizedBox(
                     height: 25,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Ringkasan Pesanan",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Subtotal",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Text("Rp${calculateSubtotal().toString()}",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Pajak",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal)),
+                            Text("Rp${calculatePajak(subtotal).toString()}",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Ongkos Kirim",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal)),
+                            Text("Rp${ongkosKirim.toString()}",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.normal)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 1.5,
+                    width: 340,
+                    color: const Color.fromARGB(49, 152, 152, 152),
+                  ),
+                  const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Total",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.normal)),
+                        Text(
+                          "Rp${calculateTotal(subtotal, pajak, ongkosKirim)}",
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 35),
