@@ -6,6 +6,7 @@ import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
@@ -272,5 +273,23 @@ Future<List<Pembayaran>> getPembayaran() async {
     return data.map((json) => Pembayaran.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load carts');
+  }
+}
+
+Future<List<ProdukKomunitas>> getProdukKomunitas() async {
+  final response = await http.get(
+    Uri.parse("$url/get-komunitas"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+  print(response);
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => ProdukKomunitas.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load produk komunitas');
   }
 }

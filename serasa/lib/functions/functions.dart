@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
@@ -123,6 +126,19 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
     return detailKeranjangs;
   } catch (e) {
     print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
+  
+  try {
+    List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
+    print(produkKomunitass.length);
+    // print("asdf");
+    return produkKomunitass;
+  } catch (e) {
+    print('Error fetching komunitas: $e');
     return [];
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/post.dart';
+import 'package:serasa/service/http_service.dart';
 import 'package:serasa/widgets/test.dart';
 import 'package:serasa/widgets/widget_Community.dart';
 import '../utils/color.dart';
@@ -11,16 +14,29 @@ class Community extends StatefulWidget {
 
   @override
   State<Community> createState() => _CommunityState();
+
+  static fromJson(json) {}
 }
 
 class _CommunityState extends State<Community> {
   final ScrollController _controller = ScrollController();
   bool _isVisible = true;
 
+  List<ProdukKomunitas> _produkKomunitass = [];
+
   @override
   void initState() {
     super.initState();
+    _fetchProdukKomunitas();
     _controller.addListener(_scrollListener);
+  }
+
+  void _fetchProdukKomunitas() async {
+    List<ProdukKomunitas> fetchedProdukKomunitass =
+        await fetchProdukKomunitass();
+    setState(() {
+      _produkKomunitass = fetchedProdukKomunitass;
+    });
   }
 
   @override
@@ -143,7 +159,6 @@ class _CommunityState extends State<Community> {
                       }
                       return false;
                     },
-                    child: GestureDetector(
                       child: Container(
                         margin: const EdgeInsets.only(
                           left: 15,
@@ -158,26 +173,32 @@ class _CommunityState extends State<Community> {
                             mainAxisSpacing: 20,
                             crossAxisCount: 2,
                           ),
-                          itemCount: 20,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return const WidgetCommunity(
-                                nama: "nama",
-                                harga: "harga",
-                                exp: "exp",
-                                jarak: "jarak");
+                          itemCount: _produkKomunitass.length,
+                          itemBuilder: (context, index) {
+                            ProdukKomunitas produkKomunitas =
+                                _produkKomunitass[index];
+
+                            return GestureDetector(
+                              child: WidgetCommunity(
+                                  nama: produkKomunitas.nama!,
+                                  harga: produkKomunitas.harga!,
+                                  exp: produkKomunitas.exp!,
+                                  foto: produkKomunitas.foto!,
+                                  jarak: "5"),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Detailproduk(
+                                        produkKomunitas: produkKomunitas),
+                                  ),
+                                );
+                              },
+                            );
                           },
                         ),
                       ),
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Detailproduk(),
-                          ),
-                        );
-                      },
-                    ),
                   ),
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 200),
