@@ -22,12 +22,12 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Checkout(),
-                  ),
-                );
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const Checkout(),
+                //   ),
+                // );
               },
               icon: const Icon(
                 Icons.arrow_back,
