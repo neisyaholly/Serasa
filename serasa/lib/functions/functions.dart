@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
@@ -127,11 +130,76 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
   }
 }
 
+Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
+  
+  try {
+    List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
+    print(produkKomunitass.length);
+    // print("asdf");
+    return produkKomunitass;
+  } catch (e) {
+    print('Error fetching komunitas: $e');
+    return [];
+  }
+}
+
 Future<List<Pembayaran>> fetchPembayarans() async {
   try {
     List<Pembayaran> pembayarans = await getPembayaran();
     print(pembayarans.length);
     return pembayarans;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<dynamic> createKeranjang(userID,
+    List<DetailKeranjang> detailKeranjang) async {
+  Keranjang keranjang =
+      Keranjang(null, userID);
+
+  List<DetailKeranjang> detailKeranjangList = detailKeranjang
+      .map((detail) => DetailKeranjang(
+          null, detail.keranjangID, detail.produkID, detail.qty))
+      .toList();
+
+  dynamic request = await createKeranjang(keranjang, detailKeranjangList);
+
+  if (request is Keranjang) {
+    print("Keranjang added Successfully!");
+    return request;
+  } else {
+    print("Failed To added!");
+    return null;
+  }
+}
+
+void updateQtyDetail(int id) async {
+
+  try {
+    updateQtyDetail(id);
+    print('Product quantity updated successfully');
+  } catch (e) {
+    print('Error updating product quantity: $e');
+  }
+}
+
+void updateProductCart(int id) async {
+
+  try {
+    updateProductCart(id);
+    print('Product updated successfully');
+  } catch (e) {
+    print('Error updating product : $e');
+  }
+}
+
+Future<List<Alamat>> fetchAlamats() async {
+  try {
+    List<Alamat> alamats = await getAlamat();
+    print(alamats.length);
+    return alamats;
   } catch (e) {
     print('Error fetching restos: $e');
     return [];

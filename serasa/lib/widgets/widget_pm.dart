@@ -6,11 +6,13 @@ class WidgetPM extends StatefulWidget {
     required this.nama,
     required this.detail,
     required this.harga,
+    required this.foto,
   });
 
   final String nama;
   final String detail;
-  final String harga;
+  final int harga;
+  final String foto;
 
   @override
   State<WidgetPM> createState() => _WidgetPMState();
@@ -59,7 +61,9 @@ class _WidgetPMState extends State<WidgetPM> {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                  color: Colors.brown, borderRadius: BorderRadius.circular(10)),
+                  color: Colors.brown,
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(image: NetworkImage(widget.foto), fit: BoxFit.contain)),
             ),
             const SizedBox(
               width: 10,
@@ -94,7 +98,7 @@ class _WidgetPMState extends State<WidgetPM> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.harga,
+                        'Rp${widget.harga}',
                         style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 14,

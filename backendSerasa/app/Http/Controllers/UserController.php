@@ -68,4 +68,9 @@ class UserController extends Controller
         }
     }
 
+    public function getAlamat(){
+        $alamat = Alamat::all();
+        return response()->json($alamat, 200);
+    }
+
 }

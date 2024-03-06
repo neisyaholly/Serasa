@@ -6,6 +6,7 @@ import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/keranjang.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/user.dart';
@@ -192,37 +193,49 @@ Future<Keranjang?> createKeranjang(
   return null;
 }
 
-Future<List<Keranjang>> updateQtyDetail() async {
-  final response = await http.get(
-    Uri.parse("$url/update-qtyDetail/{id}"),
-    headers: <String, String>{
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-  );
+Future<void> updateQtyDetail(int id) async {
+  try {
+    final response = await http.put(
+      Uri.parse('$url/update-qtyDetail/id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
 
-  if (response.statusCode == 200) {
-    Iterable data = json.decode(response.body);
-    return data.map((json) => Keranjang.fromJson(json)).toList();
-  } else {
-    throw Exception('Failed to load carts');
+    if (response.statusCode == 200) {
+      print('Product quantity updated successfully');
+    } else if (response.statusCode == 500) {
+      throw Exception('Failed to update product quantity: ${response.body}');
+    } else {
+      throw Exception('Unexpected error occurred: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error updating product quantity: $e');
+    throw e;
   }
 }
 
-Future<List<Keranjang>> updateProductCart() async {
-  final response = await http.get(
-    Uri.parse("$url/updateProductCart/{id}"),
-    headers: <String, String>{
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-  );
+Future<void> updateProductCart(int id) async {
+  try {
+    final response = await http.put(
+      Uri.parse('$url/updateProductCart/id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
 
-  if (response.statusCode == 200) {
-    Iterable data = json.decode(response.body);
-    return data.map((json) => Keranjang.fromJson(json)).toList();
-  } else {
-    throw Exception('Failed to load carts');
+    if (response.statusCode == 200) {
+      print('Product updated successfully');
+    } else if (response.statusCode == 500) {
+      throw Exception('Failed to update product: ${response.body}');
+    } else {
+      throw Exception('Unexpected error occurred: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error updating product: $e');
+    throw e;
   }
 }
 
@@ -274,5 +287,40 @@ Future<List<Pembayaran>> getPembayaran() async {
     return data.map((json) => Pembayaran.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load carts');
+  }
+}
+
+Future<List<ProdukKomunitas>> getProdukKomunitas() async {
+  final response = await http.get(
+    Uri.parse("$url/get-komunitas"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+  print(response);
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => ProdukKomunitas.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load produk komunitas');
+  }
+}
+
+Future<List<Alamat>> getAlamat() async {
+  final response = await http.get(
+    Uri.parse("$url/get-address"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Alamat.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load alamats');
   }
 }

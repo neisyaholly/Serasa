@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/recycle.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_riwayatPenukaran.dart';
 
 class RiwayatPenukaranSampah extends StatefulWidget {
@@ -27,7 +27,7 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Recycle(),
+                        builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
                       ),
                     );
                   },

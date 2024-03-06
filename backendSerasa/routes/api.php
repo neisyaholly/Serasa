@@ -27,6 +27,7 @@ use App\Http\Controllers\BankSampahController;
 Route::post('/register-user', [UserController::class, 'registerUser']);
 Route::post('/login-user', [UserController::class, 'loginUser']);
 Route::post('/add-address', [UserController::class, 'addAlamat']);
+Route::get('/get-address', [UserController::class, 'getAlamat']);
 Route::get('/get-resto', [RestoController::class, 'getResto']);
 Route::get('/get-produkResto', [RestoController::class, 'getProdukResto']);
 Route::post('/input-bantuan', [BantuanController::class, 'inputBantuan']);
@@ -42,3 +43,4 @@ Route::put('/updateProductCart/{id}', [KeranjangController::class, 'updateProduc
 Route::get('/get-keranjang', [KeranjangController::class, 'getKeranjang']);
 Route::get('/get-detailKeranjang', [KeranjangController::class, 'getDetailKeranjang']);
 Route::get('/get-pembayaran', [PesananController::class, 'getPembayaran']);
+Route::get('/get-komunitas', [ProdukKomunitasController::class, 'getProdukKomunitas']);

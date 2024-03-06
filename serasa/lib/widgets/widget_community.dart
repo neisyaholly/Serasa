@@ -6,11 +6,13 @@ class WidgetCommunity extends StatelessWidget {
       required this.nama,
       required this.harga,
       required this.exp,
+      required this.foto,
       required this.jarak});
 
   final String nama;
-  final String harga;
+  final int harga;
   final String exp;
+  final String foto;
   final String jarak;
 
   @override
@@ -39,7 +41,9 @@ class WidgetCommunity extends StatelessWidget {
             height: 102,
             decoration: BoxDecoration(
                 color: Colors.amberAccent,
-                borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              image: NetworkImage(foto), fit: BoxFit.fill),),
           ),
           Text(
             nama,
