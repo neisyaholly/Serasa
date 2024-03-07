@@ -92,9 +92,10 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
                 children: List.generate(
                   _pembayarans.length,
                   (index) {
-                    if (index == 0) {
-                      return SizedBox(); // Skip generating this item
-                    }
+                    // if (selectedPengambilanMethod.ongkosKirim == "Gosend" &&
+                    //     index == 1) {
+                    //   return SizedBox.shrink(); // To hide the item
+                    // }
                     return Container(
                       decoration: const BoxDecoration(
                         color: Color(0xFFF4F6F8),
