@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout2.dart';
@@ -170,11 +171,11 @@ class _Detailproduk extends State<Detailproduk> {
                       margin: const EdgeInsets.only(right: 40.0),
                       // color: Colors.amber,
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // mainAxisSize: MainAxisSize.min,
+                        // crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
-                            width: 80,
+                            width: 110,
                             padding: const EdgeInsets.only(left: 12, right: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,16 +183,20 @@ class _Detailproduk extends State<Detailproduk> {
                                 Image.asset(
                                     'assets/images/detailProduk/locationsymbol.png',
                                     width: 20),
-                                const Text("Lokasi",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500)),
+                                Container(
+                                  width: 70,
+                                  child: Text(produk.kab_kota!.substring(10),
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                          ), textAlign: TextAlign.center),
+                                ),
                               ],
                             ),
                           ),
                           Container(
-                            width: 80,
+                            width: 100,
                             height: 35,
                             margin: EdgeInsets.only(top: 5),
                             child: ElevatedButton(
@@ -206,7 +211,6 @@ class _Detailproduk extends State<Detailproduk> {
                                     borderRadius: BorderRadius.circular(10),
                                   )),
                               child: Container(
-                                // color: Colors.amberAccent,
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -240,10 +244,12 @@ class _Detailproduk extends State<Detailproduk> {
                 width: 400,
                 color: const Color.fromARGB(67, 152, 152, 152),
               ),
-              Padding(
+              Container(
+                width: 400,
                 padding: EdgeInsets.only(
                     right: 40.0, top: 20.0, left: 40.0, bottom: 80.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Deskripsi",

@@ -48,9 +48,6 @@ class _Checkout2 extends State<Checkout2> {
                         onPressed: () {
                           Navigator.pop(
                             context,
-                            // MaterialPageRoute(
-                            // builder: (context) =>  Detailproduk(produkKomunitas: produkKomunitas),
-                            // ),
                           );
                         },
                         icon: const Icon(
