@@ -28,17 +28,17 @@ class _Checkout2 extends State<Checkout2> {
 
   List<Pesanan> _pesanans = [];
 
-  late Pesanan pesanan;
-  late DetailPesanan detailPesanan;
+  late Pesanan coPesanan;
+  late DetailPesanan coDetailPesanan;
   String selectedPengambilanMethod = 'GoSend';
 
   @override
   void initState() {
     super.initState();
     _fetchPesanans();
-    pesanan =
+    coPesanan =
         Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 0, 0);
-    detailPesanan =
+    coDetailPesanan =
         DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
   }
 
@@ -122,11 +122,11 @@ class _Checkout2 extends State<Checkout2> {
                               width: 60,
                               height: 60,
                               decoration: BoxDecoration(
-                                color: Colors.teal,
+                                // color: Colors.teal,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
-                                child: Image.asset(
+                                child: Image.network(
                                   widget.produkKomunitas.foto!,
                                   fit: BoxFit.contain,
                                 ),
@@ -157,10 +157,8 @@ class _Checkout2 extends State<Checkout2> {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset(
-                                    widget.produkKomunitas.foto!,
-                                    width: 30,
-                                    fit: BoxFit.contain,
+                                  const Icon(
+                                    Icons.person_outlined,
                                   ),
                                   const Padding(
                                       padding: EdgeInsets.only(right: 15)),
@@ -417,7 +415,6 @@ class _Checkout2 extends State<Checkout2> {
                                       size: 20,
                                     ),
                                     onPressed: () {
-                                      FocusScope.of(context).unfocus();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -425,9 +422,17 @@ class _Checkout2 extends State<Checkout2> {
                                               PaymentCommunity(
                                             selectedPaymentMethod:
                                                 selectedPaymentMethod,
+                                            selectedPengambilanMethod:
+                                                selectedPengambilanMethod,
                                           ),
                                         ),
-                                      );
+                                      ).then((value) {
+                                        if (value != null) {
+                                          setState(() {
+                                            selectedPaymentMethod = value;
+                                          });
+                                        }
+                                      });
                                     }),
                               ],
                             ),
@@ -462,17 +467,42 @@ class _Checkout2 extends State<Checkout2> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              // final Pesanan coPesanan = Pesanan(
+                              //     null,
+                              //     currentUser!.id,
+                              //     widget.produkKomunitas.userID,
+                              //     0,
+                              //     0,
+                              //     0);
                               final player = AudioPlayer();
                               player.play(AssetSource('audios/cring.mp3'));
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const BottomNavigationBarExample(
-                                          initialIndex: 2),
-                                ),
-                              );
+                              Pesanan? pesanan = await checkOutPesanan(
+                                  coPesanan.userID,
+                                  coPesanan.sellerID,
+                                  coPesanan.pembayaranID,
+                                  coPesanan.jenis,
+                                  coPesanan.selesai);
+                              DetailPesanan? detailPesanan =
+                                  await checkOutDetailPesananKomunitas(
+                                      coDetailPesanan.pesananID,
+                                      coDetailPesanan.produkID,
+                                      coDetailPesanan.qty);
+                              // DetailPesanan detailPesanan = await =
+
+                              if (pesanan is Pesanan) {
+                                // ignore: use_build_context_synchronously
+                                FocusScope.of(context).unfocus();
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BottomNavigationBarExample(
+                                            initialIndex: 2),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
