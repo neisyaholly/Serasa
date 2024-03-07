@@ -87,15 +87,30 @@ Future<dynamic> addAlamat(
 //   }
 // }
 
-Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
-  DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
-  dynamic request = await createAlamat(detailPesanan);
+Future<dynamic> checkOutPesanan(
+    userID, sellerID, pembayaranID, jenis, selesai) async {
+  Pesanan pesanan =
+      Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
+  dynamic request = await createPesanan(pesanan);
 
-  if (request is DetailPesanan) {
-    print("Address added Successfully!");
+  if (request is Pesanan) {
+    print("Pesanan added Successfully!");
     return request;
   } else {
-    print("Failed To Register!");
+    print("Failed To Checkout Pesanan!");
+    return null;
+  }
+}
+
+Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
+  DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
+  dynamic request = await createDetailPesananKomunitas(detailPesanan);
+
+  if (request is DetailPesanan) {
+    print("Detail Pesanan added Successfully!");
+    return request;
+  } else {
+    print("Failed To Checkout Detail Pesanan!");
     return null;
   }
 }
