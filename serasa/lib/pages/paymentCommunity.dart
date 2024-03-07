@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/checkout2.dart';
 
 // ignore: must_be_immutable
 class PaymentCommunity extends StatefulWidget {

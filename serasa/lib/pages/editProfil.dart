@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/user.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 
 class EditProfil extends StatefulWidget {
@@ -9,6 +11,10 @@ class EditProfil extends StatefulWidget {
 }
 
 class _EditProfilState extends State<EditProfil> {
+  final _namaController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _telpController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +34,8 @@ class _EditProfilState extends State<EditProfil> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
+                          builder: (context) =>
+                              const BottomNavigationBarExample(initialIndex: 4),
                         ),
                       );
                     },
@@ -71,7 +78,10 @@ class _EditProfilState extends State<EditProfil> {
                     height: 90,
                     decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(100)),
+                        borderRadius: BorderRadius.circular(100),
+                        image: DecorationImage(
+                            image: NetworkImage(currentUser!.foto!),
+                            fit: BoxFit.contain)),
                   ),
                   const SizedBox(
                     height: 10,
@@ -111,6 +121,7 @@ class _EditProfilState extends State<EditProfil> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _namaController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -161,6 +172,7 @@ class _EditProfilState extends State<EditProfil> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             fillColor: Color(0xFFFACFC7),
                             filled: true,
@@ -209,6 +221,7 @@ class _EditProfilState extends State<EditProfil> {
                       Container(
                         height: 40,
                         child: TextField(
+                          controller: _telpController,
                           decoration: InputDecoration(
                             fillColor: const Color(0xFFFACFC7),
                             filled: true,
@@ -240,7 +253,29 @@ class _EditProfilState extends State<EditProfil> {
                     height: 50,
                   ),
                   ElevatedButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      final name = _namaController.text;
+                      final email = _emailController.text;
+                      final telp = _telpController.text;
+                      final userID = currentUser!.id!;
+
+                      User? user = await editProfil(name, email, telp, userID);
+                      if (user is User) {
+                        // ignore: use_build_context_synchronously
+                        FocusScope.of(context).unfocus();
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const BottomNavigationBarExample(
+                                    initialIndex: 4),
+                          ),
+                        );
+                      } else {
+                        print("Update Failed!");
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: const MaterialStatePropertyAll(
                         Color(0xFFE45C50),
