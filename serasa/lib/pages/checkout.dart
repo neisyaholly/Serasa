@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
@@ -18,7 +20,7 @@ class Checkout extends StatefulWidget {
       this.selectedPaymentIndex});
 
   final Resto resto;
-  final List<DetailKeranjang> detailkeranjangs;
+  List<DetailKeranjang> detailkeranjangs;
   String? selectedPaymentMethod;
   int? selectedPaymentIndex;
 
@@ -35,6 +37,7 @@ void sementara() {
 
 class _Checkout extends State<Checkout> {
   late List<ProdukResto> _produkRestos = [];
+  late List<DetailPesanan> detailPesanans = [];
 
   @override
   void initState() {
@@ -42,6 +45,7 @@ class _Checkout extends State<Checkout> {
     _fetchProdukRestos();
     widget.selectedPaymentIndex = 0;
     widget.selectedPaymentMethod = 'Gopay';
+    // convertToDetailPesanan();
   }
 
   void _fetchProdukRestos() async {
@@ -111,6 +115,13 @@ class _Checkout extends State<Checkout> {
     // For example, you can estimate the height based on the content or use a fixed value
     return 135; // Use your own calculation here
   }
+
+  // void convertToDetailPesanan() {
+  //   detailPesanans = widget.detailkeranjangs
+  //       .map((keranjang) =>
+  //           DetailPesanan(null, null, keranjang.produkID, keranjang.qty))
+  //       .toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -708,17 +719,41 @@ class _Checkout extends State<Checkout> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         final player = AudioPlayer();
                         player.play(AssetSource('audios/cring.mp3'));
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const BottomNavigationBarExample(
-                                    initialIndex: 2),
-                          ),
-                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) =>
+                        //         const BottomNavigationBarExample(
+                        //             initialIndex: 2),
+                        //   ),
+                        // );
+                        // convertToDetailPesanan();
+                        // FocusScope.of(context).unfocus();
+                        // Pesanan? pesanan = await checkOut(
+                        //     currentUser!.id,
+                        //     widget.resto.id,
+                        //     widget.selectedPaymentIndex,
+                        //     1,
+                        //     0,
+                        //     detailPesanans);
+
+                        // print(name + " - " + tglLahir + " - " + telp + " - " + email + " - " + password + " - " + confirmPassword);
+                        // if (pesanan is Pesanan) {
+                        //   // ignore: use_build_context_synchronously
+                        //   Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           const BottomNavigationBarExample(
+                        //               initialIndex: 2),
+                        //     ),
+                        //   );
+                        // } else {
+                        //   print("Create Pesanan Failed");
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 244, 99, 88),

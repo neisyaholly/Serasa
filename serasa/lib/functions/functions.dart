@@ -65,20 +65,33 @@ Future<dynamic> addAlamat(
   }
 }
 
-Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
-    List<Map<String, dynamic>> detailPesanan) async {
-  Pesanan pesanan =
-      Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
+// Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
+//     List<DetailPesanan> detailPesanan) async {
+//   Pesanan pesanan =
+//       Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
 
-  List<DetailPesanan> detailPesananList = detailPesanan
-      .map((detail) => DetailPesanan(
-          null, detail['pesananID'], detail['produkID'], detail['qty']))
-      .toList();
+//   List<DetailPesanan> detailPesananList = detailPesanan
+//       .map((detail) =>
+//           DetailPesanan(null, detail.pesananID, detail.produkID, detail.qty))
+//       .toList();
 
-  dynamic request = await createPesanan(pesanan, detailPesananList);
+//   dynamic request = await createPesanan(pesanan, detailPesananList);
 
-  if (request is Pesanan) {
-    print("Order added Successfully!");
+//   if (request is Pesanan) {
+//     print("Order added Successfully!");
+//     return request;
+//   } else {
+//     print("Failed To Checkout!");
+//     return null;
+//   }
+// }
+
+Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
+  DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
+  dynamic request = await createAlamat(detailPesanan);
+
+  if (request is DetailPesanan) {
+    print("Address added Successfully!");
     return request;
   } else {
     print("Failed To Register!");
@@ -131,7 +144,6 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
 }
 
 Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
-  
   try {
     List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
     print(produkKomunitass.length);
@@ -154,10 +166,9 @@ Future<List<Pembayaran>> fetchPembayarans() async {
   }
 }
 
-Future<dynamic> createKeranjang(userID,
-    List<DetailKeranjang> detailKeranjang) async {
-  Keranjang keranjang =
-      Keranjang(null, userID);
+Future<dynamic> createKeranjang(
+    userID, List<DetailKeranjang> detailKeranjang) async {
+  Keranjang keranjang = Keranjang(null, userID);
 
   List<DetailKeranjang> detailKeranjangList = detailKeranjang
       .map((detail) => DetailKeranjang(
@@ -176,7 +187,6 @@ Future<dynamic> createKeranjang(userID,
 }
 
 void updateQtyDetail(int id) async {
-
   try {
     updateQtyDetail(id);
     print('Product quantity updated successfully');
@@ -186,11 +196,32 @@ void updateQtyDetail(int id) async {
 }
 
 void updateProductCart(int id) async {
-
   try {
     updateProductCart(id);
     print('Product updated successfully');
   } catch (e) {
     print('Error updating product : $e');
+  }
+}
+
+Future<List<Alamat>> fetchAlamats() async {
+  try {
+    List<Alamat> alamats = await getAlamat();
+    print(alamats.length);
+    return alamats;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
+  }
+}
+
+Future<List<Pesanan>> fetchPesanans() async {
+  try {
+    List<Pesanan> pesanans = await getPesanan();
+    print(pesanans.length);
+    return pesanans;
+  } catch (e) {
+    print('Error fetching restos: $e');
+    return [];
   }
 }

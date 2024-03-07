@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/detailproduk.dart';
-import 'package:serasa/pages/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Checkout2 extends StatefulWidget {
-  const Checkout2({super.key});
+  const Checkout2({super.key, required this.produkKomunitas});
+
+  final ProdukKomunitas produkKomunitas;
 
   @override
   State<Checkout2> createState() {
@@ -21,17 +24,49 @@ void sementara() {
 }
 
 class _Checkout2 extends State<Checkout2> {
-  String _selectedPaymentMethod = '';
-  
+  String selectedPaymentMethod = 'Cash on Delivery (CoD)';
+
+  List<Pesanan> _pesanans = [];
+
+  late Pesanan pesanan;
+  late DetailPesanan detailPesanan;
+  String selectedPengambilanMethod = 'GoSend';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPesanans();
+    pesanan =
+        Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 0, 0);
+    detailPesanan =
+        DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
+  }
+
+  void _fetchPesanans() async {
+    List<Pesanan> fetchedPesanans = await fetchPesanans();
+    setState(() {
+      _pesanans = fetchedPesanans;
+    });
+  }
+
+  int ongkosKirim = 0;
+
+  int subtotal = 0;
+  int calculateSubtotal() {
+    subtotal = 0;
+    subtotal = widget.produkKomunitas.harga!;
+    return subtotal;
+  }
+
+  int total = 0;
+  int calculateTotal(int subtotal, int ongkosKirim) {
+    total = 0;
+    total = subtotal + ongkosKirim;
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-  // for (var i in _produkKomunitass.length){
-  //   ProdukKomunitas produkKomunitas = _produkKomunitass[i];
-  // }
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -92,20 +127,22 @@ class _Checkout2 extends State<Checkout2> {
                               ),
                               child: Center(
                                 child: Image.asset(
-                                    'assets/images/foodProducts/ayam.png'),
+                                  widget.produkKomunitas.foto!,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 20)),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Nama Makanan",
-                                    style: TextStyle(
+                                Text(widget.produkKomunitas.nama.toString(),
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.bold)),
-                                Text("Exp: 19/02/2024 - 18.00",
-                                    style: TextStyle(
+                                Text("Exp: ${widget.produkKomunitas.exp}",
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500)),
@@ -121,11 +158,13 @@ class _Checkout2 extends State<Checkout2> {
                               Row(
                                 children: [
                                   Image.asset(
-                                      "assets/images/detailProduk/personsymbol.png",
-                                      width: 30),
+                                    widget.produkKomunitas.foto!,
+                                    width: 30,
+                                    fit: BoxFit.contain,
+                                  ),
                                   const Padding(
                                       padding: EdgeInsets.only(right: 15)),
-                                  const Align(
+                                  Align(
                                     alignment: Alignment.centerLeft,
                                     child: Column(
                                       mainAxisAlignment:
@@ -134,13 +173,13 @@ class _Checkout2 extends State<Checkout2> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Penjual",
+                                        const Text("Penjual",
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 fontFamily: 'Poppins',
                                                 color: Colors.black54)),
-                                        Text("Nama",
-                                            style: TextStyle(
+                                        Text(widget.produkKomunitas.name!,
+                                            style: const TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Poppins',
                                                 color: Colors.black)),
@@ -226,10 +265,11 @@ class _Checkout2 extends State<Checkout2> {
                                         ],
                                       ),
                                       value: 'Ambil Sendiri',
-                                      groupValue: _selectedPaymentMethod,
+                                      groupValue: selectedPengambilanMethod,
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedPaymentMethod = value!;
+                                          selectedPengambilanMethod = value!;
+                                          ongkosKirim = 0;
                                         });
                                       },
                                     ),
@@ -264,7 +304,7 @@ class _Checkout2 extends State<Checkout2> {
                                                   ))
                                             ],
                                           ),
-                                          Text('Rp9.000',
+                                          Text('Rp9000',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16,
@@ -273,10 +313,11 @@ class _Checkout2 extends State<Checkout2> {
                                         ],
                                       ),
                                       value: 'GoSend',
-                                      groupValue: _selectedPaymentMethod,
+                                      groupValue: selectedPengambilanMethod,
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedPaymentMethod = value!;
+                                          selectedPengambilanMethod = value!;
+                                          ongkosKirim = 9000;
                                         });
                                       },
                                     ),
@@ -291,26 +332,27 @@ class _Checkout2 extends State<Checkout2> {
                           width: 1000,
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(top: 20, bottom: 25),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Ringkasan Pesanan",
+                              const Text("Ringkasan Pesanan",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
-                              Padding(padding: EdgeInsets.only(bottom: 15)),
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 15)),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Subtotal",
+                                  const Text("Subtotal",
                                       style: TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
-                                  Text("Rp10.000.000",
-                                      style: TextStyle(
+                                  Text("Rp${calculateSubtotal().toString()}",
+                                      style: const TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
                               ),
@@ -318,11 +360,11 @@ class _Checkout2 extends State<Checkout2> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Ongkos Kirim",
+                                  const Text("Ongkos Kirim",
                                       style: TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
-                                  Text("Rp20.000",
-                                      style: TextStyle(
+                                  Text("Rp${ongkosKirim.toString()}",
+                                      style: const TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
                               ),
@@ -334,17 +376,18 @@ class _Checkout2 extends State<Checkout2> {
                           width: 1000,
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(top: 15, bottom: 10),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Total",
+                              const Text("Total",
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'Poppins')),
-                              Text("Rp10.020.000",
-                                  style: TextStyle(
+                              Text(
+                                  "Rp${calculateTotal(subtotal, ongkosKirim).toInt()}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
@@ -355,7 +398,7 @@ class _Checkout2 extends State<Checkout2> {
                           height: 1.5,
                           width: 1000,
                           color: const Color.fromARGB(49, 152, 152, 152),
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -375,11 +418,14 @@ class _Checkout2 extends State<Checkout2> {
                                     ),
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const PaymentCommunity(),
+                                              PaymentCommunity(
+                                            selectedPaymentMethod:
+                                                selectedPaymentMethod,
+                                          ),
                                         ),
                                       );
                                     }),
@@ -422,7 +468,9 @@ class _Checkout2 extends State<Checkout2> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const BottomNavigationBarExample(initialIndex: 2),
+                                  builder: (context) =>
+                                      const BottomNavigationBarExample(
+                                          initialIndex: 2),
                                 ),
                               );
                             },

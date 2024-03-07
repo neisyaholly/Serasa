@@ -22,6 +22,7 @@ class UserController extends Controller
             $cred->password = Hash::make($R->password);
             $cred->poin = 0;
             $cred->role = 1;
+            $cred->foto = "https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/pfp_def.webp";
             $cred->save();
             $response = ['status' => 200, 'user' => $cred, 'message' => 'Register Successfully! Welcome to Serasa'];
             return response()->json($cred, 201);
@@ -66,6 +67,11 @@ class UserController extends Controller
         }catch(Exception $e){
             $response = ['status' => 500, 'message' => $e];
         }
+    }
+
+    public function getAlamat(){
+        $alamat = Alamat::all();
+        return response()->json($alamat, 200);
     }
 
 }

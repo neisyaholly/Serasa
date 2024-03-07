@@ -137,7 +137,6 @@ class _CartState extends State<Cart> {
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             Keranjang keranjang = _keranjangs[index];
-
                             // Find the matching DetailKeranjang where keranjangID matches id
                             DetailKeranjang detailKeranjang =
                                 _detailKeranjangs.firstWhere(
@@ -145,23 +144,19 @@ class _CartState extends State<Cart> {
                               orElse: () => DetailKeranjang(
                                   -1, -1, -1, -1), // Default value if not found
                             );
-
                             ProdukResto produkResto = _produkRestos.firstWhere(
                               (produkResto) =>
                                   produkResto.id == detailKeranjang.produkID,
                               orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
                                   ""), // Default value if not found
                             );
-
                             // Find the matching Resto based on the found ProdukResto's restoID
                             Resto resto = _restos.firstWhere(
                               (resto) => resto.id == produkResto.restoID,
                               orElse: () => Resto(-1, "", "", "", "", "",
                                   ""), // Default value if not found
                             );
-
                             // Use the restaurant name (nama) from the Resto
-
                             List<DetailKeranjang> detailsForKeranjang =
                                 _detailKeranjangs
                                     .where(
@@ -169,7 +164,6 @@ class _CartState extends State<Cart> {
                                           detail.keranjangID == keranjang.id,
                                     )
                                     .toList();
-
                             return WidgetCart(
                               nama: resto,
                               jumlah: detailsForKeranjang,

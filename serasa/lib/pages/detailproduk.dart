@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
-import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/checkout2.dart';
 import 'package:serasa/pages/navbar.dart';
 
@@ -10,7 +9,6 @@ class Detailproduk extends StatefulWidget {
 
   final ProdukKomunitas produkKomunitas;
 
-
   @override
   State<Detailproduk> createState() {
     return _Detailproduk();
@@ -18,7 +16,6 @@ class Detailproduk extends StatefulWidget {
 }
 
 class _Detailproduk extends State<Detailproduk> {
-
   @override
   Widget build(BuildContext context) {
     ProdukKomunitas produk = widget.produkKomunitas;
@@ -252,14 +249,14 @@ class _Detailproduk extends State<Detailproduk> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Deskripsi",
+                    const Text("Deskripsi",
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500)),
-                    Padding(padding: EdgeInsets.only(bottom: 8)),
+                    const Padding(padding: EdgeInsets.only(bottom: 8)),
                     Text(produk.deskripsi!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.normal),
@@ -275,7 +272,9 @@ class _Detailproduk extends State<Detailproduk> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Checkout2(),
+                        builder: (context) => Checkout2(
+                          produkKomunitas: widget.produkKomunitas,
+                        ),
                       ),
                     );
                   },

@@ -5,7 +5,7 @@ import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/post.dart';
 import 'package:serasa/widgets/test.dart';
-import 'package:serasa/widgets/widget_Community.dart';
+import 'package:serasa/widgets/widget_community.dart';
 import '../utils/color.dart';
 
 class Community extends StatefulWidget {
@@ -158,41 +158,46 @@ class _CommunityState extends State<Community> {
                       }
                       return false;
                     },
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                          left: 15,
-                          right: 15,
-                        ),
-                        child: GridView.builder(
-                          controller: _controller,
-                          padding: const EdgeInsets.all(5),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                            crossAxisCount: 2,
-                          ),
-                          itemCount: _produkKomunitass.length,
-                          itemBuilder: (context, index) {
-                            ProdukKomunitas produkKomunitas =
-                                _produkKomunitass[index];
-
-                            return GestureDetector(
-                              child: WidgetCommunity(nama: produkKomunitas.nama!, harga: produkKomunitas.harga!, exp: produkKomunitas.exp!, foto: produkKomunitas.foto!, jarak: "5"),
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Detailproduk(
-                                        produkKomunitas: produkKomunitas),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        left: 15,
+                        right: 15,
                       ),
+                      child: GridView.builder(
+                        controller: _controller,
+                        padding: const EdgeInsets.all(5),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: _produkKomunitass.length,
+                        itemBuilder: (context, index) {
+                          ProdukKomunitas produkKomunitas =
+                              _produkKomunitass[index];
+
+                          return GestureDetector(
+                            child: WidgetCommunity(
+                                nama: produkKomunitas.nama!,
+                                harga: produkKomunitas.harga!,
+                                exp: produkKomunitas.exp!,
+                                foto: produkKomunitas.foto!,
+                                jarak: "5"),
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Detailproduk(
+                                      produkKomunitas: produkKomunitas),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ),
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 200),
