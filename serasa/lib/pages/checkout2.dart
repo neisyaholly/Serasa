@@ -24,7 +24,7 @@ void sementara() {
 }
 
 class _Checkout2 extends State<Checkout2> {
-  String selectedPaymentMethod = 'Cash on Delivery (CoD)';
+  String selectedPaymentMethod = 'Gopay';
 
   List<Pesanan> _pesanans = [];
 
@@ -49,7 +49,7 @@ class _Checkout2 extends State<Checkout2> {
     });
   }
 
-  int ongkosKirim = 0;
+  int ongkosKirim = 9000;
 
   int subtotal = 0;
   int calculateSubtotal() {
@@ -445,8 +445,8 @@ class _Checkout2 extends State<Checkout2> {
                                         width: 2.0),
                                     borderRadius: BorderRadius.circular(1.0),
                                   ),
-                                  child: const Text("Cash on Delivery (CoD)",
-                                      style: TextStyle(
+                                  child: Text(selectedPaymentMethod,
+                                      style: const TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500)),
