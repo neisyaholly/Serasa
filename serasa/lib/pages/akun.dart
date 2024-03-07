@@ -130,7 +130,7 @@ class _AkunState extends State<Akun> {
       } else if (_pesanans[0].jenis == 0) {
         ProdukKomunitas? produkKomunitas = _produkKoms.firstWhere(
           (produk) => produk.id == detail.produkID,
-          orElse: () => ProdukKomunitas(-1, -1, "", "", -1, "", "", ""),
+          orElse: () => ProdukKomunitas(-1, -1, "", "", -1, "", "", "", ""),
         );
         sumPrice += produkKomunitas.harga!;
       }
