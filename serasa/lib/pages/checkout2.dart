@@ -36,10 +36,12 @@ class _Checkout2 extends State<Checkout2> {
   void initState() {
     super.initState();
     _fetchPesanans();
+    print("test");
+    print(widget.produkKomunitas.id);
     coPesanan =
         Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 0, 0);
-    coDetailPesanan =
-        DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
+    coDetailPesanan = DetailPesanan(
+        null, (_pesanans.length + 1), widget.produkKomunitas.id, 1);
   }
 
   void _fetchPesanans() async {
@@ -475,6 +477,8 @@ class _Checkout2 extends State<Checkout2> {
                               //     0,
                               //     0,
                               //     0);
+
+                              int? sellerID = widget.produkKomunitas.userID;
                               final player = AudioPlayer();
                               player.play(AssetSource('audios/cring.mp3'));
                               Pesanan? pesanan = await checkOutPesanan(
@@ -489,7 +493,17 @@ class _Checkout2 extends State<Checkout2> {
                                       coDetailPesanan.produkID,
                                       coDetailPesanan.qty);
                               // DetailPesanan detailPesanan = await =
-
+                              // print("TEST" +
+                              //     coPesanan.userID.toString()! +
+                              //     coPesanan.sellerID.toString() +
+                              //     coPesanan.pembayaranID.toString()! +
+                              //     coPesanan.jenis.toString()! +
+                              //     coPesanan.selesai.toString()!);
+                              print("WOI" +
+                                  sellerID.toString() +
+                                  coDetailPesanan.pesananID.toString() +
+                                  coDetailPesanan.produkID.toString() +
+                                  coDetailPesanan.qty.toString());
                               if (pesanan is Pesanan) {
                                 // ignore: use_build_context_synchronously
                                 FocusScope.of(context).unfocus();

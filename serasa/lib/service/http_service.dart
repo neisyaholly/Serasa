@@ -137,14 +137,14 @@ Future<DetailPesanan?> createDetailPesananKomunitas(
   return null;
 }
 
-Future<Pesanan?> updatePesanan(pesanan) async {
+Future<Pesanan?> updatePesanan(int id) async {
   final response = await http.put(
-    Uri.parse("$url/update-pesanan"),
+    Uri.parse("$url/update-pesanan/$id"),
     headers: <String, String>{
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
-    body: jsonEncode(pesanan),
+    // body: jsonEncode(pesanan),
   );
 
   if (response.statusCode == 200) {
