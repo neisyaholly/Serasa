@@ -7,10 +7,12 @@ class PaymentCommunity extends StatefulWidget {
   PaymentCommunity(
       {super.key,
       required this.selectedPaymentMethod,
-      required this.selectedPengambilanMethod});
+      required this.selectedPengambilanMethod,
+      required this.selectedPaymentMethodIndex});
 
   String? selectedPaymentMethod;
   String? selectedPengambilanMethod;
+  int? selectedPaymentMethodIndex;
 
   @override
   State<PaymentCommunity> createState() => _PaymentCommunityState();
@@ -43,7 +45,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pop(context, widget.selectedPaymentMethod);
+                Navigator.pop(context, widget.selectedPaymentMethodIndex);
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -129,6 +131,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
                                 onChanged: (value) {
                                   setState(() {
                                     widget.selectedPaymentMethod = value!;
+                                    widget.selectedPaymentMethodIndex = index;
                                     // print(widget.selectedPaymentMethod);
                                   });
                                 },
@@ -149,7 +152,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
                           ),
                           onPressed: () {
                             Navigator.pop(
-                                context, widget.selectedPaymentMethod);
+                                context, widget.selectedPaymentMethodIndex);
                           },
                           child: const Text(
                             'Pilih',
