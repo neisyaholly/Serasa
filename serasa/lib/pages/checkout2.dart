@@ -37,7 +37,7 @@ class _Checkout2 extends State<Checkout2> {
     super.initState();
     _fetchPesanans();
     coPesanan =
-        Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 0, 0);
+        Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 9000, 0, 0);
     coDetailPesanan =
         DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
   }
@@ -481,6 +481,7 @@ class _Checkout2 extends State<Checkout2> {
                                   coPesanan.userID,
                                   coPesanan.sellerID,
                                   coPesanan.pembayaranID,
+                                  coPesanan.ongkir,
                                   coPesanan.jenis,
                                   coPesanan.selesai);
                               DetailPesanan? detailPesanan =

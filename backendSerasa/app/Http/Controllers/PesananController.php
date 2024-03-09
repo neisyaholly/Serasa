@@ -16,6 +16,7 @@ class PesananController extends Controller
             $pesanan->userID = $request->userID;
             $pesanan->sellerID = $request->sellerID;
             $pesanan->pembayaranID = $request->pembayaranID;
+            $pesanan->ongkir = $request->ongkir;
             $pesanan->jenis = $request->jenis;
             $pesanan->selesai = 0;
             $pesanan->save();

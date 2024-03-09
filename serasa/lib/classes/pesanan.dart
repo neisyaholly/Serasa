@@ -3,6 +3,7 @@ class Pesanan {
   int? userID;
   int? sellerID;
   int? pembayaranID;
+  int? ongkir;
   int? jenis;
   int? selesai;
 
@@ -11,6 +12,7 @@ class Pesanan {
     this.userID,
     this.sellerID,
     this.pembayaranID,
+    this.ongkir,
     this.jenis,
     this.selesai,
   );
@@ -21,6 +23,7 @@ class Pesanan {
         "userID": userID,
         "sellerID": sellerID,
         "pembayaranID": pembayaranID,
+        "ongkir": ongkir,
         "jenis": jenis,
         "selesai": selesai,
       };
@@ -31,6 +34,7 @@ class Pesanan {
       json["userID"],
       json["sellerID"],
       json["pembayaranID"],
+      json["ongkir"],
       json["jenis"],
       json["selesai"],
     );

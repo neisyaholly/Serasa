@@ -88,9 +88,9 @@ Future<dynamic> addAlamat(
 // }
 
 Future<dynamic> checkOutPesanan(
-    userID, sellerID, pembayaranID, jenis, selesai) async {
+    userID, sellerID, pembayaranID, ongkir, jenis, selesai) async {
   Pesanan pesanan =
-      Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
+      Pesanan(null, userID, sellerID, pembayaranID, ongkir, jenis, selesai);
   dynamic request = await createPesanan(pesanan);
 
   if (request is Pesanan) {

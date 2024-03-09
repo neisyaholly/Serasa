@@ -17,6 +17,7 @@ class PesananSeeder extends Seeder
                 'userID' => '1',
                 'sellerID' => '1',
                 'pembayaranID' => '1',
+                'ongkir' => '9000',
                 'jenis' => '1',
                 'selesai' => '1',
                 'created_at' => now(),
