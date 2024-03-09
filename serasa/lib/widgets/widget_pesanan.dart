@@ -10,9 +10,9 @@ class WidgetPesanan extends StatelessWidget {
       this.onPressed});
 
   final String nama;
-  final String jumlah;
-  final String jenis;
-  final String harga;
+  final List<dynamic> jumlah;
+  final List<dynamic> jenis;
+  final List<dynamic> harga;
   final VoidCallback? onPressed;
 
   @override
@@ -71,7 +71,7 @@ class WidgetPesanan extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  jumlah,
+                                  jumlah[index],
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal,
@@ -87,7 +87,7 @@ class WidgetPesanan extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              jenis,
+                              jenis[index],
                               style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.normal,

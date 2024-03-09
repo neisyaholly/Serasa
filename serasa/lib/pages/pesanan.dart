@@ -1,15 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/widgets/popup_Riwayat.dart';
 import 'package:serasa/widgets/widget_pesanan.dart';
 
-class Pesanan extends StatefulWidget {
-  const Pesanan({super.key});
+class PesananPage extends StatefulWidget {
+  const PesananPage({super.key});
 
   @override
-  State<Pesanan> createState() => _PesananState();
+  State<PesananPage> createState() => _PesananPageState();
 }
 
-class _PesananState extends State<Pesanan> {
+class _PesananPageState extends State<PesananPage> {
+  List<Pesanan> _pesanans = [];
+  List<DetailPesanan> _detailPesanans = [];
+  List<ProdukKomunitas> _produkKomunitass = [];
+  List<ProdukResto> _produkRestos = [];
+
+  void initState() {
+    super.initState();
+    _fetchPesanans();
+    _fetchDetailPesanans();
+    _fetchProdukKomunitass();
+    _fetchProdukRestos();
+  }
+
+  void _fetchPesanans() async {
+    List<Pesanan> fetchedPesanans = await fetchPesanans();
+    setState(() {
+      _pesanans = fetchedPesanans;
+    });
+  }
+
+  void _fetchDetailPesanans() async {
+    List<DetailPesanan> fetchedDetailPesanans = await fetchDetailPesanans();
+    setState(() {
+      _detailPesanans = fetchedDetailPesanans;
+    });
+  }
+
+  void _fetchProdukKomunitass() async {
+    List<ProdukKomunitas> fetchedProdukKomunitass =
+        await fetchProdukKomunitass();
+    setState(() {
+      _produkKomunitass = fetchedProdukKomunitass;
+    });
+  }
+
+  void _fetchProdukRestos() async {
+    List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
+    setState(() {
+      _produkRestos = fetchedProdukRestos;
+    });
+  }
+
   bool isPopUpShown = false; // State variable to track popup visibility
 
   void togglePopUpVisibility() {
@@ -17,7 +64,6 @@ class _PesananState extends State<Pesanan> {
       isPopUpShown = !isPopUpShown; // Toggle popup visibility
     });
   }
-
   // =
 
   @override
@@ -30,7 +76,7 @@ class _PesananState extends State<Pesanan> {
             children: [
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(top: 65),
+                margin: const EdgeInsets.only(top: 65),
                 child: Column(
                   children: [
                     const Text(
@@ -71,24 +117,59 @@ class _PesananState extends State<Pesanan> {
                       // margin: EdgeInsets.only(left: 30, right: 30),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.all(0),
-                              itemCount: 10,
+                              itemCount: _pesanans.length,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (_, index) {
-                                return WidgetPesanan(
-                                  nama: "nama",
-                                  jumlah: "1",
-                                  jenis: "jenis",
-                                  harga: "harga",
-                                  onPressed: () {
-                                    togglePopUpVisibility();
-                                  },
-                                );
+                                List<DetailPesanan> detailPesanansPerPesanan =
+                                    _detailPesanans
+                                        .where((detailPesanan) =>
+                                            detailPesanan.pesananID ==
+                                            _pesanans[index].id)
+                                        .toList();
+                                if (_pesanans[index].jenis == 0) {
+                                  // Return WidgetPesanan with listProdukKomunitas
+                                  List<ProdukKomunitas>
+                                      infoProdukDetailPesanans =
+                                      _produkKomunitass
+                                          .where((infoProdukDetailPesanan) =>
+                                              infoProdukDetailPesanan.id ==
+                                              detailPesanansPerPesanan[index]
+                                                  .produkID)
+                                          .toList();
+                                  return WidgetPesanan(
+                                    nama: infoProdukDetailPesanans[index].name!,
+                                    jumlah: detailPesanansPerPesanan,
+                                    jenis: infoProdukDetailPesanans,
+                                    harga: infoProdukDetailPesanans,
+                                    onPressed: () {
+                                      togglePopUpVisibility();
+                                    },
+                                  );
+                                } else if (_pesanans[index].jenis == 1) {
+                                  // Return WidgetPesanan with listProdukRestos
+                                  List<ProdukResto> infoProdukDetailPesanans =
+                                      _produkRestos
+                                          .where((infoProdukDetailPesanan) =>
+                                              infoProdukDetailPesanan.id ==
+                                              detailPesanansPerPesanan[index]
+                                                  .produkID)
+                                          .toList();
+                                  return WidgetPesanan(
+                                    nama: "nama",
+                                    jumlah: detailPesanansPerPesanan,
+                                    jenis: infoProdukDetailPesanans,
+                                    harga: infoProdukDetailPesanans,
+                                    onPressed: () {
+                                      togglePopUpVisibility();
+                                    },
+                                  );
+                                }
                               },
                             ),
                           ),

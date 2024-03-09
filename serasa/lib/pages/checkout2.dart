@@ -4,7 +4,6 @@ import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -493,33 +492,52 @@ class _Checkout2 extends State<Checkout2> {
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
                             onPressed: () async {
-                              final player = AudioPlayer();
-                              player.play(AssetSource('audios/cring.mp3'));
-                              Pesanan? pesanan = await checkOutPesanan(
-                                  coPesanan.userID,
-                                  coPesanan.sellerID,
-                                  coPesanan.pembayaranID,
-                                  coPesanan.ongkir,
-                                  coPesanan.jenis,
-                                  coPesanan.selesai);
-                              DetailPesanan? detailPesanan =
-                                  await checkOutDetailPesananKomunitas(
-                                      coDetailPesanan.pesananID,
-                                      coDetailPesanan.produkID,
-                                      coDetailPesanan.qty);
-                              if (pesanan is Pesanan) {
-                                // ignore: use_build_context_synchronously
-                                FocusScope.of(context).unfocus();
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const BottomNavigationBarExample(
-                                            initialIndex: 2),
+                              bool hasOngoingPesanan = _pesanans
+                                  .any((pesanan) => pesanan.selesai == 0);
+                              if (hasOngoingPesanan) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Kamu sedang memiliki pesanan yang dalam proses..',
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    duration: const Duration(seconds: 2),
                                   ),
                                 );
+                              } else {
+                                final player = AudioPlayer();
+                                player.play(AssetSource('audios/cring.mp3'));
+                                Pesanan? pesanan = await checkOutPesanan(
+                                    coPesanan.userID,
+                                    coPesanan.sellerID,
+                                    coPesanan.pembayaranID,
+                                    coPesanan.jenis,
+                                    coPesanan.ongkir,
+                                    coPesanan.selesai);
+                                DetailPesanan? detailPesanan =
+                                    await checkOutDetailPesananKomunitas(
+                                        coDetailPesanan.pesananID,
+                                        coDetailPesanan.produkID,
+                                        coDetailPesanan.qty);
+                                if (pesanan is Pesanan &&
+                                    detailPesanan is DetailPesanan) {
+                                  // ignore: use_build_context_synchronously
+                                  FocusScope.of(context).unfocus();
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BottomNavigationBarExample(
+                                              initialIndex: 2),
+                                    ),
+                                  );
+                                }
                               }
+                              ;
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
