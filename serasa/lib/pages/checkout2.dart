@@ -33,7 +33,7 @@ class _Checkout2 extends State<Checkout2> {
   late Pesanan coPesanan;
   late DetailPesanan coDetailPesanan;
   String selectedPengambilanMethod = 'GoSend';
-  late int selectedPaymentMethodIndex = 2;
+  late int selectedPaymentMethodIndex = 1;
 
   @override
   void initState() {
@@ -42,8 +42,7 @@ class _Checkout2 extends State<Checkout2> {
     _fetchPesanans();
     coPesanan = Pesanan(null, currentUser!.id, widget.produkKomunitas.userID,
         selectedPaymentMethodIndex, 9000, 0, 0);
-    coDetailPesanan = DetailPesanan(
-        null, (_pesanans.length + 1), widget.produkKomunitas.id, 1);
+    coDetailPesanan = DetailPesanan(null, 0, widget.produkKomunitas.id, 1);
   }
 
   void _fetchPembayarans() async {
@@ -78,6 +77,8 @@ class _Checkout2 extends State<Checkout2> {
 
   @override
   Widget build(BuildContext context) {
+    print("test");
+    // print(_pesanans.length + 1);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -454,7 +455,7 @@ class _Checkout2 extends State<Checkout2> {
                                             selectedPaymentMethod = _pembayarans[
                                                     selectedPaymentMethodIndex]
                                                 .jenis!;
-                                            coDetailPesanan.pesananID =
+                                            coPesanan.pembayaranID =
                                                 selectedPaymentMethodIndex;
                                           });
                                         }
@@ -494,6 +495,9 @@ class _Checkout2 extends State<Checkout2> {
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
                             onPressed: () async {
+                              // print("woi");
+                              // print(coDetailPesanan.pesananID);
+                              // print(_pesanans.length + 1);
                               bool hasOngoingPesanan = _pesanans
                                   .any((pesanan) => pesanan.selesai == 0);
                               if (hasOngoingPesanan) {
@@ -515,13 +519,13 @@ class _Checkout2 extends State<Checkout2> {
                                 Pesanan? pesanan = await checkOutPesanan(
                                     coPesanan.userID,
                                     coPesanan.sellerID,
-                                    coPesanan.pembayaranID,
+                                    (coPesanan.pembayaranID! + 1),
                                     coPesanan.ongkir,
                                     coPesanan.jenis,
                                     coPesanan.selesai);
                                 DetailPesanan? detailPesanan =
                                     await checkOutDetailPesananKomunitas(
-                                        coDetailPesanan.pesananID,
+                                        pesanan!.id,
                                         coDetailPesanan.produkID,
                                         coDetailPesanan.qty);
                                 if (pesanan is Pesanan &&

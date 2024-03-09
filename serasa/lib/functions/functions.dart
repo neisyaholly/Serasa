@@ -343,3 +343,12 @@ Future<dynamic> editProfil(name, email, telp, userID) async {
     return null;
   }
 }
+
+void updateeJenisPesanan(int id) async {
+  try {
+    updatePesanan(id);
+    print('Pesanan arrived successfully');
+  } catch (e) {
+    print('Error updating confirmation arrived pesanan : $e');
+  }
+}
