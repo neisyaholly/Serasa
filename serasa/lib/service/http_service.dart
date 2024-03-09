@@ -190,75 +190,55 @@ Future<List<ProdukResto>> getProdukResto() async {
   }
 }
 
-Future<Keranjang?> createKeranjang(
-    Keranjang, List<DetailPesanan> detailKeranjang) async {
-  final requestData = {
-    "keranjang": Keranjang.toJson(),
-    "detailKeranjang":
-        detailKeranjang.map((detail) => detail.toJson()).toList(),
-  };
-
+Future<Keranjang?> createKeranjang(keranjang) async {
   final response = await http.post(
     Uri.parse("$url/create-keranjang"),
     headers: <String, String>{
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
-    body: jsonEncode(requestData),
+    body: jsonEncode(keranjang),
   );
-
   if (response.statusCode == 200) {
     return Keranjang.fromJson(jsonDecode(response.body));
   } else {
     print("Adding keranjang failed!");
   }
-
   return null;
 }
 
-Future<void> updateQtyDetail(int id) async {
-  try {
-    final response = await http.put(
-      Uri.parse('$url/update-qtyDetail/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Product quantity updated successfully');
-    } else if (response.statusCode == 500) {
-      throw Exception('Failed to update product quantity: ${response.body}');
-    } else {
-      throw Exception('Unexpected error occurred: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error updating product quantity: $e');
-    throw e;
+Future<DetailKeranjang?> createDetailKeranjang(detailKeranjang) async {
+  final response = await http.post(
+    Uri.parse("$url/create-detailKeranjang"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(detailKeranjang),
+  );
+  if (response.statusCode == 200) {
+    print("Detail keranjang added successfully!");
+    return DetailKeranjang.fromJson(jsonDecode(response.body));
+  } else {
+    print("Adding detail keranjang failed!");
+    return null;
   }
 }
 
-Future<void> updateProductCart(int id) async {
-  try {
-    final response = await http.put(
-      Uri.parse('$url/updateProductCart/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Product updated successfully');
-    } else if (response.statusCode == 500) {
-      throw Exception('Failed to update product: ${response.body}');
-    } else {
-      throw Exception('Unexpected error occurred: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error updating product: $e');
-    throw e;
+Future<void> updateQtyDetails(int id, int qty) async {
+  final response = await http.put(
+    Uri.parse('$url/update-qtyDetail/$id/$qty'),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  );
+  if (response.statusCode == 200) {
+    print('Product quantity updated successfully');
+  } else if (response.statusCode == 500) {
+    throw Exception('Failed to update product quantity: ${response.body}');
+  } else {
+    throw Exception('Unexpected error occurred: ${response.statusCode}');
   }
 }
 
@@ -321,7 +301,6 @@ Future<List<ProdukKomunitas>> getProdukKomunitas() async {
       "Accept": "application/json",
     },
   );
-  print(response);
 
   if (response.statusCode == 200) {
     Iterable data = json.decode(response.body);

@@ -21,12 +21,21 @@ Future<dynamic> registerUser(
     return "Password doesn't match!";
   }
 
-  User user = User(null, name, tglLahir, telp, email, password, null, null, null);
+  User user =
+      User(null, name, tglLahir, telp, email, password, null, null, null);
   dynamic request = await createUser(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-    request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print("User Registered Successfully!");
     return request;
   } else {
@@ -36,13 +45,20 @@ Future<dynamic> registerUser(
 }
 
 Future<dynamic> loginUser(email, password) async {
-  // logika buat input
   User user = User(null, null, null, null, email, password, null, null, null);
   dynamic request = await verifyUser(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-        request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print(currentUser!.id);
     print("User Logged In Successfully!");
     return request;
@@ -163,7 +179,6 @@ Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   try {
     List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
     print(produkKomunitass.length);
-    // print("asdf");
     return produkKomunitass;
   } catch (e) {
     print('Error fetching produk komunitas: $e');
@@ -182,16 +197,9 @@ Future<List<Pembayaran>> fetchPembayarans() async {
   }
 }
 
-Future<dynamic> createKeranjang(
-    userID, List<DetailKeranjang> detailKeranjang) async {
+Future<dynamic> buatKeranjang(userID) async {
   Keranjang keranjang = Keranjang(null, userID);
-
-  List<DetailKeranjang> detailKeranjangList = detailKeranjang
-      .map((detail) => DetailKeranjang(
-          null, detail.keranjangID, detail.produkID, detail.qty))
-      .toList();
-
-  dynamic request = await createKeranjang(keranjang, detailKeranjangList);
+  dynamic request = await createKeranjang(keranjang);
 
   if (request is Keranjang) {
     print("Keranjang added Successfully!");
@@ -202,21 +210,46 @@ Future<dynamic> createKeranjang(
   }
 }
 
-void updateQtyDetail(int id) async {
+Future<dynamic> buatDetailKeranjang(List<ProdukResto> produkResto,
+    int keranjangID, List<int> quantities) async {
+  List<dynamic> result = [];
+  List<DetailKeranjang> detailKeranjangs = await fetchDetailKeranjangs();
+
+  for (int i = 0; i < produkResto.length; i++) {
+    bool productExists =
+        detailKeranjangs.any((detail) => detail.produkID == produkResto[i].id);
+    if (quantities[i] > 0 && !productExists) {
+      DetailKeranjang? detail =
+          DetailKeranjang(null, keranjangID, produkResto[i].id, quantities[i]);
+      dynamic request = createDetailKeranjang(detail);
+      if (request != null) {
+        print("Detail Keranjang added Successfully!");
+        result.add(request);
+      } else {
+        print("Failed To add Detail Keranjang!");
+        result.add(null);
+      }
+    } else if (quantities[i] > 0 && productExists) {
+      DetailKeranjang dk = detailKeranjangs.firstWhere(
+        (detail) => detail.produkID == produkResto[i].id,
+      );
+      int newQty = dk.qty! + quantities[i];
+      updateQtyDetail(dk.id!, newQty);
+      result.add(dk);
+    }
+  }
+  if (result.any((element) => element == null)) {
+    return [];
+  }
+  return result;
+}
+
+void updateQtyDetail(int id, int qty) async {
   try {
-    updateQtyDetail(id);
+    updateQtyDetails(id, qty);
     print('Product quantity updated successfully');
   } catch (e) {
     print('Error updating product quantity: $e');
-  }
-}
-
-void updateProductCart(int id) async {
-  try {
-    updateProductCart(id);
-    print('Product updated successfully');
-  } catch (e) {
-    print('Error updating product : $e');
   }
 }
 
@@ -255,7 +288,8 @@ Future<List<DetailPesanan>> fetchDetailPesanans() async {
 
 Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampah() async {
   try {
-    List<RiwayatTukarSampah> riwayatTukarSampah = await fetchRiwayatTukarSampahFromAPI();
+    List<RiwayatTukarSampah> riwayatTukarSampah =
+        await fetchRiwayatTukarSampahFromAPI();
     print("Success");
     print(riwayatTukarSampah[0].berat);
     return riwayatTukarSampah;
@@ -275,7 +309,6 @@ void updateAlamatUtama(int id, int userID) async {
 }
 
 Future<dynamic> inputHelp(userID, isi) async {
-
   Bantuan bantuan = Bantuan(null, userID, isi);
   dynamic request = await createBantuan(bantuan);
 
@@ -289,13 +322,20 @@ Future<dynamic> inputHelp(userID, isi) async {
 }
 
 Future<dynamic> editProfil(name, email, telp, userID) async {
-
   User user = User(userID, name, null, telp, email, null, null, null, null);
   dynamic request = await updateProfil(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-    request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print("Profile Updated Successfully!");
     return request;
   } else {
