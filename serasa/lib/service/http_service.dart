@@ -436,3 +436,36 @@ Future<User?> updateProfil(user) async {
     return null;
   }
 }
+
+Future<void> deleteUser(int id) async {
+  final response = await http.delete(
+    Uri.parse("$url/deleteUser/$id"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+  if (response.statusCode == 200) {
+    print('User deleted successfully');
+  } else {
+    print('Failed to delete user: ${response.statusCode}');
+  }
+}
+
+Future<User?> tambahPoinQR(user) async {
+  final response = await http.post(
+    Uri.parse("$url/poin-qr"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(user),
+  );
+
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  } else {
+    print("Add Ppin by QR failed!");
+    return null;
+  }
+}

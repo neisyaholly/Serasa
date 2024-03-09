@@ -380,10 +380,14 @@ class _PilihRestoState extends State<PilihResto> {
                   bool productExists = _produkRestos.any((produk) =>
                       detailKeranjangs
                           .any((detail) => detail.produkID == produk.id));
-                  bool restoExists = _produkRestos.any((produk) =>
-                      detailKeranjangs.any((detail) =>
-                          detail.produkID == produk.id &&
-                          produk.restoID == widget.resto.id));
+                  bool restoExists = detailKeranjangs.any((detail) {
+                    ProdukResto? matchingProduk = _produkRestos.firstWhere(
+                      (produk) => produk.id == detail.produkID,
+                      orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
+                    );
+                    return matchingProduk != null &&
+                        matchingProduk.restoID == widget.resto.id;
+                  });
                   if (!productExists && !restoExists) {
                     Keranjang? keranjang =
                         await buatKeranjang(currentUser!.id!);
@@ -410,19 +414,16 @@ class _PilihRestoState extends State<PilihResto> {
                       print("Failed to create keranjang");
                     }
                   } else if (restoExists) {
-                    List<DetailKeranjang> detailKeranjangs =
-                        await fetchDetailKeranjangs();
                     DetailKeranjang? detailKeranjang =
                         detailKeranjangs.firstWhere(
                       (detail) {
                         ProdukResto? matchingProduk = _produkRestos.firstWhere(
-                          (produk) =>
-                              produk.id == detail.produkID &&
-                              produk.restoID == widget.resto.id,
+                          (produk) => produk.id == detail.produkID,
                           orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
                         );
-                        // ignore: unnecessary_null_comparison
-                        return matchingProduk != null;
+                        // Check if the matching product belongs to the same resto
+                        return matchingProduk != null &&
+                            matchingProduk.restoID == widget.resto.id;
                       },
                       orElse: () => DetailKeranjang(-1, -1, -1, -1),
                     );

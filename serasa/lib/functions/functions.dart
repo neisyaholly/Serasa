@@ -344,6 +344,38 @@ Future<dynamic> editProfil(name, email, telp, userID) async {
   }
 }
 
+Future<void> hapusAkun(int id) async {
+  try {
+    await deleteUser(id);
+    print('Acc deleted successfully');
+  } catch (e) {
+    print('Error deleting acc: $e');
+  }
+}
+
+Future<dynamic> addPoinQR(userID, poin) async {
+  User user = User(userID, null, null, null, null, null, poin, null, null);
+  dynamic request = await tambahPoinQR(user);
+
+  if (request is User) {
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
+    print("Poin by QR Scan Added Successfully!");
+    return request;
+  } else {
+    print("Failed To Add Poin!");
+    return null;
+  }
+}
+
 void updateeJenisPesanan(int id) async {
   try {
     updatePesanan(id);

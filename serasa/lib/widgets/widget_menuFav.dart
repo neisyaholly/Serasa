@@ -5,11 +5,13 @@ class WidgetMenuFav extends StatelessWidget {
       {super.key,
       required this.nama,
       required this.resto,
+      required this.foto,
       required this.harga1,
       required this.harga2});
 
   final String nama;
   final String resto;
+  final String foto;
   final String harga1;
   final String harga2;
 
@@ -34,7 +36,8 @@ class WidgetMenuFav extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                // color: Colors.amber, borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(image: NetworkImage(foto))),
             width: 75,
             height: 75,
           ),

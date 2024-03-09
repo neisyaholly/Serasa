@@ -110,4 +110,23 @@ class UserController extends Controller
         $updatedUser = User::find($R->id);
         return response()->json($updatedUser, 200);
     }
+
+    public function addPoin(Request $R){
+        $user = User::where('id', $R->id)->update(['poin' => $R->poin]);
+        $updatedUser = User::find($R->id);
+        return response()->json($updatedUser, 200);
+    }
+
+    public function deleteUser(Request $request) {
+        try {
+            $user = User::find($request->id);
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+            $user->delete();
+            return response()->json(['message' => 'User deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete user: ' . $e->getMessage()], 500);
+        }
+    }
 }
