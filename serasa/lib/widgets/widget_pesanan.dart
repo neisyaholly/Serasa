@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/produk_resto.dart';
 
 class WidgetPesanan extends StatelessWidget {
   const WidgetPesanan(
       {super.key,
       required this.nama,
       required this.jumlah,
-      required this.jenis,
+      required this.namaProduk,
       required this.harga,
       this.onPressed});
 
   final String nama;
-  final List<dynamic> jumlah;
-  final List<dynamic> jenis;
-  final List<dynamic> harga;
+  final List<DetailPesanan> jumlah;
+  final List<String> namaProduk;
+  final int harga;
   final VoidCallback? onPressed;
 
   @override
@@ -63,7 +65,7 @@ class WidgetPesanan extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(0),
-                      itemCount: 6,
+                      itemCount: namaProduk.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (_, index) {
                         return Row(
@@ -71,7 +73,7 @@ class WidgetPesanan extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  jumlah[index],
+                                  jumlah[index].qty.toString(),
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal,
@@ -87,7 +89,7 @@ class WidgetPesanan extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              jenis[index],
+                              namaProduk[index],
                               style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.normal,

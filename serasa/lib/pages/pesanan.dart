@@ -3,6 +3,7 @@ import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/widgets/popup_Riwayat.dart';
 import 'package:serasa/widgets/widget_pesanan.dart';
@@ -19,6 +20,7 @@ class _PesananPageState extends State<PesananPage> {
   List<DetailPesanan> _detailPesanans = [];
   List<ProdukKomunitas> _produkKomunitass = [];
   List<ProdukResto> _produkRestos = [];
+  List<Resto> _restos = [];
 
   void initState() {
     super.initState();
@@ -26,6 +28,7 @@ class _PesananPageState extends State<PesananPage> {
     _fetchDetailPesanans();
     _fetchProdukKomunitass();
     _fetchProdukRestos();
+    _fetchRestos();
   }
 
   void _fetchPesanans() async {
@@ -57,6 +60,13 @@ class _PesananPageState extends State<PesananPage> {
     });
   }
 
+  void _fetchRestos() async {
+    List<Resto> fetchedRestos = await fetchRestos();
+    setState(() {
+      _restos = fetchedRestos;
+    });
+  }
+
   bool isPopUpShown = false; // State variable to track popup visibility
 
   void togglePopUpVisibility() {
@@ -64,7 +74,6 @@ class _PesananPageState extends State<PesananPage> {
       isPopUpShown = !isPopUpShown; // Toggle popup visibility
     });
   }
-  // =
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +132,7 @@ class _PesananPageState extends State<PesananPage> {
                           Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.all(0),
-                              itemCount: _pesanans.length,
+                              itemCount: 2,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (_, index) {
                                 List<DetailPesanan> detailPesanansPerPesanan =
@@ -134,6 +143,7 @@ class _PesananPageState extends State<PesananPage> {
                                         .toList();
                                 if (_pesanans[index].jenis == 0) {
                                   // Return WidgetPesanan with listProdukKomunitas
+                                  print("test");
                                   List<ProdukKomunitas>
                                       infoProdukDetailPesanans =
                                       _produkKomunitass
@@ -142,16 +152,38 @@ class _PesananPageState extends State<PesananPage> {
                                               detailPesanansPerPesanan[index]
                                                   .produkID)
                                           .toList();
+                                  print(detailPesanansPerPesanan[0].qty);
+                                  List<String> namaProdukList =
+                                      infoProdukDetailPesanans
+                                          .map((info) => info.nama ?? "unknown")
+                                          .toList();
+                                  // print(infoProdukDetailPesanans[0].name!);
+                                  print(namaProdukList[0]);
+
+                                  double totalHarga = 0;
+                                  for (int i = 0;
+                                      i < infoProdukDetailPesanans.length;
+                                      i++) {
+                                    double subtotal =
+                                        infoProdukDetailPesanans[i].harga! *
+                                            detailPesanansPerPesanan[i]
+                                                .qty!
+                                                .toDouble();
+                                    totalHarga += subtotal;
+                                  }
+                                  print(totalHarga);
+                                  // + ongkir
+                                  totalHarga += _pesanans[index].ongkir!;
                                   return WidgetPesanan(
-                                    nama: infoProdukDetailPesanans[index].name!,
+                                    nama: infoProdukDetailPesanans.first.name!,
                                     jumlah: detailPesanansPerPesanan,
-                                    jenis: infoProdukDetailPesanans,
-                                    harga: infoProdukDetailPesanans,
+                                    namaProduk: namaProdukList,
+                                    harga: totalHarga.toInt(),
                                     onPressed: () {
                                       togglePopUpVisibility();
                                     },
                                   );
-                                } else if (_pesanans[index].jenis == 1) {
+                                } else {
                                   // Return WidgetPesanan with listProdukRestos
                                   List<ProdukResto> infoProdukDetailPesanans =
                                       _produkRestos
@@ -160,11 +192,41 @@ class _PesananPageState extends State<PesananPage> {
                                               detailPesanansPerPesanan[index]
                                                   .produkID)
                                           .toList();
+                                  List<String> namaProdukList =
+                                      infoProdukDetailPesanans
+                                          .map((info) => info.nama ?? "unknown")
+                                          .toList();
+
+                                  double totalHarga = 0;
+                                  for (int i = 0;
+                                      i < infoProdukDetailPesanans.length;
+                                      i++) {
+                                    double subtotal =
+                                        infoProdukDetailPesanans[i].harga! *
+                                            detailPesanansPerPesanan[i]
+                                                .qty!
+                                                .toDouble();
+                                    totalHarga += subtotal;
+                                  }
+                                  // + ongkir
+                                  totalHarga += _pesanans[index].ongkir!;
+                                  // Calculate tax
+                                  double pajak = totalHarga * 0.11;
+                                  // Add tax to totalHarga
+                                  totalHarga += pajak;
+
+                                  String restoName = '';
+
+                                  Resto? resto = _restos.firstWhere((resto) =>
+                                      resto.id ==
+                                      infoProdukDetailPesanans.first.restoID);
+                                  restoName = resto.nama!;
+
                                   return WidgetPesanan(
-                                    nama: "nama",
+                                    nama: restoName,
                                     jumlah: detailPesanansPerPesanan,
-                                    jenis: infoProdukDetailPesanans,
-                                    harga: infoProdukDetailPesanans,
+                                    namaProduk: namaProdukList,
+                                    harga: totalHarga.toInt(),
                                     onPressed: () {
                                       togglePopUpVisibility();
                                     },

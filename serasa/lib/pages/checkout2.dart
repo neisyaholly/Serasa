@@ -285,6 +285,7 @@ class _Checkout2 extends State<Checkout2> {
                                         setState(() {
                                           selectedPengambilanMethod = value!;
                                           ongkosKirim = 0;
+                                          coPesanan.ongkir = ongkosKirim;
                                         });
                                       },
                                     ),
@@ -333,6 +334,7 @@ class _Checkout2 extends State<Checkout2> {
                                         setState(() {
                                           selectedPengambilanMethod = value!;
                                           ongkosKirim = 9000;
+                                          coPesanan.ongkir = ongkosKirim;
                                         });
                                       },
                                     ),
@@ -378,7 +380,7 @@ class _Checkout2 extends State<Checkout2> {
                                   const Text("Ongkos Kirim",
                                       style: TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
-                                  Text("Rp${ongkosKirim.toString()}",
+                                  Text("Rp${coPesanan.ongkir.toString()}",
                                       style: const TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
@@ -401,7 +403,7 @@ class _Checkout2 extends State<Checkout2> {
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'Poppins')),
                               Text(
-                                  "Rp${calculateTotal(subtotal, ongkosKirim).toInt()}",
+                                  "Rp${calculateTotal(subtotal, coPesanan.ongkir!).toInt()}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontFamily: 'Poppins',
@@ -514,8 +516,8 @@ class _Checkout2 extends State<Checkout2> {
                                     coPesanan.userID,
                                     coPesanan.sellerID,
                                     coPesanan.pembayaranID,
-                                    coPesanan.jenis,
                                     coPesanan.ongkir,
+                                    coPesanan.jenis,
                                     coPesanan.selesai);
                                 DetailPesanan? detailPesanan =
                                     await checkOutDetailPesananKomunitas(
