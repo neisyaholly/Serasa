@@ -21,12 +21,21 @@ Future<dynamic> registerUser(
     return "Password doesn't match!";
   }
 
-  User user = User(null, name, tglLahir, telp, email, password, null, null, null);
+  User user =
+      User(null, name, tglLahir, telp, email, password, null, null, null);
   dynamic request = await createUser(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-    request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print("User Registered Successfully!");
     return request;
   } else {
@@ -41,8 +50,16 @@ Future<dynamic> loginUser(email, password) async {
   dynamic request = await verifyUser(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-        request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print(currentUser!.id);
     print("User Logged In Successfully!");
     return request;
@@ -255,7 +272,8 @@ Future<List<DetailPesanan>> fetchDetailPesanans() async {
 
 Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampah() async {
   try {
-    List<RiwayatTukarSampah> riwayatTukarSampah = await fetchRiwayatTukarSampahFromAPI();
+    List<RiwayatTukarSampah> riwayatTukarSampah =
+        await fetchRiwayatTukarSampahFromAPI();
     print("Success");
     print(riwayatTukarSampah[0].berat);
     return riwayatTukarSampah;
@@ -275,7 +293,6 @@ void updateAlamatUtama(int id, int userID) async {
 }
 
 Future<dynamic> inputHelp(userID, isi) async {
-
   Bantuan bantuan = Bantuan(null, userID, isi);
   dynamic request = await createBantuan(bantuan);
 
@@ -289,17 +306,33 @@ Future<dynamic> inputHelp(userID, isi) async {
 }
 
 Future<dynamic> editProfil(name, email, telp, userID) async {
-
   User user = User(userID, name, null, telp, email, null, null, null, null);
   dynamic request = await updateProfil(user);
 
   if (request is User) {
-    currentUser = User(request.id, request.name, request.tglLahir, request.telp,
-    request.email, request.password, request.poin, request.role, request.foto);
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
     print("Profile Updated Successfully!");
     return request;
   } else {
     print("Failed To Edit Profil!");
     return null;
+  }
+}
+
+void updateeJenisPesanan(int id) async {
+  try {
+    updatePesanan(id);
+    print('Pesanan arrived successfully');
+  } catch (e) {
+    print('Error updating confirmation arrived pesanan : $e');
   }
 }

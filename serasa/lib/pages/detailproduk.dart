@@ -173,15 +173,16 @@ class _Detailproduk extends State<Detailproduk> {
                         children: [
                           Container(
                             width: 110,
-                            padding: const EdgeInsets.only(left: 20, right: 5),
+                            padding: const EdgeInsets.only(left: 10, right: 5),
+                            alignment: Alignment.center,
                             child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
                                     'assets/images/detailProduk/locationsymbol.png',
                                     width: 20),
                                 Container(
-                                  width: 50,
+                                  padding: const EdgeInsets.only(left: 2),
                                   child: Text(
                                       produk.kab_kota!.substring(
                                           produk.kab_kota!.indexOf(' ') + 1),

@@ -8,13 +8,28 @@ class WidgetPesanan extends StatelessWidget {
       required this.nama,
       required this.jumlah,
       required this.namaProduk,
+      required this.totalHarga,
+      required this.foto,
+      required this.status,
       required this.harga,
+      required this.subtotal,
+      required this.pajak,
+      required this.ongkir,
+      required this.pembayaran,
       this.onPressed});
 
   final String nama;
   final List<DetailPesanan> jumlah;
   final List<String> namaProduk;
-  final int harga;
+  final int totalHarga;
+  final String foto;
+  final String status;
+  final List<int> harga;
+  final int subtotal;
+  final int pajak;
+  final int ongkir;
+  final String pembayaran;
+
   final VoidCallback? onPressed;
 
   @override
@@ -39,10 +54,14 @@ class WidgetPesanan extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
               width: 75,
               height: 75,
+              child: Image.network(
+                foto,
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(
               width: 10,
@@ -101,7 +120,7 @@ class WidgetPesanan extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Total Harga: Rp$harga",
+                    "Total Harga: Rp$totalHarga",
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
