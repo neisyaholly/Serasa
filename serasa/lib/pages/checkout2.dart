@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
@@ -24,6 +25,8 @@ void sementara() {
 }
 
 class _Checkout2 extends State<Checkout2> {
+  late List<Pembayaran> _pembayarans = [];
+
   String selectedPaymentMethod = 'Gopay';
 
   List<Pesanan> _pesanans = [];
@@ -31,15 +34,24 @@ class _Checkout2 extends State<Checkout2> {
   late Pesanan coPesanan;
   late DetailPesanan coDetailPesanan;
   String selectedPengambilanMethod = 'GoSend';
+  late int selectedPaymentMethodIndex = 2;
 
   @override
   void initState() {
     super.initState();
+    _fetchPembayarans();
     _fetchPesanans();
-    coPesanan =
-        Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 9000, 0, 0);
-    coDetailPesanan =
-        DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
+    coPesanan = Pesanan(null, currentUser!.id, widget.produkKomunitas.userID,
+        selectedPaymentMethodIndex, 9000, 0, 0);
+    coDetailPesanan = DetailPesanan(
+        null, (_pesanans.length + 1), widget.produkKomunitas.id, 1);
+  }
+
+  void _fetchPembayarans() async {
+    List<Pembayaran> fetchedPembayarans = await fetchPembayarans();
+    setState(() {
+      _pembayarans = fetchedPembayarans;
+    });
   }
 
   void _fetchPesanans() async {
@@ -203,7 +215,13 @@ class _Checkout2 extends State<Checkout2> {
                                             width: 20),
                                         const Padding(
                                             padding: EdgeInsets.only(right: 5)),
-                                        const Text("Lokasi",
+                                        Text(
+                                            widget.produkKomunitas.kab_kota!
+                                                .substring(widget
+                                                        .produkKomunitas
+                                                        .kab_kota!
+                                                        .indexOf(' ') +
+                                                    1),
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Poppins',
@@ -424,12 +442,19 @@ class _Checkout2 extends State<Checkout2> {
                                                 selectedPaymentMethod,
                                             selectedPengambilanMethod:
                                                 selectedPengambilanMethod,
+                                            selectedPaymentMethodIndex:
+                                                coPesanan.pembayaranID,
                                           ),
                                         ),
                                       ).then((value) {
                                         if (value != null) {
                                           setState(() {
-                                            selectedPaymentMethod = value;
+                                            selectedPaymentMethodIndex = value;
+                                            selectedPaymentMethod = _pembayarans[
+                                                    selectedPaymentMethodIndex]
+                                                .jenis!;
+                                            coDetailPesanan.pesananID =
+                                                selectedPaymentMethodIndex;
                                           });
                                         }
                                       });
@@ -468,13 +493,6 @@ class _Checkout2 extends State<Checkout2> {
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
                             onPressed: () async {
-                              // final Pesanan coPesanan = Pesanan(
-                              //     null,
-                              //     currentUser!.id,
-                              //     widget.produkKomunitas.userID,
-                              //     0,
-                              //     0,
-                              //     0);
                               final player = AudioPlayer();
                               player.play(AssetSource('audios/cring.mp3'));
                               Pesanan? pesanan = await checkOutPesanan(
@@ -489,8 +507,6 @@ class _Checkout2 extends State<Checkout2> {
                                       coDetailPesanan.pesananID,
                                       coDetailPesanan.produkID,
                                       coDetailPesanan.qty);
-                              // DetailPesanan detailPesanan = await =
-
                               if (pesanan is Pesanan) {
                                 // ignore: use_build_context_synchronously
                                 FocusScope.of(context).unfocus();

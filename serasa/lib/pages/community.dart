@@ -176,7 +176,9 @@ class _CommunityState extends State<Community> {
                         itemBuilder: (context, index) {
                           ProdukKomunitas produkKomunitas =
                               _produkKomunitass[index];
-
+                          print("woi");
+                          // print(produkKomunitas.id);
+                          print(_produkKomunitass[0].id);
                           return GestureDetector(
                             child: WidgetCommunity(
                                 nama: produkKomunitas.nama!,

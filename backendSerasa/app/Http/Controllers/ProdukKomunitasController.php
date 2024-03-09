@@ -10,12 +10,10 @@ use Illuminate\Http\Request;
 class ProdukKomunitasController extends Controller
 {
     public function getProdukKomunitas(){
-
-        // $produkKomunitas = ProdukKomunitas::all();
         $produkKomunitas = DB::table('produk_komunitas')
         ->join('users', 'produk_komunitas.userID', '=', 'users.id')
         ->join('alamats', 'users.id', '=', 'alamats.userID')
-        ->select('produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'users.name', 'alamats.kab_kota')
+        ->select('produk_komunitas.id', 'produk_komunitas.userID', 'produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'users.name', 'alamats.kab_kota')
         ->where ('alamats.utama', 1)
         // ->groupBy('produk_komunitas.id')
         ->get();
