@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:http/http.dart';
 import 'package:serasa/classes/alamat.dart';
 import 'package:serasa/classes/bantuan.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
@@ -447,5 +448,41 @@ Future<List<Map<String, dynamic>>> fetchBankSampahMap() async {
   } catch (e) {
     print('Error fetching: $e');
     throw e; // Rethrow the exception to handle it elsewhere if needed
+  }
+}
+
+Future<void> createVoucherUserEntry(Voucher voucher, int userId) async {
+  final response = await post(
+    Uri.parse("$url/create-voucher-user"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(<String, dynamic>{
+      "id": voucher.id,
+      "userID": userId,
+      "terpakai": 0, // Set the 'terpakai' value to 0
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to create voucher user entry');
+  }
+}
+
+Future<void> updateUserPoin(int userId, int poin) async {
+  final response = await put(
+    Uri.parse("$url/update-user-poin/$userId"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(<String, dynamic>{
+      "poin": poin, // Set the updated poin value
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to update user poin');
   }
 }
