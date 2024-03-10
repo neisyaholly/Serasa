@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/navbar.dart';
+import 'package:serasa/classes/riwayatTukarSampah.dart';
+import 'package:serasa/pages/recycle.dart';
 import 'package:serasa/widgets/widget_riwayatPenukaran.dart';
+import 'package:serasa/classes/riwayatTukarSampah.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/service/http_service.dart';
 
 class RiwayatPenukaranSampah extends StatefulWidget {
   const RiwayatPenukaranSampah({super.key});
@@ -10,6 +14,45 @@ class RiwayatPenukaranSampah extends StatefulWidget {
 }
 
 class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
+  late Future<List<RiwayatTukarSampah>> _riwayatFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _riwayatFuture = fetchRiwayatTukarSampah();
+  }
+
+  String _getMonthName(int month) {
+    switch (month) {
+      case 1:
+        return 'Januari';
+      case 2:
+        return 'Februari';
+      case 3:
+        return 'Maret';
+      case 4:
+        return 'April';
+      case 5:
+        return 'Mei';
+      case 6:
+        return 'Juni';
+      case 7:
+        return 'Juli';
+      case 8:
+        return 'Agustus';
+      case 9:
+        return 'September';
+      case 10:
+        return 'Oktober';
+      case 11:
+        return 'November';
+      case 12:
+        return 'Desember';
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +70,7 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
+                        builder: (context) => const Recycle(),
                       ),
                     );
                   },
@@ -94,21 +137,42 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                     height: 10,
                   ),
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      // color: Colors.amber,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(0),
-                        itemCount: 10,
-                        itemBuilder: (_, index) {
-                          return const WidgetRiwayat(
-                              tanggal: "Oktober 31, 2023",
-                              jumlah: "1",
-                              poin: "10");
-                        },
-                      ),
+                    child: FutureBuilder<List<RiwayatTukarSampah>>(
+                      future: _riwayatFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Container();
+                        } else if (snapshot.hasError) {
+                          return Center(
+                            child: Text('Error: ${snapshot.error}'),
+                          );
+                        } else if (snapshot.hasData) {
+                          final List<RiwayatTukarSampah> riwayatList = snapshot.data!;
+                          return ListView.builder(
+                            padding: const EdgeInsets.all(0),
+                            itemCount: riwayatList.length,
+                            itemBuilder: (context, index) {
+                              final riwayat = riwayatList[index];
+                              final DateTime? createdAt = riwayat.created_at != null ? DateTime.parse(riwayat.created_at!) : null;
+                              final formattedDate = createdAt != null ? "${createdAt.day} ${_getMonthName(createdAt.month)}, ${createdAt.year}" : '';
+                              final jumlah = riwayat.berat ?? 0;
+                              final poin = jumlah * 10;
+
+                              return WidgetRiwayat(
+                                tanggal: formattedDate,
+                                jumlah: jumlah.toString(),
+                                poin: poin.toString(),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: Text('No data available'),
+                          );
+                        }
+                      },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

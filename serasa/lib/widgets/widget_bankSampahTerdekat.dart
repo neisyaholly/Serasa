@@ -43,20 +43,20 @@ class WidgetBankSampahTerdekat extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Bank Sampah $nama",
-                    style: const TextStyle(
+                const Text("Bank Sampah Serasa:",
+                    style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.normal)),
-                Text(daerah,
+                Text(nama,
                     style: const TextStyle(
                         fontSize: 15,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.normal)),
               ],
             ),
-            Text("$jarak km",
-                style: const TextStyle(
+            const Text("0.5 km",
+                style: TextStyle(
                     fontSize: 13,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.normal,

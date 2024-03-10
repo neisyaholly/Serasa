@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:serasa/pages/myrewards2.dart';
 import 'package:serasa/pages/rewards.dart';
 import 'package:serasa/pages/skvoucher.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/classes/voucher.dart';
+import 'package:serasa/classes/voucherUser.dart';
+
+// class Vouchers{
+//   final String imageUrl;
+//   Vouchers({required this.imageUrl});
+
+//   factory Vouchers.fromJson(Map<String, dynamic> json) {
+//     return Vouchers(imageUrl: json['foto']);
+//   }
+// }
 
 class VoucherAktif extends StatefulWidget {
   const VoucherAktif({super.key});
@@ -14,6 +26,43 @@ class VoucherAktif extends StatefulWidget {
 
 class _VoucherAktif extends State<VoucherAktif> {
   bool _isHovered = false;
+  late List<Voucher> _vouchers = [];
+  late List<VoucherUser> _voucherUser = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchVouchers().then((fetchedVouchers) {setState(() {
+  //     _vouchers = fetchedVouchers.cast<Voucher>();
+  //   });});
+  // }
+
+  // void _fetchVouchers() async {
+  //   final fetchedVouchers = await fetchVouchers();
+  //   setState(() {
+  //     _vouchers = fetchedVouchers.cast<Voucher>();
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVouchers();
+    _fetchVoucherUser();
+  }
+
+  void _fetchVouchers() async {
+    List<Voucher> fetchedVouchers = await fetchVouchers();
+      setState(() {
+        _vouchers = fetchedVouchers;
+    });
+  }
+  void _fetchVoucherUser() async {
+    List<VoucherUser> fetchedVoucherUser = await fetchVoucherUser();
+      setState(() {
+        _voucherUser = fetchedVoucherUser;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,22 +167,22 @@ class _VoucherAktif extends State<VoucherAktif> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: [
-                    GestureDetector(
-                      child: Image.asset(
-                        "assets/images/rewards/voucherriwayat.png",
+                  children: _vouchers.where((voucher) => _voucherUser.any((vu) => vu.voucherID == voucher.id && vu.terpakai == 0)).map((voucher){
+                    return GestureDetector(
+                      child: Image.network(
+                        voucher.foto!,
                         width: 350,
                       ),
-                      onTap: () {
+                       onTap: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Skvoucher(),
+                            builder: (context) => Skvoucher(vouchers: _vouchers, voucherID: voucher.id ?? 0),
                           ),
                         );
                       },
-                    ),
-                  ],
+                    );
+                  }).toList(),
                 ),
               ),
             ],

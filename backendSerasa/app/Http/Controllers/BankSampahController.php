@@ -12,11 +12,10 @@ class BankSampahController extends Controller
         return response()->json($bank, 200);
     }
 
+    //bikin function tukarSampah di sini (riwayatnya)
     public function getRiwayatTukarSampah(){
         $riwayat = RiwayatTukarSampah::all();
         return response()->json($riwayat, 200);
     }
-
-    //bikin function tukarSampah di sini (riwayatnya)
 
 }

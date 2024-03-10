@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serasa/pages/myrewards1.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/popup_Reward.dart';
+import 'package:serasa/functions/functions.dart';
 
 class Rewards extends StatefulWidget {
   const Rewards({Key? key}) : super(key: key);
@@ -80,11 +81,11 @@ class _Rewards extends State<Rewards> {
                             size: 20,
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: Align(
                               alignment: Alignment.topRight,
-                              child: Text("Hai, Nathasya!",
-                                  style: TextStyle(
+                              child: Text("Hai, ${currentUser!.name!}!",
+                                  style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500))),
@@ -104,9 +105,9 @@ class _Rewards extends State<Rewards> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "320",
-                          style: TextStyle(
+                        Text(
+                          "${currentUser!.poin!}",
+                          style: const TextStyle(
                               fontFamily: 'Poppins',
                               color: Color(0xFFED6055),
                               fontSize: 96,
