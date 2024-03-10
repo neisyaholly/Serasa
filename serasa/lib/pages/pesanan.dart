@@ -156,8 +156,9 @@ class _PesananPageState extends State<PesananPage> {
                         children: [
                           Container(
                             color: Colors.black,
-                            width: 250,
-                            height: 250,
+                            width: _controller.value.size.width,
+                            height: _controller.value.size.height,
+                            child: VideoPlayer(_controller),
                           ),
                           ElevatedButton(
                             onPressed: () {
