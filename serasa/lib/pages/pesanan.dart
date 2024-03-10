@@ -26,6 +26,8 @@ class _PesananPageState extends State<PesananPage> {
   List<Resto> _restos = [];
   List<Pembayaran> _pembayarans = [];
 
+  late VideoPlayerController _controller;
+
   void initState() {
     super.initState();
     _fetchPesanans();
@@ -34,7 +36,14 @@ class _PesananPageState extends State<PesananPage> {
     _fetchProdukRestos();
     _fetchRestos();
     _fetchPembayarans();
+    _controller = VideoPlayerController.asset('assets/videos/gudd.mp4')
+    ..initialize().then((_) {
+      setState(() {}); // Ini opsional, tergantung kebutuhan Anda
+      _controller.setLooping(true); // Set looping video
+      _controller.play(); // Play video secara otomatis setelah diinisialisasi
+    });
   }
+
 
   void _fetchPesanans() async {
     List<Pesanan> fetchedPesanans = await fetchPesanans();
@@ -111,18 +120,10 @@ class _PesananPageState extends State<PesananPage> {
         'pembayaran': pembayaran,
       };
     });
-
-  late VideoPlayerController _controller;
-
-  void initState() {
-  super.initState();
-  _controller = VideoPlayerController.asset('assets/videos/gudd.mp4')
-    ..initialize().then((_) {
-      setState(() {}); // Ini opsional, tergantung kebutuhan Anda
-      _controller.setLooping(true); // Set looping video
-      _controller.play(); // Play video secara otomatis setelah diinisialisasi
-    });
   }
+
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +156,11 @@ class _PesananPageState extends State<PesananPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            color: Colors.black,
-                            width: _controller.value.size.width,
-                            height: _controller.value.size.height,
+                            // color: Colors.black,
+                            // width: 200,
+                            // height: 200,
+                            width: _controller.value.size.width * 0.2,
+                            height: _controller.value.size.height * 0.2,
                             child: VideoPlayer(_controller),
                           ),
                           ElevatedButton(
@@ -447,4 +450,4 @@ class _PesananPageState extends State<PesananPage> {
       ),
     );
   }
-}}
+}
