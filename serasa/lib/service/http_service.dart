@@ -524,6 +524,7 @@ Future<List<BankSampah>> fetchBankSampahFromAPI() async {
   }
 }
 
+
 Future<ProdukKomunitas?> createProdukKomunitas(pk) async {
   final response = await http.post(
     Uri.parse("$url/create-komunitas"),
@@ -542,4 +543,22 @@ Future<ProdukKomunitas?> createProdukKomunitas(pk) async {
   }
 
   return null;
+}
+
+Future<List<String>> getVoucherImageUrls() async {
+  final response = await http.get(
+    Uri.parse("$url/get-voucher"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    List<String> imageUrls = data.map((json) => json['foto']).toList().cast<String>();
+    return imageUrls;
+  } else {
+    throw Exception('Failed to load voucher image URLs');
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/pages/myrewards1.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/popup_Reward.dart';
@@ -14,37 +15,75 @@ class Rewards extends StatefulWidget {
 }
 
 class _Rewards extends State<Rewards> {
-  String _getImageAssetPathForItem(int index) {
-    List<String> imagePaths = [
-      'assets/images/rewards/voucher.png',
-      'assets/images/rewards/voucher2.png',
-      'assets/images/rewards/voucher3.png',
-      'assets/images/rewards/voucher4.png',
-      'assets/images/rewards/voucher5.png',
-      'assets/images/rewards/voucher6.png',
-      'assets/images/rewards/voucher7.png',
-    ];
+  List<Voucher> _vouchers = []; // Store the fetched vouchers
 
-    if (index >= 0 && index < imagePaths.length) {
-      return imagePaths[index];
-    } else {
-      return 'assets/images/rewards/voucher.png';
+  // Fetch vouchers on widget initialization
+  @override
+  void initState() {
+    super.initState();
+    _fetchVouchers();
+  }
+
+  // Function to fetch vouchers from the server
+  void _fetchVouchers() async {
+    try {
+      List<Voucher> vouchers = await fetchVouchers();
+      setState(() {
+        _vouchers = vouchers;
+      });
+    } catch (e) {
+      print('Error fetching vouchers: $e');
     }
   }
 
-  bool isPopUpShown = false; // State variable to track popup visibility
+Voucher? selectedVoucher;
 
-  void togglePopUpVisibility() {
+  // Function to set selectedVoucher
+  void setSelectedVoucher(Voucher voucher) {
     setState(() {
-      isPopUpShown = !isPopUpShown; // Toggle popup visibility
+      selectedVoucher = voucher;
     });
   }
+
+
+  bool isPopUpShown = false; // State variable to track popup visibility
+
+ void togglePopUpVisibility({int? index}) {
+  setState(() {
+    isPopUpShown = !isPopUpShown; // Toggle popup visibility
+    if (isPopUpShown && index != null) {
+      setSelectedVoucher(_vouchers[index]);
+    }
+  });
+}
 
   void closePopUp() {
     setState(() {
       isPopUpShown = false; // Set isPopUpShown to false to close the popup
     });
   }
+
+void _handleYesButtonClick(Voucher? voucher) async {
+  if (voucher != null) {
+    try {
+      // Create voucher user entry
+      await createVoucherUserEntry(voucher, currentUser!.id!);
+
+      // Update user's points
+      int updatedPoints = currentUser!.poin! - voucher.poin!;
+      await updateUserPoin(currentUser!.id!, updatedPoints);
+
+      // Fetch vouchers again after updating
+      _fetchVouchers();
+
+      // Close the popup after executing the logic
+      togglePopUpVisibility();
+    } catch (e) {
+      print('Error handling voucher: $e');
+    }
+  }
+}
+
 
 
   @override
@@ -160,18 +199,25 @@ class _Rewards extends State<Rewards> {
                             height: 100,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 7,
+                              itemCount: _vouchers.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (_, index) {
-                                var imageAssetPath =
-                                    _getImageAssetPathForItem(index);
-                                return Container(
-                                  margin: const EdgeInsets.only(right: 15),
-                                  width: 250,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Image.asset(imageAssetPath,
-                                      fit: BoxFit.cover),
+                                String imageUrl = _vouchers[index].foto ?? ''; // Get the image URL
+                                return GestureDetector(
+                                  onTap: () {
+                                    togglePopUpVisibility(index: index);
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 15),
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(imageUrl), // Load image from URL
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 );
                               },
                             ),
@@ -196,22 +242,24 @@ class _Rewards extends State<Rewards> {
                             height: 100,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 7,
+                              itemCount: _vouchers.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (_, index) {
-                                var imageAssetPath =
-                                    _getImageAssetPathForItem(index);
+                                String imageUrl = _vouchers[index].foto ?? ''; // Get the image URL
                                 return GestureDetector(
                                   onTap: () {
-                                    togglePopUpVisibility();
+                                    togglePopUpVisibility(index: index);
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.only(right: 15),
-                                    width: 250,
+                                    width: 400,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: Image.asset(imageAssetPath,
-                                        fit: BoxFit.cover),
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(imageUrl), // Load image from URL
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                 );
                               },
@@ -231,7 +279,7 @@ class _Rewards extends State<Rewards> {
                   decoration: BoxDecoration(color: Colors.grey.withOpacity(0.8)),
                   child: Center(
                     child: Container(
-                      child: PopUpReward(closePopUp: closePopUp),
+                      child: PopUpReward(closePopUp: closePopUp, handleYesButtonClick: _handleYesButtonClick, voucher: selectedVoucher),
                     ),
                   ),
                 ),
