@@ -4,6 +4,7 @@ import 'package:serasa/functions/functions.dart';
 // import 'package:serasa/HOMEPAGE/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/register.dart';
+import 'package:video_player/video_player.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,6 +25,18 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  late VideoPlayerController _controller;
+
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/videos/Timeline1.mp4')
+      ..initialize().then((_) {
+        setState(() {}); // Ini opsional, tergantung kebutuhan Anda
+        _controller.setLooping(true); // Set looping video
+        _controller.play(); // Play video secara otomatis setelah diinisialisasi
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +45,11 @@ class _LoginPageState extends State<LoginPage> {
         decoration: const BoxDecoration(color: Color(0xFFED6055)),
         child: Column(
           children: [
-            Image.asset('assets/images/logoSerasaHeader.png'),
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              width: _controller.value.size.width *0.30,
+              height: _controller.value.size.height * 0.26,
+              child: VideoPlayer(_controller)),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(left: 35, right: 35),

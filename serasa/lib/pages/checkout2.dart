@@ -81,9 +81,7 @@ class _Checkout2 extends State<Checkout2> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.pop(
-                            context,
-                          );
+                          Navigator.pop(context,);
                         },
                         icon: const Icon(
                           Icons.arrow_back,

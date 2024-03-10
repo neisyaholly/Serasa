@@ -65,7 +65,6 @@ Future<Alamat?> createAlamat(alamat) async {
     },
     body: jsonEncode(alamat),
   );
-
   if (response.statusCode == 200) {
     return Alamat.fromJson(jsonDecode(response.body));
   } else {
@@ -361,4 +360,24 @@ Future<List<Pesanan>> getPesanan() async {
   } else {
     throw Exception('Failed to load alamats');
   }
+}
+
+Future<ProdukKomunitas?> createProdukKomunitas(pk) async {
+  final response = await http.post(
+    Uri.parse("$url/create-komunitas"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(pk),
+  );
+  // print(pk);
+  if (response.statusCode == 200) {
+    // print("asdf");
+    return ProdukKomunitas.fromJson(jsonDecode(response.body));
+  } else {
+    print("failed!");
+  }
+
+  return null;
 }
