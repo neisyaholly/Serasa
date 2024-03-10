@@ -192,6 +192,21 @@ Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   }
 }
 
+Future<dynamic> addProdukKomunitas(
+    userID, nama, harga, exp, deskripsi) async {
+  
+  ProdukKomunitas pk = ProdukKomunitas(null, userID, nama, deskripsi, harga, exp, null, null, null);
+  dynamic request = await createProdukKomunitas(pk);
+  print("asdf");
+  if (request is ProdukKomunitas) {
+    print("ProdukKomunitas added Successfully!");
+    return request;
+  } else {
+    print("ProdukKomunitas Failed!");
+    return null;
+  }
+}
+
 Future<List<Pembayaran>> fetchPembayarans() async {
   try {
     List<Pembayaran> pembayarans = await getPembayaran();

@@ -70,7 +70,6 @@ Future<Alamat?> createAlamat(alamat) async {
     },
     body: jsonEncode(alamat),
   );
-
   if (response.statusCode == 200) {
     return Alamat.fromJson(jsonDecode(response.body));
   } else {
@@ -547,20 +546,23 @@ Future<List<BankSampah>> fetchBankSampahFromAPI() async {
   }
 }
 
-Future<List<String>> getVoucherImageUrls() async {
-  final response = await http.get(
-    Uri.parse("$url/get-voucher"),
+
+Future<ProdukKomunitas?> createProdukKomunitas(pk) async {
+  final response = await http.post(
+    Uri.parse("$url/create-komunitas"),
     headers: <String, String>{
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
+    body: jsonEncode(pk),
   );
-
+  // print(pk);
   if (response.statusCode == 200) {
-    Iterable data = json.decode(response.body);
-    List<String> imageUrls = data.map((json) => json['foto']).toList().cast<String>();
-    return imageUrls;
+    // print("asdf");
+    return ProdukKomunitas.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load voucher image URLs');
+    print("failed!");
   }
+
+  return null;
 }

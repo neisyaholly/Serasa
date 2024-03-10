@@ -41,7 +41,7 @@ class ProdukKomunitas {
       json['userID'],
       json['nama'],
       json['deskripsi'],
-      json['harga'] as int,
+      json['harga'],
       json['exp'],
       json['foto'],
       json['name'],

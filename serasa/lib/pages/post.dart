@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/pages/community.dart';
 import 'package:serasa/pages/navbar.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:serasa/mapselection.dart';
 
 class Post extends StatefulWidget {
@@ -17,25 +23,29 @@ void sementara() {
 
 class _Post extends State<Post> {
   late DateTime _selectedDate;
-  final _tglLahirController = TextEditingController();
+  final _expController = TextEditingController();
+  final _namaController = TextEditingController();
+  final _hargaController = TextEditingController();
+  final _deskripsiController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _fetchProdukKomunitas();
     _selectedDate = DateTime.now(); // Initialize with the current date
-    _tglLahirController.text = _formatDate(_selectedDate);
+    _expController.text = _formatDate(_selectedDate);
   }
 
   String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 30)),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -55,10 +65,23 @@ class _Post extends State<Post> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _tglLahirController.text = _formatDate(picked);
+        _expController.text = _formatDate(picked);
       });
     }
   }
+
+  List<ProdukKomunitas> _produkKomunitass = [];
+
+  void _fetchProdukKomunitas() async {
+    List<ProdukKomunitas> fetchedProdukKomunitass =
+        await fetchProdukKomunitass();
+    setState(() {
+      _produkKomunitass = fetchedProdukKomunitass;
+    });
+  }
+
+  File? _imageFile;
+  String? _imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -121,22 +144,34 @@ class _Post extends State<Post> {
                       color: Colors.black12,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Center(
-                        child: Image.asset(
-                            "assets/images/detailProduk/cireng.jpg",
-                            fit: BoxFit.cover),
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        openCamera(context);
+                      },
+                      child: Text('Open Camera'),
                     ),
                   ),
                 ),
+                
+                      _imageFile != null
+                          ?
+                          Column(
+                            children: [
+                              Image.file(
+                              _imageFile!,
+                              height: 300,
+                              width: 300,
+                            ),
+                          Text(_imageUrl!),
+                            ],
+                          ) 
+                          : SizedBox(),
                 Container(
                   height: 1.5,
                   width: 350,
                   color: const Color.fromARGB(39, 0, 0, 0),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,6 +184,7 @@ class _Post extends State<Post> {
                       SizedBox(
                         width: 350,
                         child: TextField(
+                          controller: _namaController,
                           decoration: InputDecoration(
                               hintText: 'Ketik nama produkmu di sini',
                               hintStyle: TextStyle(
@@ -166,7 +202,7 @@ class _Post extends State<Post> {
                   width: 350,
                   color: const Color.fromARGB(39, 0, 0, 0),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 15, left: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,6 +222,7 @@ class _Post extends State<Post> {
                           SizedBox(
                             width: 330,
                             child: TextField(
+                              controller: _hargaController,
                               decoration: InputDecoration(
                                   hintText: 'Ketik harga produkmu di sini',
                                   hintStyle: TextStyle(
@@ -225,7 +262,7 @@ class _Post extends State<Post> {
                             onTap: () {
                               _selectDate(context);
                             },
-                            controller: _tglLahirController,
+                            controller: _expController,
                             decoration: const InputDecoration(
                               labelText: 'Pilih Tanggal',
                               suffixIcon: Icon(Icons.arrow_drop_down_sharp),
@@ -259,7 +296,7 @@ class _Post extends State<Post> {
                   width: 350,
                   color: const Color.fromARGB(67, 152, 152, 152),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 15, left: 30, bottom: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,7 +318,9 @@ class _Post extends State<Post> {
                           SizedBox(
                             width: 330,
                             child: Text(
-                              'Jl. Pakuan No.3, Sumur Batu, Kec. Babakan Madang, Kabupaten Bogor, Jawa Barat 16810',
+                              _produkKomunitass.isNotEmpty
+                                  ? _produkKomunitass[4].kab_kota!
+                                  : 'Tidak ada produk',
                               style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 10,
@@ -331,7 +370,8 @@ class _Post extends State<Post> {
                             ),
                           ],
                         ),
-                        child: const TextField(
+                        child: TextField(
+                          controller: _deskripsiController,
                           maxLines: 5, // Set the maximum number of lines
                           decoration: InputDecoration(
                             hintText: 'Ketik deskripsi produk',
@@ -373,14 +413,29 @@ class _Post extends State<Post> {
                 SizedBox(
                   width: 342,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const BottomNavigationBarExample(initialIndex: 3),
-                        ),
-                      );
+                    onPressed: () async {
+                      final userID = currentUser!.id!;
+                      final nama = _namaController.text;
+                      final harga = int.tryParse(_hargaController.text);
+                      final exp = _expController.text;
+                      final deskripsi = _deskripsiController.text;
+                      // final imageUrl = _imageUrl;
+                      FocusScope.of(context).unfocus();
+                      ProdukKomunitas? pk = await addProdukKomunitas(
+                          userID, nama, harga, exp, deskripsi);
+
+                      if (pk is ProdukKomunitas) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const BottomNavigationBarExample(
+                                    initialIndex: 3),
+                          ),
+                        );
+                      } else {
+                        print("error");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 244, 99, 88),
@@ -406,5 +461,18 @@ class _Post extends State<Post> {
         ),
       ),
     );
+  }
+
+  Future<void> openCamera(BuildContext context) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+        _imageUrl = pickedFile.path;
+      });
+    } else {
+      print('No image selected.');
+    }
   }
 }

@@ -9,6 +9,7 @@ import 'package:serasa/functions/functions.dart';
 import 'package:serasa/service/http_service.dart';
 import 'package:serasa/widgets/popup_Riwayat.dart';
 import 'package:serasa/widgets/widget_pesanan.dart';
+import 'package:video_player/video_player.dart';
 
 class PesananPage extends StatefulWidget {
   const PesananPage({super.key});
@@ -25,6 +26,8 @@ class _PesananPageState extends State<PesananPage> {
   List<Resto> _restos = [];
   List<Pembayaran> _pembayarans = [];
 
+  late VideoPlayerController _controller;
+
   void initState() {
     super.initState();
     _fetchPesanans();
@@ -33,7 +36,14 @@ class _PesananPageState extends State<PesananPage> {
     _fetchProdukRestos();
     _fetchRestos();
     _fetchPembayarans();
+    _controller = VideoPlayerController.asset('assets/videos/gudd.mp4')
+    ..initialize().then((_) {
+      setState(() {}); // Ini opsional, tergantung kebutuhan Anda
+      _controller.setLooping(true); // Set looping video
+      _controller.play(); // Play video secara otomatis setelah diinisialisasi
+    });
   }
+
 
   void _fetchPesanans() async {
     List<Pesanan> fetchedPesanans = await fetchPesanans();
@@ -112,6 +122,9 @@ class _PesananPageState extends State<PesananPage> {
     });
   }
 
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,9 +156,12 @@ class _PesananPageState extends State<PesananPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            color: Colors.black,
-                            width: 250,
-                            height: 250,
+                            // color: Colors.black,
+                            // width: 200,
+                            // height: 200,
+                            width: _controller.value.size.width * 0.2,
+                            height: _controller.value.size.height * 0.2,
+                            child: VideoPlayer(_controller),
                           ),
                           ElevatedButton(
                             onPressed: () {
