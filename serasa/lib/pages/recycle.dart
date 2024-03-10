@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:serasa/classes/riwayatTukarSampah.dart';
+import 'package:serasa/classes/bankSampah.dart';
 import 'package:serasa/pages/bankSampahTerdekat.dart';
 import 'package:serasa/pages/qr.dart';
 import 'package:serasa/pages/riwayatPenukaran.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/service/http_service.dart';
+import 'package:intl/intl.dart';
 
 class Recycle extends StatefulWidget {
   const Recycle({super.key});
@@ -11,6 +18,17 @@ class Recycle extends StatefulWidget {
 }
 
 class _RecycleState extends State<Recycle> {
+  late Future<List<RiwayatTukarSampah>> _riwayatTukarSampahFuture;
+  late final Future<List<BankSampah>> _bankSampahFuture = fetchBankSampahFromAPI();
+  double totalWeight = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _riwayatTukarSampahFuture = fetchRiwayatTukarSampah();
+    // _bankSampahFuture = fetchBankSampahFromAPI();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,104 +102,118 @@ class _RecycleState extends State<Recycle> {
                 const SizedBox(height: 15),
 
                 // Box Poin
-                Container(
-                  width: 300,
-                  height: 170,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: <Color>[
-                        Color(0xFF6AB384),
-                        Color(0xFFF2A096),
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                          left: 15,
-                          right: 10,
-                          bottom: 10,
-                        ),
-                        width: 320,
-                        height: 100,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              spreadRadius: -2,
-                              blurRadius: 8,
-                              offset: const Offset(
-                                  0, 2), // changes position of shadow
-                            ),
+                FutureBuilder<List<RiwayatTukarSampah>>(
+                  future: _riwayatTukarSampahFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    }else if(snapshot.hasError){
+                      return Text('Error: ${snapshot.error}');
+                    }else{
+                      final List<RiwayatTukarSampah> riwayatTukarSampah = snapshot.data!;
+                      totalWeight = riwayatTukarSampah.isNotEmpty? riwayatTukarSampah.map<double>((e) => (e.berat ?? 0).toDouble()).reduce((a, b) => a+b): 0;
+                    return Container(
+                      width: 300,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: <Color>[
+                            Color(0xFF6AB384),
+                            Color(0xFFF2A096),
                           ],
-                          gradient: const LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: <Color>[
-                              Color(0xFF6AB384),
-                              Color(0xFFF2A096),
-                            ],
-                          ),
                         ),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Sampah Organik yang Sudah Kamu Daur Ulang",
-                              style: TextStyle(
-                                color: Color(0xFFFFFFFF),
-                                fontFamily: 'Poppins',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              left: 15,
+                              right: 10,
+                              bottom: 10,
+                            ),
+                            width: 320,
+                            height: 100,
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  spreadRadius: -2,
+                                  blurRadius: 8,
+                                  offset: const Offset(
+                                      0, 2), // changes position of shadow
+                                ),
+                              ],
+                              gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: <Color>[
+                                  Color(0xFF6AB384),
+                                  Color(0xFFF2A096),
+                                ],
                               ),
                             ),
-                            Text("32 Kilogram",
-                                style: TextStyle(
-                                  color: Color(0xFFFFFFFF),
-                                  fontFamily: 'Poppins',
-                                  fontSize: 27,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                          ],
-                        ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Sampah Organik yang Sudah Kamu Daur Ulang",
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontFamily: 'Poppins',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text("$totalWeight Kilogram",
+                                    style: const TextStyle(
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: 'Poppins',
+                                      fontSize: 27,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                              ],
+                            ),
+                          ),
+                          
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              left: 15,
+                              right: 10,
+                              bottom: 10,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Your Poin",
+                                    style: TextStyle(
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                                Text("${currentUser?.poin ?? '0'}",
+                                    style: const TextStyle(
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: 'Poppins',
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                          left: 15,
-                          right: 10,
-                          bottom: 10,
-                        ),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Your Poin",
-                                style: TextStyle(
-                                  color: Color(0xFFFFFFFF),
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("320",
-                                style: TextStyle(
-                                  color: Color(0xFFFFFFFF),
-                                  fontFamily: 'Poppins',
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  }
+                  },
                 ),
                 const SizedBox(height: 20),
 
@@ -256,33 +288,62 @@ class _RecycleState extends State<Recycle> {
                                   ),
                                 ],
                               ),
-                              child: const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Bank Sampah Serasa",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.normal)),
-                                      Text("Rumah Talenta BCA",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.normal)),
-                                    ],
-                                  ),
-                                  Text("0,4 km",
+                              child: FutureBuilder<List<BankSampah>>(
+                                future: _bankSampahFuture,
+                                builder: (context, snapshot) {
+                                  // List<BankSampah> bankSampahList = [];
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if(snapshot.hasData) {
+                                    final List<BankSampah> bankSampahList = snapshot.data!;
+                                    final bank = bankSampahList.firstWhere((element) => element.id == 1, orElse: () => BankSampah(null, "", ""));
+                                    final String? bankName = bank.nama;
+                                    if (bankName!=null) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "Bank Sampah Serasa",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              Text(
+                                                bankName,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  const Text("0,4 km",
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.normal,
-                                          color: Color(0xFF1D8C35))),
-                                ],
+                                          color: Color(0xFF1D8C35),
+                                          ),
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return const Text('No data found');
+                                    }
+                                  }
+                                  return Container();
+                                },
                               ),
                             ),
                           ],
@@ -357,125 +418,64 @@ class _RecycleState extends State<Recycle> {
                                   ),
                                 ],
                               ),
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Oktober 31, 2023 12:09:01",
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500)),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Daur Ulang 1 Kg",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.normal)),
-                                      Text("+10 Poin",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF1D8C35),
-                                          ))
-                                    ],
-                                  ),
-                                ],
+                              child: FutureBuilder<List<RiwayatTukarSampah>>(
+                                future: _riwayatTukarSampahFuture,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Container();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (snapshot.hasData) {
+                                    final List<RiwayatTukarSampah> riwayatList =
+                                        snapshot.data!;
+                                    final top2RiwayatList = riwayatList.take(2).toList();
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: top2RiwayatList.map((riwayat) {
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              riwayat.created_at != null ? DateFormat('MMMM dd, yyyy HH:mm').format(DateTime.parse(riwayat.created_at!)) : 'No Date',
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Daur Ulang ${riwayat.berat} Kg",
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: 'Poppins',
+                                                      fontWeight: FontWeight.normal),
+                                                ),
+                                                Text(
+                                                  "+${riwayat.berat! * 10} Poin",
+                                                  style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xFF1D8C35),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    );
+                                  }
+                                  return Container();
+                                },
                               ),
                             ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                                left: 20,
-                                right: 15,
-                                bottom: 10,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFFED6055)
-                                        .withOpacity(0.3),
-                                    spreadRadius: 0,
-                                    blurRadius: 4,
-                                    offset: const Offset(
-                                        0, 0), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Oktober 31, 2023 12:09:01",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Daur Ulang 1 Kg",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.normal,
-                                          )),
-                                      Text("+10 Poin",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF1D8C35),
-                                          ))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            // Container(
-                            //   alignment: Alignment.topLeft,
-                            //   padding: const EdgeInsets.all(10),
-                            //   decoration: BoxDecoration(
-                            //     color: Colors.white,
-                            //     borderRadius: BorderRadius.circular(10),
-                            //     boxShadow: [
-                            //       BoxShadow(
-                            //         color: const Color(0xFFED6055).withOpacity(0.5),
-                            //         spreadRadius: -2,
-                            //         blurRadius: 8,
-                            //         offset: const Offset(
-                            //             0, 0), // changes position of shadow
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   child: const Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       Text("Oktober 31, 2023 12:09:01"),
-                            //       Row(
-                            //         mainAxisAlignment:
-                            //             MainAxisAlignment.spaceBetween,
-                            //         children: [
-                            //           Text("Daur Ulang 1 Kg"),
-                            //           Text("+10 Poin")
-                            //         ],
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

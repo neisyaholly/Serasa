@@ -531,7 +531,7 @@ Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampahFromAPI() async {
 }
 
 Future<List<BankSampah>> fetchBankSampahFromAPI() async {
-  final response = await http.get(
+  final response = await http.post(
     Uri.parse("$url/get-bankSampah"),
     headers: <String, String>{
       "Content-Type": "application/json",

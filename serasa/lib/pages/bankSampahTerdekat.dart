@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/navbar.dart';
+import 'package:serasa/pages/recycle.dart';
 import 'package:serasa/widgets/widget_bankSampahTerdekat.dart';
+import 'package:serasa/classes/bankSampah.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/service/http_service.dart';
 
 class BankSampahTerdekat extends StatefulWidget {
   const BankSampahTerdekat({super.key});
@@ -10,6 +14,14 @@ class BankSampahTerdekat extends StatefulWidget {
 }
 
 class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
+  late Future<List<Map<String, dynamic>>> _bankSampahFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _bankSampahFuture = fetchBankSampahMap();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +31,7 @@ class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -28,7 +40,7 @@ class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
+                          builder: (context) => const Recycle(),
                         ),
                       );
                     },
@@ -60,20 +72,41 @@ class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
             ),
             Expanded(
               child: Container(
-                // color: Colors.amber,
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  itemCount: 20,
-                  itemBuilder: (_, index) {
-                    return const WidgetBankSampahTerdekat(
-                        nama: "Serasa:",
-                        daerah: "Rumah Talenta BCA",
-                        jarak: "0,4");
+                width: MediaQuery.of(context).size.width*0.9,
+                child: FutureBuilder<List<Map<String, dynamic>>>(
+                  future: _bankSampahFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.hasData) {
+                      final List<Map<String, dynamic>> bankSampahList = snapshot.data!;
+                      return ListView.builder(
+                        padding: const EdgeInsets.all(0),
+                        itemCount: bankSampahList.length,
+                        itemBuilder: (context, index) {
+                          final bankSampah = bankSampahList[index];
+                          return WidgetBankSampahTerdekat(
+                            nama: bankSampah['nama'] ?? '',
+                            daerah: bankSampah['lokasi'] ?? '',
+                            jarak: bankSampah['jarak'] ?? '',
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('No data available'),
+                      );
+                    }
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
