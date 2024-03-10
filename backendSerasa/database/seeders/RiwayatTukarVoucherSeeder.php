@@ -5,25 +5,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RiwayatTukarSampahSeeder extends Seeder
+class RiwayatTukarVoucherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('riwayat_tukar_sampahs')->insert([
+        DB::table('riwayat_tukar_vouchers')->insert([
             [
                 'userID' => '1',
-                'berat' => '10',
-            ],
-            [
-                'userID' => '1',
-                'berat' => '30',
-            ],
-            [
-                'userID' => '1',
-                'berat' => '5',
+                'voucherID' => '1',
             ],
             // Add more dummy users as needed
         ]);

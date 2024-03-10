@@ -17,8 +17,16 @@ class VoucherUserSeeder extends Seeder
                 'voucherID' => '1',
                 'userID' => '1',
                 'terpakai' => '0',
-                'created_at' => now(),
-                'updated_at' => now(),
+            ],
+            [
+                'voucherID' => '2',
+                'userID' => '1',
+                'terpakai' => '0',
+            ],
+            [
+                'voucherID' => '3',
+                'userID' => '1',
+                'terpakai' => '1',
             ],
             // Add more dummy users as needed
         ]);

@@ -12,6 +12,11 @@ import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/riwayatTukarSampah.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/service/http_service.dart';
+import 'package:serasa/classes/voucher.dart';
+import 'package:serasa/classes/voucherUser.dart';
+import 'package:serasa/classes/bankSampah.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
 
 User? currentUser;
 
@@ -286,19 +291,6 @@ Future<List<DetailPesanan>> fetchDetailPesanans() async {
   }
 }
 
-Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampah() async {
-  try {
-    List<RiwayatTukarSampah> riwayatTukarSampah =
-        await fetchRiwayatTukarSampahFromAPI();
-    print("Success");
-    print(riwayatTukarSampah[0].berat);
-    return riwayatTukarSampah;
-  } catch (e) {
-    print('Error fetching riwayat tukar samapah: $e');
-    return [];
-  }
-}
-
 void updateAlamatUtama(int id, int userID) async {
   try {
     updateAddressUtama(id, userID);
@@ -382,5 +374,78 @@ void updateeJenisPesanan(int id) async {
     print('Pesanan arrived successfully');
   } catch (e) {
     print('Error updating confirmation arrived pesanan : $e');
+  }
+}
+
+Future<List<Voucher>> fetchVouchers() async {
+  try {
+    List<Voucher> vouchers = await getVoucher();
+    print("successsssssssssssss");
+    print(vouchers[0].nama);
+    return vouchers;
+  } catch (e) {
+    print('Error fetching : $e');
+    return [];
+  }
+}
+
+Future<List<VoucherUser>> fetchVoucherUser() async {
+  try {
+    List<VoucherUser> voucherUser = await getVoucherUser();
+    print("successsssssssssssss");
+    print(voucherUser[0].userID);
+    return voucherUser;
+  } catch (e) {
+    print('Error fetching : $e');
+    return [];
+  }
+}
+
+void updateVoucherUsers(int id) async {
+  // final int voucherId = 123; // Your voucher ID
+
+  try {
+    updateVoucherUser(id); // Await the updateVoucherUser method call
+    print('Voucher user updated successfully');
+  } catch (e) {
+    print('Error updating voucher user: $e');
+  }
+}
+
+Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampah() async {
+  try {
+    List<RiwayatTukarSampah> riwayatTukarSampah = await fetchRiwayatTukarSampahFromAPI();
+    print("Success");
+    print(riwayatTukarSampah[0].berat);
+    return riwayatTukarSampah;
+  } catch (e) {
+    print('Error fetching: $e');
+    return [];
+  }
+}
+
+Future<List<BankSampah>> fetchBankSampah() async {
+  try {
+    final response = await fetchBankSampahFromAPI();
+    print("Success");
+    print(response);
+    return response;
+  } catch (e) {
+    print('Error fetching: $e');
+    throw e; // Rethrow the exception to handle it elsewhere if needed
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchBankSampahMap() async {
+  try {
+    final List<BankSampah> bankSampahList = await fetchBankSampahFromAPI();
+    // Convert BankSampah objects to Map<String, dynamic> objects
+    final List<Map<String, dynamic>> mappedList = bankSampahList.map((bankSampah) {
+      return bankSampah.toJson(); // Use the toJson() method directly
+    }).toList();
+    return mappedList;
+  } catch (e) {
+    print('Error fetching: $e');
+    throw e; // Rethrow the exception to handle it elsewhere if needed
   }
 }

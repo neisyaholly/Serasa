@@ -12,6 +12,9 @@ import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/classes/riwayatTukarSampah.dart';
 import 'package:serasa/classes/user.dart';
+import 'package:serasa/classes/voucher.dart';
+import 'package:serasa/classes/voucherUser.dart';
+import 'package:serasa/classes/bankSampah.dart';
 
 String url = "http://10.0.2.2:8000/api";
 
@@ -361,23 +364,6 @@ Future<List<DetailPesanan>> getDetailPesanan() async {
   }
 }
 
-Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampahFromAPI() async {
-  final response = await http.get(
-    Uri.parse("$url/get-riwayatTukarSampah"),
-    headers: <String, String>{
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-  );
-
-  if (response.statusCode == 200) {
-    Iterable data = json.decode(response.body);
-    return data.map((json) => RiwayatTukarSampah.fromJson(json)).toList();
-  } else {
-    throw Exception('Failed to load riwayat tukar sampah');
-  }
-}
-
 Future<void> updateAddressUtama(int id, int userID) async {
   try {
     final response = await http.put(
@@ -467,5 +453,96 @@ Future<User?> tambahPoinQR(user) async {
   } else {
     print("Add Ppin by QR failed!");
     return null;
+  }
+}
+
+Future<List<Voucher>> getVoucher() async {
+  final response = await http.get(
+    Uri.parse("$url/get-voucher"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => Voucher.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load vouchers');
+  }
+}
+
+Future<List<VoucherUser>> getVoucherUser() async {
+  final response = await http.get(
+    Uri.parse("$url/get-voucherUser"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => VoucherUser.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load voucher user');
+  }
+}
+
+Future<void> updateVoucherUser(int id) async {
+  try {
+    final response = await http.put(
+      Uri.parse('$url/updateVoucherUser/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('Voucher user updated successfully');
+    } else if (response.statusCode == 500) {
+      throw Exception('Failed to update voucher user: ${response.body}');
+    } else {
+      throw Exception('Unexpected error occurred: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error updating voucher user: $e');
+    throw e; // Rethrow the exception for handling it outside
+  }
+}
+
+Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampahFromAPI() async {
+  final response = await http.get(
+    Uri.parse("$url/get-riwayatTukarSampah"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => RiwayatTukarSampah.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load riwayat tukar sampah');
+  }
+}
+
+Future<List<BankSampah>> fetchBankSampahFromAPI() async {
+  final response = await http.get(
+    Uri.parse("$url/get-bankSampah"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final List<dynamic> jsonData = json.decode(response.body);
+    return jsonData.map((data) => BankSampah.fromJson(data)).toList();
+  } else {
+    throw Exception('Failed to load bank sampah');
   }
 }
