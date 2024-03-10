@@ -457,7 +457,7 @@ Future<User?> tambahPoinQR(user) async {
 }
 
 Future<List<Voucher>> getVoucher() async {
-  final response = await http.get(
+  final response = await http.post(
     Uri.parse("$url/get-voucher"),
     headers: <String, String>{
       "Content-Type": "application/json",

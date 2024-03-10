@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/pages/myrewards1.dart';
 import 'package:serasa/pages/rewards.dart';
+import 'package:serasa/functions/functions.dart';
+import 'package:serasa/classes/voucher.dart';
+import 'package:serasa/classes/voucherUser.dart';
+import 'package:serasa/pages/skvoucher.dart';
 
 class RiwayatPenukaran extends StatefulWidget {
   const RiwayatPenukaran({super.key});
@@ -13,6 +17,28 @@ class RiwayatPenukaran extends StatefulWidget {
 
 class _RiwayatPenukaran extends State<RiwayatPenukaran> {
   bool _isHovered = false;
+  late List<Voucher> _vouchers = [];
+  late List<VoucherUser> _voucherUser = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVouchers();
+    _fetchVoucherUser();
+  }
+
+  void _fetchVouchers() async {
+    List<Voucher> fetchedVouchers = await fetchVouchers();
+      setState(() {
+        _vouchers = fetchedVouchers;
+    });
+  }
+  void _fetchVoucherUser() async {
+    List<VoucherUser> fetchedVoucherUser = await fetchVoucherUser();
+      setState(() {
+        _voucherUser = fetchedVoucherUser;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +143,22 @@ class _RiwayatPenukaran extends State<RiwayatPenukaran> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/rewards/voucherriwayat.png",
-                      width: 350,
-                    ),
-                  ],
+                  children: _vouchers.where((voucher) => _voucherUser.any((vu) => vu.voucherID == voucher.id && vu.terpakai == 1)).map((voucher){
+                    return GestureDetector(
+                      child: Image.network(
+                        voucher.foto!,
+                        width: 350,
+                      ),
+                      //  onTap: () {
+                      //   Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => Skvoucher(voucherID: voucher.id ?? 0),
+                      //     ),
+                      //   );
+                      // },
+                    );
+                  }).toList(),
                 ),
               ),
             ],
