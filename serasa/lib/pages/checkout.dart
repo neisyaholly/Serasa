@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pembayaran.dart';
+import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
@@ -35,16 +37,29 @@ void sementara() {
 }
 
 class _Checkout extends State<Checkout> {
+  late List<ProdukResto> coprodukRestos = [];
+  late List<int> quantities = [];
   late List<ProdukResto> _produkRestos = [];
   late List<DetailPesanan> detailPesanans = [];
+  late int selectedPaymentIndex;
+  late List<Pembayaran> _pembayarans = [];
 
   @override
   void initState() {
     super.initState();
     _fetchProdukRestos();
-    widget.selectedPaymentIndex = 0;
-    widget.selectedPaymentMethod = 'Gopay';
+    _fetchPembayarans();
+    selectedPaymentIndex = 1;
+    widget.selectedPaymentMethod = 'GoPay';
+    addQuantities();
     // convertToDetailPesanan();
+  }
+
+  void _fetchPembayarans() async {
+    List<Pembayaran> fetchedPembayarans = await fetchPembayarans();
+    setState(() {
+      _pembayarans = fetchedPembayarans;
+    });
   }
 
   void _fetchProdukRestos() async {
@@ -54,20 +69,24 @@ class _Checkout extends State<Checkout> {
     });
   }
 
+  void addQuantities() {
+    for (int i = 0; i < widget.detailkeranjangs.length; i++) {
+      quantities.add(widget.detailkeranjangs[i].qty!);
+    }
+  }
+
   String _selectedPaymentMethod = 'GoSend';
 
   void incrementQty(int index) {
     setState(() {
-      widget.detailkeranjangs[index].qty =
-          widget.detailkeranjangs[index].qty! + 1;
+      quantities[index] = quantities[index] + 1;
     });
   }
 
   void decrementQty(int index) {
     setState(() {
-      if (widget.detailkeranjangs[index].qty! > 1) {
-        widget.detailkeranjangs[index].qty =
-            widget.detailkeranjangs[index].qty! - 1;
+      if (quantities[index] > 1) {
+        quantities[index] = quantities[index] - 1;
       }
     });
   }
@@ -92,7 +111,7 @@ class _Checkout extends State<Checkout> {
     return pajak;
   }
 
-  int ongkosKirim = 0;
+  int ongkosKirim = 9000;
 
   double total = 0.0;
   double calculateTotal(int subtotal, double pajak, int ongkosKirim) {
@@ -124,6 +143,10 @@ class _Checkout extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
+    // print('test');
+    // print(_pembayarans[0].jenis);
+    // print(widget.detailkeranjangs[0].qty);
+    // print(quantities[0]);
     return Scaffold(
         backgroundColor: const Color(0xFFFFFEF8),
         body: SafeArea(
@@ -202,6 +225,9 @@ class _Checkout extends State<Checkout> {
                               orElse: () => ProdukResto(-1, -1, "", "", -1, -1,
                                   ""), // Default value if not found
                             );
+
+                            coprodukRestos.add(produkResto);
+
                             return Column(
                               children: [
                                 Container(
@@ -311,10 +337,8 @@ class _Checkout extends State<Checkout> {
                                                                     .center,
                                                             children: [
                                                               Text(
-                                                                  widget
-                                                                      .detailkeranjangs[
+                                                                  quantities[
                                                                           index]
-                                                                      .qty
                                                                       .toString(),
                                                                   style: const TextStyle(
                                                                       fontSize:
@@ -667,18 +691,26 @@ class _Checkout extends State<Checkout> {
                                 ),
                                 onPressed: () {
                                   FocusScope.of(context).unfocus();
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => PaymentPage(
-                                        resto: widget.resto,
-                                        detailkeranjangs:
-                                            widget.detailkeranjangs,
                                         selectedPaymentMethod:
                                             widget.selectedPaymentMethod,
+                                        selectedPaymentIndex:
+                                            selectedPaymentIndex,
                                       ),
                                     ),
-                                  );
+                                  ).then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        selectedPaymentIndex = value;
+                                        widget.selectedPaymentMethod =
+                                            _pembayarans[selectedPaymentIndex]
+                                                .jenis!;
+                                      });
+                                    }
+                                  });
                                 }),
                           ],
                         ),
@@ -697,7 +729,7 @@ class _Checkout extends State<Checkout> {
                                 borderRadius: BorderRadius.circular(1.0),
                               ),
                               child: Text(
-                                  widget.selectedPaymentMethod.toString(),
+                                  _pembayarans[selectedPaymentIndex].jenis!,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
@@ -721,38 +753,40 @@ class _Checkout extends State<Checkout> {
                       onPressed: () async {
                         final player = AudioPlayer();
                         player.play(AssetSource('audios/cring.mp3'));
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         const BottomNavigationBarExample(
-                        //             initialIndex: 2),
-                        //   ),
-                        // );
-                        // convertToDetailPesanan();
-                        // FocusScope.of(context).unfocus();
-                        // Pesanan? pesanan = await checkOut(
-                        //     currentUser!.id,
-                        //     widget.resto.id,
-                        //     widget.selectedPaymentIndex,
-                        //     1,
-                        //     0,
-                        //     detailPesanans);
+                        print('WOI AH EEK TEST');
+                        // print('WOI AH EEK ${currentUser!.id}');
+                        // print('WOI AH EEK ${widget.resto.id}');
+                        Pesanan? pesanan = await checkOutPesanan(
+                            currentUser!.id,
+                            widget.resto.id,
+                            selectedPaymentIndex + 1,
+                            ongkosKirim,
+                            1,
+                            0);
 
-                        // print(name + " - " + tglLahir + " - " + telp + " - " + email + " - " + password + " - " + confirmPassword);
-                        // if (pesanan is Pesanan) {
-                        //   // ignore: use_build_context_synchronously
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           const BottomNavigationBarExample(
-                        //               initialIndex: 2),
-                        //     ),
-                        //   );
-                        // } else {
-                        //   print("Create Pesanan Failed");
-                        // }
+                        // print('WOI AH EEK h ${pesanan!.id}');
+                        // print('WOI AH EEK ${coprodukRestos[1].nama}');
+                        // print('WOI AH EEK ${quantities[0]}');
+                        List<dynamic> detailPs =
+                            await checkOutDetailPesananResto(
+                                pesanan!.id, coprodukRestos, quantities);
+                        print('BERAKIE TEST');
+                        // print('WOI AH EEK length ${coprodukRestos.length}');
+                        if (detailPs.isNotEmpty) {
+                          // ignore: use_build_context_synchronously
+                          FocusScope.of(context).unfocus();
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const BottomNavigationBarExample(
+                                      initialIndex: 2),
+                            ),
+                          );
+                        } else {
+                          print("Detail Keranjangs list is empty");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 244, 99, 88),

@@ -8,13 +8,7 @@ import 'package:serasa/pages/checkout.dart';
 // ignore: must_be_immutable
 class PaymentPage extends StatefulWidget {
   PaymentPage(
-      {super.key,
-      required this.resto,
-      required this.detailkeranjangs,
-      this.selectedPaymentMethod,
-      this.selectedPaymentIndex});
-  final Resto resto;
-  final List<DetailKeranjang> detailkeranjangs;
+      {super.key, this.selectedPaymentMethod, this.selectedPaymentIndex});
   String? selectedPaymentMethod;
   int? selectedPaymentIndex;
   @override
@@ -27,6 +21,7 @@ class _PaymentPageState extends State<PaymentPage> {
   void initState() {
     super.initState();
     _fetchPembayarans();
+    widget.selectedPaymentMethod = widget.selectedPaymentMethod;
   }
 
   void _fetchPembayarans() async {
@@ -38,30 +33,19 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('halo');
+    print(widget.selectedPaymentMethod);
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       appBar: AppBar(
         backgroundColor: const Color(0xFFFFFEF8),
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
               onPressed: () {
-                if (widget.selectedPaymentMethod != null) {
-                  int selectedIndex = _pembayarans.indexWhere(
-                      (p) => p.jenis == widget.selectedPaymentMethod);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Checkout(
-                        resto: widget.resto,
-                        detailkeranjangs: widget.detailkeranjangs,
-                        selectedPaymentMethod: widget.selectedPaymentMethod,
-                        selectedPaymentIndex: selectedIndex,
-                      ),
-                    ),
-                  );
-                }
+                Navigator.pop(context, widget.selectedPaymentIndex);
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -139,6 +123,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         onChanged: (value) {
                           setState(() {
                             widget.selectedPaymentMethod = value!;
+                            widget.selectedPaymentIndex = index;
                           });
                         },
                       ),
@@ -158,21 +143,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     elevation: 2,
                   ),
                   onPressed: () {
-                    if (widget.selectedPaymentMethod != null) {
-                      int selectedIndex = _pembayarans.indexWhere(
-                          (p) => p.jenis == widget.selectedPaymentMethod);
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Checkout(
-                            resto: widget.resto,
-                            detailkeranjangs: widget.detailkeranjangs,
-                            selectedPaymentMethod: widget.selectedPaymentMethod,
-                            selectedPaymentIndex: selectedIndex,
-                          ),
-                        ),
-                      );
-                    }
+                    Navigator.pop(context, widget.selectedPaymentIndex);
                   },
                   child: const Text(
                     'Pilih',

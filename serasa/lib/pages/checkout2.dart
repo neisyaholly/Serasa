@@ -26,7 +26,7 @@ void sementara() {
 class _Checkout2 extends State<Checkout2> {
   late List<Pembayaran> _pembayarans = [];
 
-  String selectedPaymentMethod = 'Gopay';
+  String selectedPaymentMethod = 'GoPay';
 
   List<Pesanan> _pesanans = [];
 
@@ -93,7 +93,9 @@ class _Checkout2 extends State<Checkout2> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.pop(context,);
+                          Navigator.pop(
+                            context,
+                          );
                         },
                         icon: const Icon(
                           Icons.arrow_back,
@@ -512,6 +514,7 @@ class _Checkout2 extends State<Checkout2> {
                                   ),
                                 );
                               } else {
+                                print('WOI AH ELAH');
                                 final player = AudioPlayer();
                                 player.play(AssetSource('audios/cring.mp3'));
                                 Pesanan? pesanan = await checkOutPesanan(

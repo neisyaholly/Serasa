@@ -87,27 +87,6 @@ Future<dynamic> addAlamat(
   }
 }
 
-// Future<dynamic> checkOut(userID, sellerID, pembayaranID, jenis, selesai,
-//     List<DetailPesanan> detailPesanan) async {
-//   Pesanan pesanan =
-//       Pesanan(null, userID, sellerID, pembayaranID, jenis, selesai);
-
-//   List<DetailPesanan> detailPesananList = detailPesanan
-//       .map((detail) =>
-//           DetailPesanan(null, detail.pesananID, detail.produkID, detail.qty))
-//       .toList();
-
-//   dynamic request = await createPesanan(pesanan, detailPesananList);
-
-//   if (request is Pesanan) {
-//     print("Order added Successfully!");
-//     return request;
-//   } else {
-//     print("Failed To Checkout!");
-//     return null;
-//   }
-// }
-
 Future<dynamic> checkOutPesanan(
     userID, sellerID, pembayaranID, ongkir, jenis, selesai) async {
   Pesanan pesanan =
@@ -125,7 +104,7 @@ Future<dynamic> checkOutPesanan(
 
 Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
   DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
-  dynamic request = await createDetailPesananKomunitas(detailPesanan);
+  dynamic request = await createDetailPesanan(detailPesanan);
 
   if (request is DetailPesanan) {
     print("Detail Pesanan added Successfully!");
@@ -134,6 +113,28 @@ Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
     print("Failed To Checkout Detail Pesanan!");
     return null;
   }
+}
+
+Future<dynamic> checkOutDetailPesananResto(
+    pesananID, List<ProdukResto> produkRestos, List<int> quantities) async {
+  List<dynamic> result = [];
+  for (int i = 0; i < produkRestos.length;) {
+    DetailPesanan? detail =
+        DetailPesanan(null, pesananID, produkRestos[i].id, quantities[i]);
+    dynamic request = createDetailPesanan(detail);
+    i++;
+    if (request != null) {
+      print("Detail Pesanan added Successfully!");
+      result.add(request);
+    } else {
+      print("Failed To Checkout Detail Pesanan!");
+      result.add(null);
+    }
+  }
+  if (result.any((element) => element == null)) {
+    return [];
+  }
+  return result;
 }
 
 Future<List<Resto>> fetchRestos() async {
@@ -191,10 +192,9 @@ Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   }
 }
 
-Future<dynamic> addProdukKomunitas(
-    userID, nama, harga, exp, deskripsi) async {
-  
-  ProdukKomunitas pk = ProdukKomunitas(null, userID, nama, deskripsi, harga, exp, null, null, null);
+Future<dynamic> addProdukKomunitas(userID, nama, harga, exp, deskripsi) async {
+  ProdukKomunitas pk = ProdukKomunitas(
+      null, userID, nama, deskripsi, harga, exp, null, null, null);
   dynamic request = await createProdukKomunitas(pk);
   print("asdf");
   if (request is ProdukKomunitas) {
@@ -429,7 +429,8 @@ void updateVoucherUsers(int id) async {
 
 Future<List<RiwayatTukarSampah>> fetchRiwayatTukarSampah() async {
   try {
-    List<RiwayatTukarSampah> riwayatTukarSampah = await fetchRiwayatTukarSampahFromAPI();
+    List<RiwayatTukarSampah> riwayatTukarSampah =
+        await fetchRiwayatTukarSampahFromAPI();
     print("Success");
     print(riwayatTukarSampah[0].berat);
     return riwayatTukarSampah;
@@ -455,7 +456,8 @@ Future<List<Map<String, dynamic>>> fetchBankSampahMap() async {
   try {
     final List<BankSampah> bankSampahList = await fetchBankSampahFromAPI();
     // Convert BankSampah objects to Map<String, dynamic> objects
-    final List<Map<String, dynamic>> mappedList = bankSampahList.map((bankSampah) {
+    final List<Map<String, dynamic>> mappedList =
+        bankSampahList.map((bankSampah) {
       return bankSampah.toJson(); // Use the toJson() method directly
     }).toList();
     return mappedList;

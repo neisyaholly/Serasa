@@ -24,7 +24,7 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
   void initState() {
     super.initState();
     _fetchPembayarans();
-    widget.selectedPaymentMethod = 'GoPay';
+    widget.selectedPaymentMethod = widget.selectedPaymentMethod;
     widget.selectedPaymentMethodIndex = 1;
   }
 

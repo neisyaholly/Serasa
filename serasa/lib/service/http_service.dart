@@ -98,31 +98,9 @@ Future<Pesanan?> createPesanan(Pesanan pesanan) async {
   return null;
 }
 
-Future<DetailPesanan?> createDetailPesanan(
-    List<DetailPesanan> detailPesanans) async {
+Future<DetailPesanan?> createDetailPesanan(DetailPesanan detailPesanan) async {
   final response = await http.post(
     Uri.parse("$url/create-detailPesanan"),
-    headers: <String, String>{
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    body: jsonEncode(
-        detailPesanans.map((detailPesanan) => detailPesanan.toJson()).toList()),
-  );
-
-  if (response.statusCode == 200) {
-    print("Detail pesanan added successfully!");
-    return DetailPesanan.fromJson(jsonDecode(response.body));
-  } else {
-    print("Adding detail pesanan resto failed!");
-    return null;
-  }
-}
-
-Future<DetailPesanan?> createDetailPesananKomunitas(
-    DetailPesanan detailPesanan) async {
-  final response = await http.post(
-    Uri.parse("$url/create-detailPesananKomunitas"),
     headers: <String, String>{
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -133,7 +111,7 @@ Future<DetailPesanan?> createDetailPesananKomunitas(
   if (response.statusCode == 200) {
     return DetailPesanan.fromJson(jsonDecode(response.body));
   } else {
-    print("Adding pesanan komunitas failed!");
+    print("Adding pesanan failed!");
   }
 
   return null;

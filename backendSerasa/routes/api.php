@@ -44,7 +44,6 @@ Route::get('/get-riwayatTukarSampah', [BankSampahController::class, 'getRiwayatT
 Route::put('/updateVoucherUser/{id}', [VoucherController::class, 'updateVoucherUser']);
 Route::get('/get-riwayatTukarSampah', [BankSampahController::class, 'getRiwayatTukarSampah']);
 Route::post('/create-pesanan', [PesananController::class,'createPesanan']);
-Route::post('/create-detailPesanan', [PesananController::class,'createDetailPesanan']);
 Route::put('/update-pesanan/{id}', [PesananController::class,'updatePesanan']);
 Route::post('/create-keranjang', [KeranjangController::class, 'createkeranjang']);
 Route::post('/create-detailKeranjang', [KeranjangController::class, 'createDetailKeranjang']);
@@ -56,4 +55,4 @@ Route::get('/get-komunitas', [ProdukKomunitasController::class, 'getProdukKomuni
 Route::post('/create-komunitas', [ProdukKomunitasController::class, 'createProdukKomunitas']);
 Route::get('/get-pesanan', [PesananController::class, 'getPesanan']);
 Route::get('/get-detailPesanan', [PesananController::class, 'getDetailPesanan']);
-Route::post('/create-detailPesananKomunitas', [PesananController::class,'createDetailPesananKomunitas']);
+Route::post('/create-detailPesanan', [PesananController::class,'createDetailPesanan']);

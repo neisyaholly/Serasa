@@ -118,6 +118,7 @@ flutter:
     - assets/images/kategori/roti.png
     - assets/images/kategori/cemilan.png
     - assets/images/kategori/minuman.png
+    - assets/images/gudd.png
     - assets/videos/logo.mp4
     - assets/audios/cring.mp3
     - assets/videos/cut.mp4
