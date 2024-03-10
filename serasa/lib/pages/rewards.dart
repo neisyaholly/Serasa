@@ -279,7 +279,7 @@ void _handleYesButtonClick(Voucher? voucher) async {
                   decoration: BoxDecoration(color: Colors.grey.withOpacity(0.8)),
                   child: Center(
                     child: Container(
-                      child: PopUpReward(closePopUp: closePopUp, handleYesButtonClick: _handleYesButtonClick, voucher: selectedVoucher),
+                      child: PopUpReward(closePopUp: closePopUp, handleYesButtonClick: _handleYesButtonClick, voucher: selectedVoucher!),
                     ),
                   ),
                 ),

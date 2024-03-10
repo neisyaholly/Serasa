@@ -171,15 +171,24 @@ class _PengaturanState extends State<Pengaturan> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text("Hapus Akun", style: TextStyle(fontFamily: 'Poppins'),),
+                      backgroundColor: Colors.white,
+                      title: const Text(
+                        "Hapus Akun",
+                        style: TextStyle(fontFamily: 'Poppins'),
+                      ),
                       content: const Text(
-                          "Apakah Anda yakin ingin menghapus akun Anda?", style: TextStyle(fontFamily: 'Poppins'),),
+                        "Apakah Anda yakin ingin menghapus akun Anda?",
+                        style: TextStyle(fontFamily: 'Poppins'),
+                      ),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop(); // Close the dialog
                           },
-                          child: const Text("Batal", style: TextStyle(fontFamily: 'Poppins', color: Color(0xFFED6055))),
+                          child: const Text("Batal",
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFFED6055))),
                         ),
                         TextButton(
                           onPressed: () {
@@ -191,7 +200,12 @@ class _PengaturanState extends State<Pengaturan> {
                               ),
                             );
                           },
-                          child: const Text("Hapus", style: TextStyle(fontFamily: 'Poppins', color: Color(0xFFED6055)),),
+                          child: const Text(
+                            "Hapus",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Color(0xFFED6055)),
+                          ),
                         ),
                       ],
                     );

@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
 import 'package:serasa/classes/pembayaran.dart';
@@ -169,6 +170,9 @@ class _PesananPageState extends State<PesananPage> {
                                   bottom: 40,
                                   child: ElevatedButton(
                                     onPressed: () {
+                                      final player = AudioPlayer();
+                                      player.play(
+                                          AssetSource('audios/hiyaw.mp3'));
                                       updatePesanan(_pesanans.length);
                                       Navigator.pushReplacement(
                                         context,

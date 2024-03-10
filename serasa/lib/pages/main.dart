@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black,
         ),
+        dialogBackgroundColor: Colors.white,
       ),
       home: const LoadingPage(),
     );

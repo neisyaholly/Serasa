@@ -494,57 +494,131 @@ class _Checkout2 extends State<Checkout2> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              // print("woi");
-                              // print(coDetailPesanan.pesananID);
-                              // print(_pesanans.length + 1);
-                              bool hasOngoingPesanan = _pesanans
-                                  .any((pesanan) => pesanan.selesai == 0);
-                              if (hasOngoingPesanan) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Kamu sedang memiliki pesanan yang dalam proses..',
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: Color(0xFFFFFFFF),
+                                    title: const Text(
+                                      "Check Out",
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
-                                          fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    duration: const Duration(seconds: 2),
-                                  ),
-                                );
-                              } else {
-                                print('WOI AH ELAH');
-                                final player = AudioPlayer();
-                                player.play(AssetSource('audios/cring.mp3'));
-                                Pesanan? pesanan = await checkOutPesanan(
-                                    coPesanan.userID,
-                                    coPesanan.sellerID,
-                                    (coPesanan.pembayaranID! + 1),
-                                    coPesanan.ongkir,
-                                    coPesanan.jenis,
-                                    coPesanan.selesai);
-                                DetailPesanan? detailPesanan =
-                                    await checkOutDetailPesananKomunitas(
-                                        pesanan!.id,
-                                        coDetailPesanan.produkID,
-                                        coDetailPesanan.qty);
-                                if (pesanan is Pesanan &&
-                                    detailPesanan is DetailPesanan) {
-                                  // ignore: use_build_context_synchronously
-                                  FocusScope.of(context).unfocus();
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BottomNavigationBarExample(
-                                              initialIndex: 2),
+                                    content: const Text(
+                                      "Apakah Anda yakin ingin membeli pesanan ini?",
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500),
                                     ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: const Text("Batal",
+                                            style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                color: Color(0xFFED6055),
+                                                fontWeight: FontWeight.w500)),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          bool hasOngoingPesanan =
+                                              _pesanans.any((pesanan) =>
+                                                  pesanan.selesai == 0);
+                                          if (hasOngoingPesanan) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Kamu sedang memiliki pesanan yang dalam proses..',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                              ),
+                                            );
+                                          } else {
+                                            // print("woi");
+                                            // print(coDetailPesanan.pesananID);
+                                            // print(_pesanans.length + 1);
+                                            bool hasOngoingPesanan =
+                                                _pesanans.any((pesanan) =>
+                                                    pesanan.selesai == 0);
+                                            if (hasOngoingPesanan) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                    'Kamu sedang memiliki pesanan yang dalam proses..',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                ),
+                                              );
+                                            } else {
+                                              print('WOI AH ELAH');
+                                              final player = AudioPlayer();
+                                              player.play(AssetSource(
+                                                  'audios/cring.mp3'));
+                                              Pesanan? pesanan =
+                                                  await checkOutPesanan(
+                                                      coPesanan.userID,
+                                                      coPesanan.sellerID,
+                                                      (coPesanan.pembayaranID! +
+                                                          1),
+                                                      coPesanan.ongkir,
+                                                      coPesanan.jenis,
+                                                      coPesanan.selesai);
+                                              DetailPesanan? detailPesanan =
+                                                  await checkOutDetailPesananKomunitas(
+                                                      pesanan!.id,
+                                                      coDetailPesanan.produkID,
+                                                      coDetailPesanan.qty);
+                                              if (pesanan is Pesanan &&
+                                                  detailPesanan
+                                                      is DetailPesanan) {
+                                                // ignore: use_build_context_synchronously
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const BottomNavigationBarExample(
+                                                            initialIndex: 2),
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                            ;
+                                          }
+                                        },
+                                        child: const Text(
+                                          "Check Out",
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Color(0xFFED6055),
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
                                   );
-                                }
-                              }
-                              ;
+                                },
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
