@@ -17,10 +17,10 @@ class PembayaranSeeder extends Seeder
                 'jenis' => 'Cash on Delivery (CoD)',
             ],
             [
-                'jenis' => 'OVO',
+                'jenis' => 'GoPay',
             ],
             [
-                'jenis' => 'Gopay',
+                'jenis' => 'OVO',
             ],
             [
                 'jenis' => 'ShopeePay',

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_komunitas.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/detailproduk.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/paymentCommunity.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -24,22 +24,32 @@ void sementara() {
 }
 
 class _Checkout2 extends State<Checkout2> {
-  String selectedPaymentMethod = 'Cash on Delivery (CoD)';
+  late List<Pembayaran> _pembayarans = [];
+
+  String selectedPaymentMethod = 'Gopay';
 
   List<Pesanan> _pesanans = [];
 
-  late Pesanan pesanan;
-  late DetailPesanan detailPesanan;
+  late Pesanan coPesanan;
+  late DetailPesanan coDetailPesanan;
   String selectedPengambilanMethod = 'GoSend';
+  late int selectedPaymentMethodIndex = 1;
 
   @override
   void initState() {
     super.initState();
+    _fetchPembayarans();
     _fetchPesanans();
-    pesanan =
-        Pesanan(null, currentUser!.id, widget.produkKomunitas.userID, 0, 0, 0);
-    detailPesanan =
-        DetailPesanan(null, _pesanans.length, widget.produkKomunitas.id, 1);
+    coPesanan = Pesanan(null, currentUser!.id, widget.produkKomunitas.userID,
+        selectedPaymentMethodIndex, 9000, 0, 0);
+    coDetailPesanan = DetailPesanan(null, 0, widget.produkKomunitas.id, 1);
+  }
+
+  void _fetchPembayarans() async {
+    List<Pembayaran> fetchedPembayarans = await fetchPembayarans();
+    setState(() {
+      _pembayarans = fetchedPembayarans;
+    });
   }
 
   void _fetchPesanans() async {
@@ -49,7 +59,7 @@ class _Checkout2 extends State<Checkout2> {
     });
   }
 
-  int ongkosKirim = 0;
+  int ongkosKirim = 9000;
 
   int subtotal = 0;
   int calculateSubtotal() {
@@ -67,6 +77,8 @@ class _Checkout2 extends State<Checkout2> {
 
   @override
   Widget build(BuildContext context) {
+    print("test");
+    // print(_pesanans.length + 1);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -120,11 +132,11 @@ class _Checkout2 extends State<Checkout2> {
                               width: 60,
                               height: 60,
                               decoration: BoxDecoration(
-                                color: Colors.teal,
+                                // color: Colors.teal,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
-                                child: Image.asset(
+                                child: Image.network(
                                   widget.produkKomunitas.foto!,
                                   fit: BoxFit.contain,
                                 ),
@@ -155,10 +167,8 @@ class _Checkout2 extends State<Checkout2> {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset(
-                                    widget.produkKomunitas.foto!,
-                                    width: 30,
-                                    fit: BoxFit.contain,
+                                  const Icon(
+                                    Icons.person_outlined,
                                   ),
                                   const Padding(
                                       padding: EdgeInsets.only(right: 15)),
@@ -203,7 +213,13 @@ class _Checkout2 extends State<Checkout2> {
                                             width: 20),
                                         const Padding(
                                             padding: EdgeInsets.only(right: 5)),
-                                        const Text("Lokasi",
+                                        Text(
+                                            widget.produkKomunitas.kab_kota!
+                                                .substring(widget
+                                                        .produkKomunitas
+                                                        .kab_kota!
+                                                        .indexOf(' ') +
+                                                    1),
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Poppins',
@@ -268,6 +284,7 @@ class _Checkout2 extends State<Checkout2> {
                                         setState(() {
                                           selectedPengambilanMethod = value!;
                                           ongkosKirim = 0;
+                                          coPesanan.ongkir = ongkosKirim;
                                         });
                                       },
                                     ),
@@ -316,6 +333,7 @@ class _Checkout2 extends State<Checkout2> {
                                         setState(() {
                                           selectedPengambilanMethod = value!;
                                           ongkosKirim = 9000;
+                                          coPesanan.ongkir = ongkosKirim;
                                         });
                                       },
                                     ),
@@ -361,7 +379,7 @@ class _Checkout2 extends State<Checkout2> {
                                   const Text("Ongkos Kirim",
                                       style: TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
-                                  Text("Rp${ongkosKirim.toString()}",
+                                  Text("Rp${coPesanan.ongkir.toString()}",
                                       style: const TextStyle(
                                           fontSize: 16, fontFamily: 'Poppins')),
                                 ],
@@ -384,7 +402,7 @@ class _Checkout2 extends State<Checkout2> {
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'Poppins')),
                               Text(
-                                  "Rp${calculateTotal(subtotal, ongkosKirim).toInt()}",
+                                  "Rp${calculateTotal(subtotal, coPesanan.ongkir!).toInt()}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontFamily: 'Poppins',
@@ -415,7 +433,6 @@ class _Checkout2 extends State<Checkout2> {
                                       size: 20,
                                     ),
                                     onPressed: () {
-                                      FocusScope.of(context).unfocus();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -423,9 +440,24 @@ class _Checkout2 extends State<Checkout2> {
                                               PaymentCommunity(
                                             selectedPaymentMethod:
                                                 selectedPaymentMethod,
+                                            selectedPengambilanMethod:
+                                                selectedPengambilanMethod,
+                                            selectedPaymentMethodIndex:
+                                                coPesanan.pembayaranID,
                                           ),
                                         ),
-                                      );
+                                      ).then((value) {
+                                        if (value != null) {
+                                          setState(() {
+                                            selectedPaymentMethodIndex = value;
+                                            selectedPaymentMethod = _pembayarans[
+                                                    selectedPaymentMethodIndex]
+                                                .jenis!;
+                                            coPesanan.pembayaranID =
+                                                selectedPaymentMethodIndex;
+                                          });
+                                        }
+                                      });
                                     }),
                               ],
                             ),
@@ -443,8 +475,8 @@ class _Checkout2 extends State<Checkout2> {
                                         width: 2.0),
                                     borderRadius: BorderRadius.circular(1.0),
                                   ),
-                                  child: const Text("Cash on Delivery (CoD)",
-                                      style: TextStyle(
+                                  child: Text(selectedPaymentMethod,
+                                      style: const TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500)),
@@ -460,17 +492,56 @@ class _Checkout2 extends State<Checkout2> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
-                            onPressed: () {
-                              final player = AudioPlayer();
-                              player.play(AssetSource('audios/cring.mp3'));
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const BottomNavigationBarExample(
-                                          initialIndex: 2),
-                                ),
-                              );
+                            onPressed: () async {
+                              // print("woi");
+                              // print(coDetailPesanan.pesananID);
+                              // print(_pesanans.length + 1);
+                              bool hasOngoingPesanan = _pesanans
+                                  .any((pesanan) => pesanan.selesai == 0);
+                              if (hasOngoingPesanan) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Kamu sedang memiliki pesanan yang dalam proses..',
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+                              } else {
+                                final player = AudioPlayer();
+                                player.play(AssetSource('audios/cring.mp3'));
+                                Pesanan? pesanan = await checkOutPesanan(
+                                    coPesanan.userID,
+                                    coPesanan.sellerID,
+                                    (coPesanan.pembayaranID! + 1),
+                                    coPesanan.ongkir,
+                                    coPesanan.jenis,
+                                    coPesanan.selesai);
+                                DetailPesanan? detailPesanan =
+                                    await checkOutDetailPesananKomunitas(
+                                        pesanan!.id,
+                                        coDetailPesanan.produkID,
+                                        coDetailPesanan.qty);
+                                if (pesanan is Pesanan &&
+                                    detailPesanan is DetailPesanan) {
+                                  // ignore: use_build_context_synchronously
+                                  FocusScope.of(context).unfocus();
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BottomNavigationBarExample(
+                                              initialIndex: 2),
+                                    ),
+                                  );
+                                }
+                              }
+                              ;
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

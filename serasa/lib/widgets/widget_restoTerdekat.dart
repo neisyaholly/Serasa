@@ -6,12 +6,14 @@ class WidgetRestoTerdekat extends StatelessWidget {
       required this.nama,
       required this.kategori,
       required this.rate,
+      required this.logo,
       required this.jumlahRate,
       required this.jarak});
 
   final String nama;
   final String kategori;
   final String rate;
+  final String logo;
   final String jumlahRate;
   final String jarak;
 
@@ -36,7 +38,8 @@ class WidgetRestoTerdekat extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                // color: Colors.amber, borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(image: NetworkImage(logo))),
             width: 75,
             height: 75,
           ),

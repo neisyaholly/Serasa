@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Storage;
 class ProdukKomunitasController extends Controller
 {
     public function getProdukKomunitas(){
-
-        // $produkKomunitas = ProdukKomunitas::all();
         $produkKomunitas = DB::table('produk_komunitas')
         ->join('users', 'produk_komunitas.userID', '=', 'users.id')
         ->join('alamats', 'users.id', '=', 'alamats.userID')

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/pembayaran.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/checkout2.dart';
 
 // ignore: must_be_immutable
 class PaymentCommunity extends StatefulWidget {
-  PaymentCommunity({super.key, required this.selectedPaymentMethod});
+  PaymentCommunity(
+      {super.key,
+      required this.selectedPaymentMethod,
+      required this.selectedPengambilanMethod,
+      required this.selectedPaymentMethodIndex});
 
   String? selectedPaymentMethod;
+  String? selectedPengambilanMethod;
+  int? selectedPaymentMethodIndex;
 
   @override
   State<PaymentCommunity> createState() => _PaymentCommunityState();
@@ -19,6 +24,8 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
   void initState() {
     super.initState();
     _fetchPembayarans();
+    widget.selectedPaymentMethod = 'GoPay';
+    widget.selectedPaymentMethodIndex = 1;
   }
 
   void _fetchPembayarans() async {
@@ -33,13 +40,14 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFFFFEF8),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
               onPressed: () {
-                Navigator.pop(context, widget.selectedPaymentMethod);
+                Navigator.pop(context, widget.selectedPaymentMethodIndex);
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -88,64 +96,78 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
               const SizedBox(
                 height: 20,
               ),
-              Wrap(
-                runSpacing: 15.0,
-                children: List.generate(
-                  _pembayarans.length,
-                  (index) {
-                    if (index == 0) {
-                      return SizedBox(); // Skip generating this item
-                    }
-                    return Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF4F6F8),
-                        shape: BoxShape.rectangle,
+              Expanded(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Wrap(
+                        runSpacing: 15.0,
+                        children: List.generate(
+                          _pembayarans.length,
+                          (index) {
+                            // print(widget.selectedPengambilanMethod);
+                            if (widget.selectedPengambilanMethod == 'GoSend' &&
+                                index == 0) {
+                              return SizedBox
+                                  .shrink(); // Skip generating this item
+                            }
+                            return Container(
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFF4F6F8),
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: RadioListTile<String>(
+                                contentPadding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                title: Text(
+                                  _pembayarans[index].jenis.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                                value: _pembayarans[index].jenis.toString(),
+                                groupValue: widget.selectedPaymentMethod,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.selectedPaymentMethod = value!;
+                                    widget.selectedPaymentMethodIndex = index;
+                                    // print(widget.selectedPaymentMethod);
+                                  });
+                                },
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                      child: RadioListTile<String>(
-                        contentPadding:
-                            const EdgeInsets.only(left: 15, right: 15),
-                        title: Text(
-                          _pembayarans[index].jenis.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
+                      SizedBox(
+                        width: 350,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFED6055),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 2,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(
+                                context, widget.selectedPaymentMethodIndex);
+                          },
+                          child: const Text(
+                            'Pilih',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFFFFAFA),
+                            ),
                           ),
                         ),
-                        value: _pembayarans[index].jenis.toString(),
-                        groupValue: widget.selectedPaymentMethod,
-                        onChanged: (value) {
-                          setState(() {
-                            widget.selectedPaymentMethod = value!;
-                          });
-                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 280),
-              SizedBox(
-                width: 350,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFED6055),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 2,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context, widget.selectedPaymentMethod);
-                  },
-                  child: const Text(
-                    'Pilih',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFFFFFAFA),
-                    ),
+                    ],
                   ),
                 ),
               ),

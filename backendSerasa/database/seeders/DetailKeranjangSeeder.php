@@ -20,12 +20,12 @@ class DetailKeranjangSeeder extends Seeder
             ],
             [
                 'keranjangID' => '2',
-                'produkID' => '2',
+                'produkID' => '12',
                 'qty' => '1',
             ],
             [
                 'keranjangID' => '2',
-                'produkID' => '1',
+                'produkID' => '13',
                 'qty' => '2',
             ],
             [

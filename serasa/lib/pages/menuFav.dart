@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/resto.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/test.dart';
 import 'package:serasa/widgets/widget_menuFav.dart';
@@ -12,11 +15,51 @@ class MenuFav extends StatefulWidget {
 }
 
 class _MenuFavState extends State<MenuFav> {
+
+  late List<ProdukResto> _produkRestos = [];
+  late List<Resto> _restos = [];
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  void _fetchData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      List<ProdukResto> fetchedProdukResto = await fetchProdukRestos();
+      List<Resto> fetchedResto = await fetchRestos();
+      setState(() {
+        _produkRestos = fetchedProdukResto;
+        _restos = fetchedResto;
+        _restos = _restos
+          .where((detail) =>
+              _produkRestos.any((produk) => detail.id == produk.restoID))
+          .toList();
+        _isLoading = false;
+      });
+    } catch (error) {
+      print('Error fetching restos: $error');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
-      body: SafeArea(
+      body: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFED6055)),
+              ))
+            : SafeArea(
         child: Column(
           children: [
             Container(
@@ -102,14 +145,15 @@ class _MenuFavState extends State<MenuFav> {
                       child: ListView.builder(
                         // shrinkWrap: true,
                         padding: const EdgeInsets.all(0),
-                        itemCount: 10,
+                        itemCount: 6,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (_, index) {
-                          return const WidgetMenuFav(
-                              nama: "nama",
-                              resto: "nama restoran",
-                              harga1: "harga1",
-                              harga2: "harga2");
+                          return WidgetMenuFav(
+                              nama: _produkRestos[index].nama!,
+                              resto: _restos[index].nama!,
+                              foto: _produkRestos[index].foto!,
+                              harga1: _produkRestos[index].harga.toString(),
+                              harga2: (_produkRestos[index].harga! ~/ 2).toInt().toString());
                         },
                       ),
                     ),

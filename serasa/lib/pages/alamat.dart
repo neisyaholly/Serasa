@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/tambahAlamat.dart';
 
@@ -10,30 +12,65 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
-  String? _selectedAddress;
+  late String _selectedAddress = '';
 
-  List<Map<String, String>> addresses = [
-    {
-      'name': 'Nathasya',
-      'address': 'Jl. Pakuan No. 3, Kab.Bogor, Jawa Barat, ID 16810',
-      'phone': '+62123456789'
-    },
-    {
-      'name': 'Nathasya',
-      'address': 'Jl. Pakuan No. 4, Kab.Bogor, Jawa Barat, ID 16810',
-      'phone': '+62987654321'
-    },
-    {
-      'name': 'Nathasya',
-      'address': 'Jl. Pakuan No. 1, Kab.Bogor, Jawa Barat, ID 16810',
-      'phone': '+62111222333'
-    },
-    {
-      'name': 'Nathasya',
-      'address': 'Jl. Pakuan No. 2, Kab.Bogor, Jawa Barat, ID 16810',
-      'phone': '+62111222333'
-    },
-  ];
+  late List<Alamat> _alamats = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAlamat();
+  }
+
+  void _fetchAlamat() async {
+    List<Alamat> fetchedAlamats = await fetchAlamats();
+    setState(() {
+      _alamats = fetchedAlamats;
+    });
+    _alamats = _alamats
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
+    final selectedAlamat = _alamats.firstWhere((alamat) => alamat.utama == 1,
+        orElse: () => Alamat(-1, "", "", "", "", "", "", "", -1, -1));
+    _selectedAddress = selectedAlamat.id.toString();
+  }
+
+  // Future<void> _loadSelectedAddress() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _selectedAddress = prefs.getString('selectedAddress') ?? '';
+  //   });
+  // }
+
+  // Future<void> _saveSelectedAddress(String addressId) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('selectedAddress', addressId);
+  // }
+
+  // List<Map<String, String>> addresses = [
+  //   {
+  //     'name': 'Nathasya',
+  //     'address': 'Jl. Pakuan No. 3, Kab.Bogor, Jawa Barat, ID 16810',
+  //     'phone': '+62123456789'
+  //   },
+  //   {
+  //     'name': 'Nathasya',
+  //     'address': 'Jl. Pakuan No. 4, Kab.Bogor, Jawa Barat, ID 16810',
+  //     'phone': '+62987654321'
+  //   },
+  //   {
+  //     'name': 'Nathasya',
+  //     'address': 'Jl. Pakuan No. 1, Kab.Bogor, Jawa Barat, ID 16810',
+  //     'phone': '+62111222333'
+  //   },
+  //   {
+  //     'name': 'Nathasya',
+  //     'address': 'Jl. Pakuan No. 2, Kab.Bogor, Jawa Barat, ID 16810',
+  //     'phone': '+62111222333'
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +126,7 @@ class _AddressPageState extends State<AddressPage> {
             children: [
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: addresses.length,
+                itemCount: _alamats.length,
                 itemBuilder: (context, index) {
                   bool showBorder = index.isOdd;
                   return Container(
@@ -101,7 +138,7 @@ class _AddressPageState extends State<AddressPage> {
                     ),
                     child: RadioListTile<String>(
                       title: Text(
-                        '${addresses[index]['name']} | (${addresses[index]['phone']})',
+                        '${currentUser!.name!} | (${currentUser!.telp!})',
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -109,17 +146,18 @@ class _AddressPageState extends State<AddressPage> {
                         ),
                       ),
                       subtitle: Text(
-                        addresses[index]['address']!,
+                        "${_alamats[index].nama}\n${_alamats[index].jalan}, Kel. ${_alamats[index].kel}, Kec. ${_alamats[index].kec}, ${_alamats[index].kab_kota}, ${_alamats[index].provinsi} ${_alamats[index].kode_pos}",
                         style: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      value: addresses[index]['address']!,
+                      value: _alamats[index].id.toString(),
                       groupValue: _selectedAddress,
                       onChanged: (value) {
                         setState(() {
-                          _selectedAddress = value;
+                          _selectedAddress = value!;
+                          updateAlamatUtama(_alamats[index].id!, currentUser!.id!);
                         });
                       },
                     ),

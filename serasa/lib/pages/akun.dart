@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/alamat.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/pesanan.dart';
+import 'package:serasa/classes/produk_komunitas.dart';
+import 'package:serasa/classes/produk_resto.dart';
+import 'package:serasa/classes/riwayatTukarSampah.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/alamat.dart';
 import 'package:serasa/pages/editProfil.dart';
@@ -46,11 +51,19 @@ class _AkunState extends State<Akun> {
   }
 
   late List<Alamat> _alamats = [];
+  late List<Pesanan> _pesanans = [];
+  late List<DetailPesanan> _detailpes = [];
+  late List<RiwayatTukarSampah> _riwayats = [];
+  late List<ProdukResto> _produks = [];
+  late List<ProdukKomunitas> _produkKoms = [];
 
   @override
   void initState() {
     super.initState();
     _fetchAlamat();
+    _fetchPesanan();
+    _fetchRiwayat();
+    _fetchProduk();
   }
 
   void _fetchAlamat() async {
@@ -65,12 +78,79 @@ class _AkunState extends State<Akun> {
         .toList();
   }
 
+  void _fetchProduk() async {
+    List<ProdukResto> resto = await fetchProdukRestos();
+    List<ProdukKomunitas> kom = await fetchProdukKomunitass();
+    setState(() {
+      _produks = resto;
+      _produkKoms = kom;
+    });
+  }
+
+  void _fetchPesanan() async {
+    List<Pesanan> fetchedPesanans = await fetchPesanans();
+    List<DetailPesanan> fetchedDetailPesanans = await fetchDetailPesanans();
+    setState(() {
+      _pesanans = fetchedPesanans;
+      _detailpes = fetchedDetailPesanans;
+    });
+    _pesanans = _pesanans
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
+    _detailpes = _detailpes
+        .where(
+          (detail) => detail.pesananID == _pesanans[0].id,
+        )
+        .toList();
+  }
+
+  void _fetchRiwayat() async {
+    List<RiwayatTukarSampah> fetchedRiwayats = await fetchRiwayatTukarSampah();
+    setState(() {
+      _riwayats = fetchedRiwayats;
+    });
+    _riwayats = _riwayats
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
+  }
+
+  int calculateSumPrice(List<DetailPesanan> detailpes) {
+    int sumPrice = 0;
+    for (var detail in detailpes) {
+      if (_pesanans[0].jenis == 1) {
+        ProdukResto? produkResto = _produks.firstWhere(
+          (produk) => produk.id == detail.produkID,
+          orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
+        );
+        sumPrice += produkResto.harga!;
+      } else if (_pesanans[0].jenis == 0) {
+        ProdukKomunitas? produkKomunitas = _produkKoms.firstWhere(
+          (produk) => produk.id == detail.produkID,
+          orElse: () => ProdukKomunitas(-1, -1, "", "", -1, "", "", "", ""),
+        );
+        sumPrice += produkKomunitas.harga!;
+      }
+    }
+    return sumPrice;
+  }
+
   @override
   Widget build(BuildContext context) {
     Alamat? alamatUtama = _alamats.firstWhere(
       (alamat) => alamat.utama == 1,
       orElse: () => Alamat(-1, "", "", "", "", "", "", "", -1, -1),
     );
+
+    int totalBerat = 0;
+    int index = 0;
+    while (index < _riwayats.length) {
+      totalBerat += _riwayats[index].berat!;
+      index++;
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
@@ -85,6 +165,7 @@ class _AkunState extends State<Akun> {
                 children: [
                   Container(
                     color: const Color(0xFFFBDED7),
+                    width: MediaQuery.of(context).size.width * 0.5,
                     padding: const EdgeInsets.only(
                         top: 55, left: 33, right: 33, bottom: 30),
                     child: Column(
@@ -95,7 +176,9 @@ class _AkunState extends State<Akun> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.amber,
-                            // image: DecorationImage(image: NetworkImage()),
+                            image: DecorationImage(
+                                image: NetworkImage(currentUser!.foto!),
+                                fit: BoxFit.contain),
                           ),
                         ),
                         const SizedBox(
@@ -103,12 +186,14 @@ class _AkunState extends State<Akun> {
                         ),
                         Text(
                           currentUser!.name!,
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 15,
                               fontWeight: FontWeight.w700),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
                               Icons.currency_bitcoin_rounded,
@@ -129,7 +214,7 @@ class _AkunState extends State<Akun> {
                   ),
                   Container(
                     // color: Colors.amber,
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     margin: const EdgeInsets.only(
                       top: 55,
                       right: 45,
@@ -227,28 +312,31 @@ class _AkunState extends State<Akun> {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(10),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Kamu menyelamatkan 0 makanan",
-                              style: TextStyle(
+                          Text(
+                              "Kamu menyelamatkan ${_detailpes.length} makanan",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontFamily: 'Poppins',
                                   fontSize: 11)),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Text("Kamu menghemat Rp0",
-                              style: TextStyle(
+                          Text(
+                              "Kamu menghemat Rp${calculateSumPrice(_detailpes).toString()}",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontFamily: 'Poppins',
                                   fontSize: 11)),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Text("Kamu mengurangi 0 kg sampah sisa makanan",
-                              style: TextStyle(
+                          Text(
+                              "Kamu mengurangi $totalBerat kg sampah sisa makanan",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontFamily: 'Poppins',
                                   fontSize: 11)),

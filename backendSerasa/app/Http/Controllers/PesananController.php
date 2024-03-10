@@ -16,14 +16,13 @@ class PesananController extends Controller
             $pesanan->userID = $request->userID;
             $pesanan->sellerID = $request->sellerID;
             $pesanan->pembayaranID = $request->pembayaranID;
+            $pesanan->ongkir = $request->ongkir;
             $pesanan->jenis = $request->jenis;
             $pesanan->selesai = 0;
             $pesanan->save();
-            $response = ['status' => 200, 'message' => 'Pesanan created successfully'];
-            return response()->json($response, 200);
+            return response()->json($pesanan, 200);
         }catch(Exception $e){
-            $response = ['status' => 500, 'message' => $e->getMessage()];
-            return response()->json($response, 500);
+            return response()->json($pesanan, 500);
         }
     }
     public function createDetailPesanan(Request $request){
@@ -35,7 +34,7 @@ class PesananController extends Controller
                 $detailPesanan->qty = $detail['qty'];
                 $detailPesanan->save();
             }
-    
+
             $response = ['status' => 200, 'message' => 'Detail Pesanan created successfully'];
             return response()->json($response, 200);
         }catch(Exception $e){
@@ -43,6 +42,7 @@ class PesananController extends Controller
             return response()->json($response, 500);
         }
     }
+
     public function createDetailPesananKomunitas(Request $request){
         try{
             $detailPesanan = new DetailPesanan();
@@ -50,15 +50,12 @@ class PesananController extends Controller
             $detailPesanan->produkID = $request->produkID;
             $detailPesanan->qty = $request->qty;
             $detailPesanan->save();
-            $response = ['status' => 200, 'message' => 'Pesanan Komunitas created successfully'];
-            return response()->json($response, 200);
+            return response()->json($detailPesanan, 200);
         }catch(Exception $e){
-            $response = ['status' => 500, 'message' => $e->getMessage()];
-            return response()->json($response, 500);
+            return response()->json($detailPesanan, 500);
         }
     }
-    public 
-    
+
     public function updatePesanan(Request $R, Int $id){
         $pesanan = Pesanan::where('id', $id)->update(['selesai'=>1]);
     }
@@ -72,4 +69,10 @@ class PesananController extends Controller
         $pesanan = Pesanan::all();
         return response()->json($pesanan, 200);
     }
+
+    public function getDetailPesanan(){
+        $detailpesanan = DetailPesanan::all();
+        return response()->json($detailpesanan, 200);
+    }
+
 }

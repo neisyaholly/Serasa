@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/bantuan.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 
 class HelpPage extends StatefulWidget {
@@ -9,7 +11,7 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
-  // final _controller = TextEditingController();
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +114,10 @@ class _HelpPageState extends State<HelpPage> {
                       ),
                     ],
                   ),
-                  child: const TextField(
+                  child: TextField(
+                    controller: _controller,
                     maxLines: 5, // Set the maximum number of lines
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Ketik yang kamu butuhkan disini',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -148,8 +151,22 @@ class _HelpPageState extends State<HelpPage> {
                     ),
                     elevation: 3,
                   ),
-                  onPressed: () {
-                    // Handle form submission here
+                  onPressed: () async {
+                    final isi = _controller.text;
+                    FocusScope.of(context).unfocus();
+                              Bantuan? bantuan = await inputHelp(currentUser!.id, isi);
+                              if (bantuan is Bantuan) {
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BottomNavigationBarExample(initialIndex: 4),
+                                  ),
+                                );
+                              } else {
+                                print("Ask Help Failed");
+                              }
                   },
                   child: const Text(
                     'Submit',

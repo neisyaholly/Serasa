@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/login.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/tentangSerasa.dart';
@@ -164,25 +165,59 @@ class _PengaturanState extends State<Pengaturan> {
                 ],
               ),
             ),
-            Container(
-              height: 100,
-              padding: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: const Color(0xFFFACFC7))),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Hapus Akun",
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500)),
-                  Icon(
-                    Icons.delete,
-                    color: Color(0xFFED6055),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Hapus Akun", style: TextStyle(fontFamily: 'Poppins'),),
+                      content: const Text(
+                          "Apakah Anda yakin ingin menghapus akun Anda?", style: TextStyle(fontFamily: 'Poppins'),),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: const Text("Batal", style: TextStyle(fontFamily: 'Poppins', color: Color(0xFFED6055))),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            hapusAkun(currentUser!.id!);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ),
+                            );
+                          },
+                          child: const Text("Hapus", style: TextStyle(fontFamily: 'Poppins', color: Color(0xFFED6055)),),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Container(
+                height: 100,
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: const Color(0xFFFACFC7))),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Hapus Akun",
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500)),
+                    Icon(
+                      Icons.delete,
+                      color: Color(0xFFED6055),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

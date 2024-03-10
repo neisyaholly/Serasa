@@ -7,23 +7,38 @@ class WidgetPM extends StatefulWidget {
     required this.detail,
     required this.harga,
     required this.foto,
+    required this.initialQuantity,
+    required this.onQuantityChanged, // New callback function
   });
 
   final String nama;
   final String detail;
   final int harga;
   final String foto;
+  final int initialQuantity;
+  final ValueChanged<int> onQuantityChanged;
+  // final void Function(int) onQuantityChanged;
 
   @override
   State<WidgetPM> createState() => _WidgetPMState();
 }
 
 class _WidgetPMState extends State<WidgetPM> {
-  int qty = 0;
+
+  late int qty;
+
+  @override
+  void initState() {
+    super.initState();
+    qty = widget.initialQuantity;
+  }
+  // int qty = 0;
 
   void incrementQty() {
     setState(() {
       qty++;
+      widget.onQuantityChanged(qty); 
+      print('New quantity: $qty');
     });
   }
 
@@ -31,6 +46,8 @@ class _WidgetPMState extends State<WidgetPM> {
     setState(() {
       if (qty > 0) {
         qty--;
+        widget.onQuantityChanged(qty);
+        print('New quantity: $qty');
       }
     });
   }

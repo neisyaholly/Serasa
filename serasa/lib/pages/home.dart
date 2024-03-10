@@ -63,7 +63,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     List<Alamat> alamatUser = _alamats
         .where(
           (detail) => detail.userID == currentUser!.id!,

@@ -13,6 +13,7 @@ class Pesanan extends Model
         'userID',
         'sellerID',
         'pembayaranID',
+        'ongkir',
         'jenis',
         'selesai',
     ];

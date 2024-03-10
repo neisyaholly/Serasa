@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('userID');
             $table->integer('sellerID');
             $table->integer('pembayaranID');
+            $table->integer('ongkir');
             $table->integer('jenis');
             $table->integer('selesai');
             $table->timestamps();

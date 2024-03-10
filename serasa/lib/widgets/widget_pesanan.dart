@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:serasa/classes/detail_pesanan.dart';
+import 'package:serasa/classes/produk_resto.dart';
 
 class WidgetPesanan extends StatelessWidget {
   const WidgetPesanan(
       {super.key,
       required this.nama,
       required this.jumlah,
-      required this.jenis,
+      required this.namaProduk,
+      required this.totalHarga,
+      required this.foto,
+      required this.status,
       required this.harga,
+      required this.subtotal,
+      required this.pajak,
+      required this.ongkir,
+      required this.pembayaran,
       this.onPressed});
 
   final String nama;
-  final String jumlah;
-  final String jenis;
-  final String harga;
+  final List<DetailPesanan> jumlah;
+  final List<String> namaProduk;
+  final int totalHarga;
+  final String foto;
+  final String status;
+  final List<int> harga;
+  final int subtotal;
+  final int pajak;
+  final int ongkir;
+  final String pembayaran;
+
   final VoidCallback? onPressed;
 
   @override
@@ -37,10 +54,14 @@ class WidgetPesanan extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
               width: 75,
               height: 75,
+              child: Image.network(
+                foto,
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(
               width: 10,
@@ -63,7 +84,7 @@ class WidgetPesanan extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(0),
-                      itemCount: 6,
+                      itemCount: namaProduk.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (_, index) {
                         return Row(
@@ -71,7 +92,7 @@ class WidgetPesanan extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  jumlah,
+                                  jumlah[index].qty.toString(),
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal,
@@ -87,7 +108,7 @@ class WidgetPesanan extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              jenis,
+                              namaProduk[index],
                               style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.normal,
@@ -99,7 +120,7 @@ class WidgetPesanan extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Total Harga: Rp$harga",
+                    "Total Harga: Rp$totalHarga",
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,

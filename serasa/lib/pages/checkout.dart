@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
-import 'package:serasa/classes/pesanan.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';

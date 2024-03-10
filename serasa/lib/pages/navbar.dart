@@ -25,7 +25,7 @@ class _BottomNavigationBarExampleState
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     Recycle(),
-    Pesanan(),
+    PesananPage(),
     Community(),
     Akun(),
   ];
@@ -51,21 +51,14 @@ class _BottomNavigationBarExampleState
           backgroundColor: const Color(0xFFED6055),
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Beranda'),
+                icon: Icon(Icons.recycling), label: 'Daur Ulang'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.recycling),
-                label: 'Daur Ulang'),
+                icon: Icon(Icons.receipt), label: 'Pesanan'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.receipt),
-                label: 'Pesanan'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.groups_rounded),
-                label: 'Komunitas'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Akun'),
+                icon: Icon(Icons.groups_rounded), label: 'Komunitas'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Akun'),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: const Color.fromARGB(255, 255, 255, 255),

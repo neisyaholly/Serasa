@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 
 class QRPage extends StatefulWidget {
@@ -12,9 +14,13 @@ class QRPage extends StatefulWidget {
 }
 
 class _QRPage extends State<QRPage> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  QRViewController? controller;
+
   @override
   Widget build(BuildContext context) {
-    String data = "This is your QR Code. Success!";
+    String data =
+        "Hi, ${currentUser!.name!}! Your transaction are successfull, we added +10 poin to your account ^^";
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -86,13 +92,20 @@ class _QRPage extends State<QRPage> {
                   borderRadius: BorderRadius.circular(10),
                   border:
                       Border.all(color: const Color(0xFFED6055), width: 1.5)),
-              child: Transform.scale(
-                scale: 0.85,
-                child: QrImageView(
-                  data: data,
-                  version: QrVersions.auto,
-                  size: 200.0,
-                ),
+              child: Stack(
+                children: [
+                  QRView(
+                    key: qrKey,
+                    onQRViewCreated: _onQRViewCreated,
+                  ),
+                  Center(
+                    child: QrImageView(
+                      data: data,
+                      version: QrVersions.auto,
+                      size: 270.0,
+                    ),
+                  ),
+                ],
               ),
             ),
             const Padding(
@@ -120,5 +133,26 @@ class _QRPage extends State<QRPage> {
         ),
       ),
     );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      // This function will be called when a QR code is scanned
+      // print('Scanned data: ${scanData.code}');
+      //ngga jalan bang
+      try {
+        addPoinQR(currentUser!.id!, 10);
+        print("WOI");
+      } catch (e) {
+        print('Error scanning QR code: $e');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 }
