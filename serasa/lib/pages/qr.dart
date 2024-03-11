@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-// import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 
@@ -20,7 +19,7 @@ class _QRPage extends State<QRPage> {
   @override
   Widget build(BuildContext context) {
     String data =
-        "Hi, ${currentUser!.name!}! Your transaction are successfull, we added +10 poin to your account ^^";
+        "Hi, ${currentUser!.name!}! Your transaction are successfull, we added poins to your account ^^";
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 254, 248, 1),
       body: SafeArea(
@@ -138,9 +137,7 @@ class _QRPage extends State<QRPage> {
   // void _onQRViewCreated(QRViewController controller) {
   //   this.controller = controller;
   //   controller.scannedDataStream.listen((scanData) {
-  //     // This function will be called when a QR code is scanned
   //     // print('Scanned data: ${scanData.code}');
-  //     //ngga jalan bang
   //     try {
   //       addPoinQR(currentUser!.id!, 10);
   //     } catch (e) {
