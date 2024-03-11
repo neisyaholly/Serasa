@@ -86,9 +86,25 @@ class _Checkout extends State<Checkout> {
 
   String _selectedPaymentMethod = 'GoSend';
 
-  void incrementQty(int index) {
+  void incrementQty(int index, coProdukResto) {
     setState(() {
-      quantities[index] = quantities[index] + 1;
+      ProdukResto? produkResto = _produkRestos.firstWhere(
+        (produk) => produk.id == coProdukResto[index].id,
+      );
+
+      if (quantities[index] < produkResto.qty!) {
+        quantities[index] = quantities[index] + 1;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Sisa stocks yang tersedia hanya ${produkResto.qty}',
+                style: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500)),
+          ),
+        );
+      }
     });
   }
 
@@ -387,7 +403,8 @@ class _Checkout extends State<Checkout> {
                                                                         onPressed:
                                                                             () {
                                                                           incrementQty(
-                                                                              index);
+                                                                              index,
+                                                                              coprodukRestos);
                                                                         },
                                                                         icon:
                                                                             const Icon(
@@ -835,8 +852,11 @@ class _Checkout extends State<Checkout> {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          bool hasOngoingPesanan =
-                                              _pesanans.any((pesanan) =>
+                                          bool hasOngoingPesanan = _pesanans
+                                              .where((pesanan) =>
+                                                  pesanan.userID ==
+                                                  currentUser!.id)
+                                              .any((pesanan) =>
                                                   pesanan.selesai == 0);
                                           if (hasOngoingPesanan) {
                                             ScaffoldMessenger.of(context)
@@ -878,7 +898,8 @@ class _Checkout extends State<Checkout> {
                                                     pesanan!.id,
                                                     coprodukRestos,
                                                     quantities);
-                                            // print('WOI AH EEK length ${coprodukRestos.length}');
+                                            print(
+                                                'WOI AH EEK length ${coprodukRestos.length}');
                                             if (detailPs.isNotEmpty) {
                                               // ignore: use_build_context_synchronously
                                               FocusScope.of(context).unfocus();

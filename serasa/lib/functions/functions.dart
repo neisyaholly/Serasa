@@ -106,6 +106,7 @@ Future<dynamic> checkOutDetailPesananKomunitas(pesananID, produkID, qty) async {
   DetailPesanan detailPesanan = DetailPesanan(null, pesananID, produkID, qty);
   dynamic request = await createDetailPesanan(detailPesanan);
 
+  updateQuantityProdukKomunitas(produkID);
   if (request is DetailPesanan) {
     print("Detail Pesanan added Successfully!");
     return request;
@@ -123,6 +124,7 @@ Future<dynamic> checkOutDetailPesananResto(
         DetailPesanan(null, pesananID, produkRestos[i].id, quantities[i]);
     dynamic request = createDetailPesanan(detail);
     i++;
+    updateQuantityProdukResto(produkRestos[i].id!, quantities[i]);
     if (request != null) {
       print("Detail Pesanan added Successfully!");
       result.add(request);

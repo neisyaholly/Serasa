@@ -526,8 +526,11 @@ class _Checkout2 extends State<Checkout2> {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          bool hasOngoingPesanan =
-                                              _pesanans.any((pesanan) =>
+                                          bool hasOngoingPesanan = _pesanans
+                                              .where((pesanan) =>
+                                                  pesanan.userID ==
+                                                  currentUser!.id)
+                                              .any((pesanan) =>
                                                   pesanan.selesai == 0);
                                           if (hasOngoingPesanan) {
                                             ScaffoldMessenger.of(context)

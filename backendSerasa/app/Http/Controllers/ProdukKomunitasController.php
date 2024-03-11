@@ -42,4 +42,12 @@ class ProdukKomunitasController extends Controller
 
     }
 
+    public function updateQuantityProdukKomunitas(Request $request, $id){
+        $produkKomunitas = ProdukKomunitas::find($id);
+        if ($produkKomunitas) {
+            $produkKomunitas->qty = $produkKomunitas->qty - 1;
+            $produkKomunitas->save();
+        }
+    }
+
 }

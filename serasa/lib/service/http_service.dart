@@ -136,6 +136,44 @@ Future<Pesanan?> updatePesanan(int id) async {
   return null;
 }
 
+Future<ProdukKomunitas?> updateQuantityProdukKomunitas(int id) async {
+  final response = await http.put(
+    Uri.parse("$url/update-quantityProdukKomunitas/$id"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    // body: jsonEncode(pesanan),
+  );
+
+  if (response.statusCode == 200) {
+    return ProdukKomunitas.fromJson(jsonDecode(response.body));
+  } else {
+    print("Updating quantity produk komunitas failed!");
+  }
+
+  return null;
+}
+
+Future<ProdukResto?> updateQuantityProdukResto(int id, int qty) async {
+  final response = await http.put(
+    Uri.parse("$url/update-quantityProdukResto/$id/$qty"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    // body: jsonEncode(pesanan),
+  );
+
+  if (response.statusCode == 200) {
+    return ProdukResto.fromJson(jsonDecode(response.body));
+  } else {
+    print("Updating quantity produk resto failed!");
+  }
+
+  return null;
+}
+
 Future<List<Resto>> getResto() async {
   final response = await http.get(
     Uri.parse("$url/get-resto"),
@@ -524,7 +562,6 @@ Future<List<BankSampah>> fetchBankSampahFromAPI() async {
   }
 }
 
-
 Future<ProdukKomunitas?> createProdukKomunitas(pk) async {
   final response = await http.post(
     Uri.parse("$url/create-komunitas"),
@@ -556,7 +593,8 @@ Future<List<String>> getVoucherImageUrls() async {
 
   if (response.statusCode == 200) {
     Iterable data = json.decode(response.body);
-    List<String> imageUrls = data.map((json) => json['foto']).toList().cast<String>();
+    List<String> imageUrls =
+        data.map((json) => json['foto']).toList().cast<String>();
     return imageUrls;
   } else {
     throw Exception('Failed to load voucher image URLs');

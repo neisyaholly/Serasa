@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
+use App\Models\ProdukResto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -56,3 +57,5 @@ Route::post('/create-komunitas', [ProdukKomunitasController::class, 'createProdu
 Route::get('/get-pesanan', [PesananController::class, 'getPesanan']);
 Route::get('/get-detailPesanan', [PesananController::class, 'getDetailPesanan']);
 Route::post('/create-detailPesanan', [PesananController::class,'createDetailPesanan']);
+Route::put('/update-quantityProdukKomunitas/{id}', [ProdukKomunitasController::class,'updateQuantityProdukKomunitas']);
+Route::put('/update-quantityProdukResto/{id}/{qty}', [RestoController::class,'updateQuantityProdukResto']);

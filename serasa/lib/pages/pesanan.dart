@@ -27,6 +27,7 @@ class _PesananPageState extends State<PesananPage> {
   List<ProdukResto> _produkRestos = [];
   List<Resto> _restos = [];
   List<Pembayaran> _pembayarans = [];
+  List<Pesanan> _currentPesanans = [];
 
   late VideoPlayerController _controller;
   bool _isLoading = false;
@@ -61,6 +62,7 @@ class _PesananPageState extends State<PesananPage> {
         _produkRestos = fetchedProdukRestos;
         _restos = fetchedRestos;
         _pembayarans = fetchedPembayarans;
+        filterPesananByUserId();
         _isLoading = false;
       });
     } catch (error) {
@@ -105,8 +107,19 @@ class _PesananPageState extends State<PesananPage> {
     });
   }
 
+  void filterPesananByUserId() {
+    _currentPesanans = _pesanans
+        .where((pesanan) => pesanan.userID == currentUser!.id)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print('halohalo ${_currentPesanans[5].id}');
+    print('Filtered Pesanan:');
+    _currentPesanans.forEach((pesanan) {
+      print('Pesanan ID: ${pesanan.id}, User ID: ${pesanan.userID}');
+    });
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       body: _isLoading
@@ -173,7 +186,7 @@ class _PesananPageState extends State<PesananPage> {
                                       final player = AudioPlayer();
                                       player.play(
                                           AssetSource('audios/hiyaw.mp3'));
-                                      updatePesanan(_pesanans.length);
+                                      updatePesanan(_currentPesanans.length);
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -203,7 +216,7 @@ class _PesananPageState extends State<PesananPage> {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: !_pesanans
+                                  visible: !_currentPesanans
                                       .any((pesanan) => pesanan.selesai == 0),
                                   child: Container(
                                     width:
@@ -308,21 +321,28 @@ class _PesananPageState extends State<PesananPage> {
                                 Expanded(
                                   child: ListView.builder(
                                     padding: EdgeInsets.all(0),
-                                    itemCount: _pesanans.length,
+                                    itemCount: _currentPesanans.length,
                                     scrollDirection: Axis.vertical,
                                     itemBuilder: (_, index) {
-                                      int reversedIndex =
-                                          _pesanans.length - 1 - index;
+                                      int reversedIndex = index <
+                                              _currentPesanans.length
+                                          ? _currentPesanans.length - 1 - index
+                                          : 0;
+
                                       List<DetailPesanan>
                                           detailPesanansPerPesanan =
                                           _detailPesanans
                                               .where((detailPesanan) =>
                                                   detailPesanan.pesananID ==
-                                                  _pesanans[reversedIndex].id)
+                                                  _currentPesanans[
+                                                          reversedIndex]
+                                                      .id)
                                               .toList();
                                       print("test");
                                       // print(detailPesanansPerPesanan[0].id);
-                                      if (_pesanans[reversedIndex].jenis == 0) {
+                                      if (_currentPesanans[reversedIndex]
+                                              .jenis ==
+                                          0) {
                                         // Return WidgetPesanan with listProdukKomunitas
                                         // print(detailPesanansPerPesanan[0].id);
                                         print("test Komunitas");
@@ -362,18 +382,22 @@ class _PesananPageState extends State<PesananPage> {
                                         for (int i = 0;
                                             i < infoProdukDetailPesanans.length;
                                             i++) {
-                                          subtotal = infoProdukDetailPesanans[i]
-                                                  .harga! *
-                                              detailPesanansPerPesanan[i]
-                                                  .qty!
-                                                  .toDouble();
-                                          totalHarga += subtotal;
+                                          subtotal = subtotal +
+                                              (infoProdukDetailPesanans[i]
+                                                      .harga! *
+                                                  detailPesanansPerPesanan[i]
+                                                      .qty!
+                                                      .toDouble());
                                         }
                                         // print(totalHarga);
                                         // + ongkir
-                                        totalHarga += _pesanans[index].ongkir!;
+                                        totalHarga += subtotal;
+                                        totalHarga +=
+                                            _currentPesanans[reversedIndex]
+                                                .ongkir!;
                                         String status = '';
-                                        if (_pesanans[reversedIndex].selesai ==
+                                        if (_currentPesanans[reversedIndex]
+                                                .selesai ==
                                             0) {
                                           status = 'dalam proses';
                                         } else {
@@ -382,7 +406,7 @@ class _PesananPageState extends State<PesananPage> {
                                         Pembayaran? pembayaran = _pembayarans
                                             .firstWhere((pembayaran) =>
                                                 pembayaran.id ==
-                                                _pesanans[reversedIndex]
+                                                _currentPesanans[reversedIndex]
                                                     .pembayaranID);
 
                                         return WidgetPesanan(
@@ -397,7 +421,9 @@ class _PesananPageState extends State<PesananPage> {
                                           harga: hargaProdukList,
                                           subtotal: subtotal.toInt(),
                                           pajak: 0,
-                                          ongkir: _pesanans[index].ongkir!,
+                                          ongkir:
+                                              _currentPesanans[reversedIndex]
+                                                  .ongkir!,
                                           pembayaran: pembayaran.jenis!,
                                           onPressed: () {
                                             togglePopUpVisibility(
@@ -412,7 +438,9 @@ class _PesananPageState extends State<PesananPage> {
                                               harga: hargaProdukList,
                                               subtotal: subtotal.toInt(),
                                               pajak: 0,
-                                              ongkir: _pesanans[index].ongkir!,
+                                              ongkir: _currentPesanans[
+                                                      reversedIndex]
+                                                  .ongkir!,
                                               pembayaran: pembayaran.jenis!,
                                             );
                                           },
@@ -441,26 +469,29 @@ class _PesananPageState extends State<PesananPage> {
                                                 .map((info) =>
                                                     info.nama ?? "unknown")
                                                 .toList();
-                                        print(namaProdukList[0]);
+                                        // print(namaProdukList[0]);
                                         // print(namaProdukList[1]);
                                         double totalHarga = 0;
                                         double subtotal = 0;
                                         for (int i = 0;
                                             i < infoProdukDetailPesanans.length;
                                             i++) {
-                                          subtotal = infoProdukDetailPesanans[i]
-                                                  .harga! *
-                                              detailPesanansPerPesanan[i]
-                                                  .qty!
-                                                  .toDouble();
-                                          totalHarga += subtotal;
+                                          subtotal = subtotal +
+                                              (infoProdukDetailPesanans[i]
+                                                      .harga! *
+                                                  detailPesanansPerPesanan[i]
+                                                      .qty!
+                                                      .toDouble());
                                         }
+                                        totalHarga += subtotal;
                                         // Calculate tax
                                         double pajak = totalHarga * 0.11;
                                         // Add tax to totalHarga
                                         totalHarga += pajak;
                                         // + ongkir
-                                        totalHarga += _pesanans[index].ongkir!;
+                                        totalHarga +=
+                                            _currentPesanans[reversedIndex]
+                                                .ongkir!;
 
                                         Resto? resto = _restos.firstWhere(
                                             (resto) =>
@@ -469,7 +500,8 @@ class _PesananPageState extends State<PesananPage> {
                                                     .first.restoID);
 
                                         String status = '';
-                                        if (_pesanans[reversedIndex].selesai ==
+                                        if (_currentPesanans[reversedIndex]
+                                                .selesai ==
                                             0) {
                                           status = 'dalam proses';
                                         } else {
@@ -478,7 +510,7 @@ class _PesananPageState extends State<PesananPage> {
                                         Pembayaran? pembayaran = _pembayarans
                                             .firstWhere((pembayaran) =>
                                                 pembayaran.id ==
-                                                _pesanans[reversedIndex]
+                                                _currentPesanans[reversedIndex]
                                                     .pembayaranID);
                                         List<int> hargaProdukList =
                                             infoProdukDetailPesanans
@@ -494,7 +526,9 @@ class _PesananPageState extends State<PesananPage> {
                                           harga: hargaProdukList,
                                           subtotal: subtotal.toInt(),
                                           pajak: pajak.toInt(),
-                                          ongkir: _pesanans[index].ongkir!,
+                                          ongkir:
+                                              _currentPesanans[reversedIndex]
+                                                  .ongkir!,
                                           pembayaran: pembayaran.jenis!,
                                           onPressed: () {
                                             togglePopUpVisibility(
@@ -507,7 +541,9 @@ class _PesananPageState extends State<PesananPage> {
                                               harga: hargaProdukList,
                                               subtotal: subtotal.toInt(),
                                               pajak: pajak.toInt(),
-                                              ongkir: _pesanans[index].ongkir!,
+                                              ongkir: _currentPesanans[
+                                                      reversedIndex]
+                                                  .ongkir!,
                                               pembayaran: pembayaran.jenis!,
                                             );
                                           },

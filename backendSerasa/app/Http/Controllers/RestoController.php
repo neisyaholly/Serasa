@@ -16,4 +16,12 @@ class RestoController extends Controller
         $produkResto = ProdukResto::all();
         return response()->json($produkResto, 200);
     }
+
+    public function updateQuantityProdukResto(Request $request, $id, $qty){
+        $produkResto = ProdukResto::find($id);
+        if ($produkResto) {
+            $produkResto->qty -= $qty;
+            $produkResto->save();
+        }
+    }
 }

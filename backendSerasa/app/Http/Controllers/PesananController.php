@@ -57,5 +57,4 @@ class PesananController extends Controller
         $detailpesanan = DetailPesanan::all();
         return response()->json($detailpesanan, 200);
     }
-
 }
