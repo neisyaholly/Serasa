@@ -19,7 +19,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '10000',
                 'exp' => '2024-03-14',
-                'qty' => '0',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/nasgor.png',
             ],
             [

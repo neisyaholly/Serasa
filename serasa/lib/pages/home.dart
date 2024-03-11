@@ -512,19 +512,33 @@ class _HomePageState extends State<HomePage> {
                                           (rowIndex * 5) + index;
                                       String? logoUrl =
                                           _restos[adjustedIndex].logo;
-                                      return Container(
-                                        width: 60,
-                                        height: 60,
-                                        decoration: logoUrl != null
-                                            ? BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                  image: NetworkImage(logoUrl),
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              )
-                                            : null,
+                                      return GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PilihResto(
+                                                  resto:
+                                                      _restos[adjustedIndex]),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 60,
+                                          height: 60,
+                                          decoration: logoUrl != null
+                                              ? BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                    image:
+                                                        NetworkImage(logoUrl),
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
                                       );
                                     }),
                                   ),
@@ -548,17 +562,29 @@ class _HomePageState extends State<HomePage> {
                                   children: List.generate(5, (index) {
                                     int adjustedIndex =
                                         (rowIndex * 5) + index + 10;
-                                    return Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                              _restos[adjustedIndex]
-                                                  .logo
-                                                  .toString()),
-                                          fit: BoxFit.contain,
+                                    return GestureDetector(
+                                      onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PilihResto(
+                                                  resto: _restos[adjustedIndex]),
+                                            ),
+                                          );
+                                        },
+                                      child: Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                _restos[adjustedIndex]
+                                                    .logo
+                                                    .toString()),
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                       ),
                                     );
