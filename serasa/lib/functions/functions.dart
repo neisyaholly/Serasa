@@ -382,6 +382,18 @@ Future<void> hapusKeranjang(int id) async {
   }
 }
 
+Future<void> hapusDetailKeranjang(
+    List<DetailKeranjang> detailKeranjangs) async {
+  for (int i = 0; i < detailKeranjangs.length; i++) {
+    try {
+      await deleteDetailKeranjang(detailKeranjangs[i].id!);
+      print('Cart deleted successfully');
+    } catch (e) {
+      print('Error deleting cart: $e');
+    }
+  }
+}
+
 Future<dynamic> addPoinQR(userID, poin) async {
   User user = User(userID, null, null, null, null, null, poin, null, null);
   dynamic request = await tambahPoinQR(user);

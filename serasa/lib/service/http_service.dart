@@ -480,9 +480,24 @@ Future<void> deleteKeranjang(int id) async {
     },
   );
   if (response.statusCode == 200) {
-    print('User deleted successfully');
+    print('Keranjang deleted successfully');
   } else {
-    print('Failed to delete user: ${response.statusCode}');
+    print('Failed to delete keranjang: ${response.statusCode}');
+  }
+}
+
+Future<void> deleteDetailKeranjang(int id) async {
+  final response = await http.delete(
+    Uri.parse("$url/deleteDetailKeranjang/$id"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+  if (response.statusCode == 200) {
+    print('Detail keranjang deleted successfully');
+  } else {
+    print('Failed to delete detail keranjang: ${response.statusCode}');
   }
 }
 
