@@ -15,8 +15,8 @@ class ProdukKomunitasController extends Controller
         ->join('users', 'produk_komunitas.userID', '=', 'users.id')
         ->join('alamats', 'users.id', '=', 'alamats.userID')
         ->select('produk_komunitas.id','produk_komunitas.userID','produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'users.name', 'alamats.kab_kota')
-        ->where ('alamats.utama', 1)
-        // ->groupBy('produk_komunitas.id')
+        ->where('alamats.utama', 1)
+        ->where('produk_komunitas.qty', 1)
         ->get();
         return response()->json($produkKomunitas, 200);
     }
@@ -32,7 +32,7 @@ class ProdukKomunitasController extends Controller
             $pk->harga = $R->harga;
             $pk->exp = $R->exp;
             $pk->deskripsi = $R->deskripsi;
-            // $pk->foto = $R->imagePath;
+            $pk->qty = 1;
             $pk->save();
             $response = ['status' => 200, 'pk' => $pk, 'message' => 'Successfully!'];
             return response()->json($pk, 200);

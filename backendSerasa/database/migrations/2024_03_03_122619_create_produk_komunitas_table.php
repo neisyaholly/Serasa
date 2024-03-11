@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->integer('harga');
             $table->date('exp');
+            $table->integer('qty');
             $table->string('foto');
         });
     }

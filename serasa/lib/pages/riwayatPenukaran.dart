@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/riwayatTukarSampah.dart';
-import 'package:serasa/pages/recycle.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_riwayatPenukaran.dart';
-import 'package:serasa/classes/riwayatTukarSampah.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/service/http_service.dart';
 
 class RiwayatPenukaranSampah extends StatefulWidget {
   const RiwayatPenukaranSampah({super.key});
@@ -70,7 +68,7 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Recycle(),
+                        builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
                       ),
                     );
                   },

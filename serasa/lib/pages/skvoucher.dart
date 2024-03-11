@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/pages/myrewards1.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:serasa/functions/functions.dart';
 
   //  Future <void> updateVoucherUser(int voucherID) async {

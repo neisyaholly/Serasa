@@ -16,14 +16,20 @@ class RiwayatTukarSampahSeeder extends Seeder
             [
                 'userID' => '1',
                 'berat' => '10',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'userID' => '1',
                 'berat' => '30',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'userID' => '1',
                 'berat' => '5',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // Add more dummy users as needed
         ]);

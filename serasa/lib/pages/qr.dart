@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
 
@@ -14,8 +14,8 @@ class QRPage extends StatefulWidget {
 }
 
 class _QRPage extends State<QRPage> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  // QRViewController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +94,10 @@ class _QRPage extends State<QRPage> {
                       Border.all(color: const Color(0xFFED6055), width: 1.5)),
               child: Stack(
                 children: [
-                  QRView(
-                    key: qrKey,
-                    onQRViewCreated: _onQRViewCreated,
-                  ),
+                  // QRView(
+                  //   key: qrKey,
+                  //   onQRViewCreated: _onQRViewCreated,
+                  // ),
                   Center(
                     child: QrImageView(
                       data: data,
@@ -135,24 +135,23 @@ class _QRPage extends State<QRPage> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      // This function will be called when a QR code is scanned
-      // print('Scanned data: ${scanData.code}');
-      //ngga jalan bang
-      try {
-        addPoinQR(currentUser!.id!, 10);
-        print("WOI");
-      } catch (e) {
-        print('Error scanning QR code: $e');
-      }
-    });
-  }
+  // void _onQRViewCreated(QRViewController controller) {
+  //   this.controller = controller;
+  //   controller.scannedDataStream.listen((scanData) {
+  //     // This function will be called when a QR code is scanned
+  //     // print('Scanned data: ${scanData.code}');
+  //     //ngga jalan bang
+  //     try {
+  //       addPoinQR(currentUser!.id!, 10);
+  //     } catch (e) {
+  //       print('Error scanning QR code: $e');
+  //     }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller?.dispose();
+  //   super.dispose();
+  // }
 }

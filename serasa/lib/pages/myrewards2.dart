@@ -4,7 +4,6 @@ import 'package:serasa/pages/rewards.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/classes/voucherUser.dart';
-import 'package:serasa/pages/skvoucher.dart';
 
 class RiwayatPenukaran extends StatefulWidget {
   const RiwayatPenukaran({super.key});

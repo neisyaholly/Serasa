@@ -19,6 +19,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '10000',
                 'exp' => '2024-03-14',
+                'qty' => '0',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/nasgor.png',
             ],
             [
@@ -27,6 +28,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '5000',
                 'exp' => '2024-12-07',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/ropang.png',
             ],
 [
@@ -35,6 +37,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '5000',
                 'exp' => '2024-12-08',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/sotokuning.png',
             ],
 [
@@ -43,6 +46,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '8000',
                 'exp' => '2024-12-07',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/bakso.png',
             ],
 [
@@ -51,6 +55,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '9000',
                 'exp' => '2024-12-09',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/miayam.png',
             ],
 [
@@ -59,6 +64,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '8000',
                 'exp' => '2024-12-07',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/ketoprak.png',
             ],
 [
@@ -67,6 +73,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '2000',
                 'exp' => '2024-12-08',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/kopsu.png',
             ],
 [
@@ -75,6 +82,7 @@ class ProdukKomunitasSeeder extends Seeder
                 'deskripsi' => 'Lorem ipsum enak',
                 'harga' => '3500',
                 'exp' => '2024-12-07',
+                'qty' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/juspisang.png',
             ],
             // Add more dummy users as needed

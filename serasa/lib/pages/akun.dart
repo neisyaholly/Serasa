@@ -99,11 +99,8 @@ class _AkunState extends State<Akun> {
           (detail) => detail.userID == currentUser!.id,
         )
         .toList();
-    _detailpes = _detailpes
-        .where(
-          (detail) => detail.pesananID == _pesanans[0].id,
-        )
-        .toList();
+        final pesananIDs = _pesanans.map((pesanan) => pesanan.id).toList();
+        _detailpes = _detailpes.where((detail) => pesananIDs.contains(detail.pesananID)).toList();
   }
 
   void _fetchRiwayat() async {

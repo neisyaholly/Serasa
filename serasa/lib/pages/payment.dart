@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:serasa/classes/detail_keranjang.dart';
 import 'package:serasa/classes/pembayaran.dart';
-import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/pages/checkout.dart';
 
 // ignore: must_be_immutable
 class PaymentPage extends StatefulWidget {

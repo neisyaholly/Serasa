@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:serasa/pages/recycle.dart';
+import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/widgets/widget_bankSampahTerdekat.dart';
-import 'package:serasa/classes/bankSampah.dart';
 import 'package:serasa/functions/functions.dart';
-import 'package:serasa/service/http_service.dart';
 
 class BankSampahTerdekat extends StatefulWidget {
   const BankSampahTerdekat({super.key});
@@ -40,7 +37,7 @@ class _BankSampahTerdekatState extends State<BankSampahTerdekat> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Recycle(),
+                          builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
                         ),
                       );
                     },

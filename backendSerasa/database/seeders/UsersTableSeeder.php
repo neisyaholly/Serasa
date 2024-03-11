@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('user1'),
                 'poin' => '320',
                 'role' => '1',
-                'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/pfp_def.webp',
+                'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/pfp_def.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

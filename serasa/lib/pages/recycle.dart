@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:serasa/classes/riwayatTukarSampah.dart';
 import 'package:serasa/classes/bankSampah.dart';
 import 'package:serasa/pages/bankSampahTerdekat.dart';
@@ -19,7 +17,8 @@ class Recycle extends StatefulWidget {
 
 class _RecycleState extends State<Recycle> {
   late Future<List<RiwayatTukarSampah>> _riwayatTukarSampahFuture;
-  late final Future<List<BankSampah>> _bankSampahFuture = fetchBankSampahFromAPI();
+  late final Future<List<BankSampah>> _bankSampahFuture =
+      fetchBankSampahFromAPI();
   double totalWeight = 0.0;
 
   @override
@@ -64,14 +63,13 @@ class _RecycleState extends State<Recycle> {
 
                 // Scan
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const QRPage(),
-                        ),
-                      );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const QRPage(),
+                      ),
+                    );
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -107,112 +105,116 @@ class _RecycleState extends State<Recycle> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container();
-                    }else if(snapshot.hasError){
+                    } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
-                    }else{
-                      final List<RiwayatTukarSampah> riwayatTukarSampah = snapshot.data!;
-                      totalWeight = riwayatTukarSampah.isNotEmpty? riwayatTukarSampah.map<double>((e) => (e.berat ?? 0).toDouble()).reduce((a, b) => a+b): 0;
-                    return Container(
-                      width: 300,
-                      height: 170,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: <Color>[
-                            Color(0xFF6AB384),
-                            Color(0xFFF2A096),
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              left: 15,
-                              right: 10,
-                              bottom: 10,
-                            ),
-                            width: 320,
-                            height: 100,
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  spreadRadius: -2,
-                                  blurRadius: 8,
-                                  offset: const Offset(
-                                      0, 2), // changes position of shadow
-                                ),
-                              ],
-                              gradient: const LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: <Color>[
-                                  Color(0xFF6AB384),
-                                  Color(0xFFF2A096),
-                                ],
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Sampah Organik yang Sudah Kamu Daur Ulang",
-                                  style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
-                                    fontFamily: 'Poppins',
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text("$totalWeight Kilogram",
-                                    style: const TextStyle(
-                                      color: Color(0xFFFFFFFF),
-                                      fontFamily: 'Poppins',
-                                      fontSize: 27,
-                                      fontWeight: FontWeight.w700,
-                                    )),
-                              ],
-                            ),
+                    } else {
+                      final List<RiwayatTukarSampah> riwayatTukarSampah =
+                          snapshot.data!;
+                      totalWeight = riwayatTukarSampah.isNotEmpty
+                          ? riwayatTukarSampah
+                              .map<double>((e) => (e.berat ?? 0).toDouble())
+                              .reduce((a, b) => a + b)
+                          : 0;
+                      return Container(
+                        width: 300,
+                        height: 170,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: <Color>[
+                              Color(0xFF6AB384),
+                              Color(0xFFF2A096),
+                            ],
                           ),
-                          
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              left: 15,
-                              right: 10,
-                              bottom: 10,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Your Poin",
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                left: 15,
+                                right: 10,
+                                bottom: 10,
+                              ),
+                              width: 320,
+                              height: 100,
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.25),
+                                    spreadRadius: -2,
+                                    blurRadius: 8,
+                                    offset: const Offset(
+                                        0, 2), // changes position of shadow
+                                  ),
+                                ],
+                                gradient: const LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: <Color>[
+                                    Color(0xFF6AB384),
+                                    Color(0xFFF2A096),
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Sampah Organik yang Sudah Kamu Daur Ulang",
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontFamily: 'Poppins',
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.w500,
-                                    )),
-                                Text("${currentUser?.poin ?? '0'}",
-                                    style: const TextStyle(
-                                      color: Color(0xFFFFFFFF),
-                                      fontFamily: 'Poppins',
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700,
-                                    )),
-                              ],
+                                    ),
+                                  ),
+                                  Text("$totalWeight Kilogram",
+                                      style: const TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: 'Poppins',
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w700,
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                left: 15,
+                                right: 10,
+                                bottom: 10,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text("Your Poin",
+                                      style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                  Text("${currentUser?.poin ?? '0'}",
+                                      style: const TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontFamily: 'Poppins',
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.w700,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 20),
@@ -297,11 +299,14 @@ class _RecycleState extends State<Recycle> {
                                     return Container();
                                   } else if (snapshot.hasError) {
                                     return Text('Error: ${snapshot.error}');
-                                  } else if(snapshot.hasData) {
-                                    final List<BankSampah> bankSampahList = snapshot.data!;
-                                    final bank = bankSampahList.firstWhere((element) => element.id == 1, orElse: () => BankSampah(null, "", ""));
+                                  } else if (snapshot.hasData) {
+                                    final List<BankSampah> bankSampahList =
+                                        snapshot.data!;
+                                    final bank = bankSampahList.firstWhere(
+                                        (element) => element.id == 1,
+                                        orElse: () => BankSampah(null, "", ""));
                                     final String? bankName = bank.nama;
-                                    if (bankName!=null) {
+                                    if (bankName != null) {
                                       return Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -328,13 +333,14 @@ class _RecycleState extends State<Recycle> {
                                               ),
                                             ],
                                           ),
-                                  const Text("0,4 km",
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.normal,
-                                          color: Color(0xFF1D8C35),
-                                          ),
+                                          const Text(
+                                            "0,4 km",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0xFF1D8C35),
+                                            ),
                                           ),
                                         ],
                                       );
@@ -429,7 +435,8 @@ class _RecycleState extends State<Recycle> {
                                   } else if (snapshot.hasData) {
                                     final List<RiwayatTukarSampah> riwayatList =
                                         snapshot.data!;
-                                    final top2RiwayatList = riwayatList.take(2).toList();
+                                    final top2RiwayatList =
+                                        riwayatList.take(2).toList();
                                     return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -439,7 +446,12 @@ class _RecycleState extends State<Recycle> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              riwayat.created_at != null ? DateFormat('MMMM dd, yyyy HH:mm').format(DateTime.parse(riwayat.created_at!)) : 'No Date',
+                                              riwayat.created_at != null
+                                                  ? DateFormat(
+                                                          'MMMM dd, yyyy HH:mm')
+                                                      .format(DateTime.parse(
+                                                          riwayat.created_at!))
+                                                  : 'No Date',
                                               style: const TextStyle(
                                                   fontSize: 13,
                                                   fontFamily: 'Poppins',
@@ -447,14 +459,16 @@ class _RecycleState extends State<Recycle> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   "Daur Ulang ${riwayat.berat} Kg",
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontFamily: 'Poppins',
-                                                      fontWeight: FontWeight.normal),
+                                                      fontWeight:
+                                                          FontWeight.normal),
                                                 ),
                                                 Text(
                                                   "+${riwayat.berat! * 10} Poin",
