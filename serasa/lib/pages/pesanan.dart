@@ -50,15 +50,15 @@ class _PesananPageState extends State<PesananPage> {
     try {
       List<Pesanan> fetchedPesanans = await fetchPesanans();
       List<DetailPesanan> fetchedDetailPesanans = await fetchDetailPesanans();
-      List<ProdukKomunitas> fetchedProdukKomunitass =
-          await fetchProdukKomunitass();
+      List<ProdukKomunitas> fetchedAllProdukKomunitass =
+          await fetchAllProdukKomunitass();
       List<ProdukResto> fetchedProdukRestos = await fetchProdukRestos();
       List<Resto> fetchedRestos = await fetchRestos();
       List<Pembayaran> fetchedPembayarans = await fetchPembayarans();
       setState(() {
         _pesanans = fetchedPesanans;
         _detailPesanans = fetchedDetailPesanans;
-        _produkKomunitass = fetchedProdukKomunitass;
+        _produkKomunitass = fetchedAllProdukKomunitass;
         _produkRestos = fetchedProdukRestos;
         _restos = fetchedRestos;
         _pembayarans = fetchedPembayarans;

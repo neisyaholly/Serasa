@@ -155,6 +155,7 @@ Future<ProdukKomunitas?> updateQuantityProdukKomunitas(int id) async {
   return null;
 }
 
+// update-quantityProdukResto/{id}/{qty}
 Future<ProdukResto?> updateQuantityProdukResto(int id, int qty) async {
   final response = await http.put(
     Uri.parse("$url/update-quantityProdukResto/$id/$qty"),
@@ -328,6 +329,23 @@ Future<List<ProdukKomunitas>> getProdukKomunitas() async {
   }
 }
 
+Future<List<ProdukKomunitas>> getAllProdukKomunitas() async {
+  final response = await http.get(
+    Uri.parse("$url/get-allKomunitas"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+
+  if (response.statusCode == 200) {
+    Iterable data = json.decode(response.body);
+    return data.map((json) => ProdukKomunitas.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load produk komunitas');
+  }
+}
+
 Future<List<Alamat>> getAlamat() async {
   final response = await http.get(
     Uri.parse("$url/get-address"),
@@ -441,6 +459,21 @@ Future<User?> updateProfil(user) async {
 Future<void> deleteUser(int id) async {
   final response = await http.delete(
     Uri.parse("$url/deleteUser/$id"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  );
+  if (response.statusCode == 200) {
+    print('User deleted successfully');
+  } else {
+    print('Failed to delete user: ${response.statusCode}');
+  }
+}
+
+Future<void> deleteKeranjang(int id) async {
+  final response = await http.delete(
+    Uri.parse("$url/deleteKeranjang/$id"),
     headers: <String, String>{
       "Content-Type": "application/json",
       "Accept": "application/json",

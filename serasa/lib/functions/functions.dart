@@ -123,8 +123,8 @@ Future<dynamic> checkOutDetailPesananResto(
     DetailPesanan? detail =
         DetailPesanan(null, pesananID, produkRestos[i].id, quantities[i]);
     dynamic request = createDetailPesanan(detail);
-    i++;
     updateQuantityProdukResto(produkRestos[i].id!, quantities[i]);
+    i++;
     if (request != null) {
       print("Detail Pesanan added Successfully!");
       result.add(request);
@@ -186,6 +186,17 @@ Future<List<DetailKeranjang>> fetchDetailKeranjangs() async {
 Future<List<ProdukKomunitas>> fetchProdukKomunitass() async {
   try {
     List<ProdukKomunitas> produkKomunitass = await getProdukKomunitas();
+    print(produkKomunitass.length);
+    return produkKomunitass;
+  } catch (e) {
+    print('Error fetching produk komunitas: $e');
+    return [];
+  }
+}
+
+Future<List<ProdukKomunitas>> fetchAllProdukKomunitass() async {
+  try {
+    List<ProdukKomunitas> produkKomunitass = await getAllProdukKomunitas();
     print(produkKomunitass.length);
     return produkKomunitass;
   } catch (e) {
@@ -359,6 +370,15 @@ Future<void> hapusAkun(int id) async {
     print('Acc deleted successfully');
   } catch (e) {
     print('Error deleting acc: $e');
+  }
+}
+
+Future<void> hapusKeranjang(int id) async {
+  try {
+    await deleteKeranjang(id);
+    print('Cart deleted successfully');
+  } catch (e) {
+    print('Error deleting cart: $e');
   }
 }
 

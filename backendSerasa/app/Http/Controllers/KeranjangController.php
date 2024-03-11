@@ -55,4 +55,17 @@ class KeranjangController extends Controller
         $detailKeranjang = DetailKeranjang::all();
         return response()->json($detailKeranjang, 200);
     }
+
+    public function deleteKeranjang(Request $request) {
+        try {
+            $keranjang = Keranjang::find($request->id);
+            if (!$keranjang) {
+                return response()->json(['message' => 'Keranjang not found'], 404);
+            }
+            $keranjang->delete();
+            return response()->json(['message' => 'Keranjang deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete keranjanf: ' . $e->getMessage()], 500);
+        }
+    }
 }

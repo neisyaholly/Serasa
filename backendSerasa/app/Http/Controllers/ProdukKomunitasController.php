@@ -14,9 +14,18 @@ class ProdukKomunitasController extends Controller
         $produkKomunitas = DB::table('produk_komunitas')
         ->join('users', 'produk_komunitas.userID', '=', 'users.id')
         ->join('alamats', 'users.id', '=', 'alamats.userID')
-        ->select('produk_komunitas.id','produk_komunitas.userID','produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'users.name', 'alamats.kab_kota')
+        ->select('produk_komunitas.id','produk_komunitas.userID','produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'produk_komunitas.qty','users.name', 'alamats.kab_kota')
         ->where('alamats.utama', 1)
         ->where('produk_komunitas.qty', 1)
+        ->get();
+        return response()->json($produkKomunitas, 200);
+    }
+    public function getAllProdukKomunitas(){
+        $produkKomunitas = DB::table('produk_komunitas')
+        ->join('users', 'produk_komunitas.userID', '=', 'users.id')
+        ->join('alamats', 'users.id', '=', 'alamats.userID')
+        ->select('produk_komunitas.id','produk_komunitas.userID','produk_komunitas.nama', 'produk_komunitas.harga', 'produk_komunitas.deskripsi', 'produk_komunitas.exp', 'produk_komunitas.foto', 'produk_komunitas.qty','users.name', 'alamats.kab_kota')
+        ->where('alamats.utama', 1)
         ->get();
         return response()->json($produkKomunitas, 200);
     }
@@ -24,7 +33,6 @@ class ProdukKomunitasController extends Controller
     public function createProdukKomunitas(Request $R){
 
         // Storage::put('local')->put('public', 'Contents');
-
         try{
             $pk = new ProdukKomunitas();
             $pk->userID = $R->userID;

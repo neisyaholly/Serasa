@@ -898,6 +898,10 @@ class _Checkout extends State<Checkout> {
                                                     pesanan!.id,
                                                     coprodukRestos,
                                                     quantities);
+
+                                            hapusKeranjang(widget
+                                                .detailkeranjangs[0]
+                                                .keranjangID!);
                                             print(
                                                 'WOI AH EEK length ${coprodukRestos.length}');
                                             if (detailPs.isNotEmpty) {

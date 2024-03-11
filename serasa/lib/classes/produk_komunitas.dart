@@ -8,18 +8,10 @@ class ProdukKomunitas {
   String? foto;
   String? name;
   String? kab_kota;
+  int? qty;
 
-  ProdukKomunitas(
-    this.id,
-    this.userID,
-    this.nama,
-    this.deskripsi,
-    this.harga,
-    this.exp,
-    this.foto,
-    this.name,
-    this.kab_kota
-  );
+  ProdukKomunitas(this.id, this.userID, this.nama, this.deskripsi, this.harga,
+      this.exp, this.foto, this.name, this.kab_kota);
 
   //buat ngubah objek user di atas jadi string json
   Map<String, dynamic> toJson() => {
@@ -37,15 +29,14 @@ class ProdukKomunitas {
   //buat ubah data berparameter json jadi objek user
   factory ProdukKomunitas.fromJson(Map<String, dynamic> json) {
     return ProdukKomunitas(
-      json['id'],
-      json['userID'],
-      json['nama'],
-      json['deskripsi'],
-      json['harga'],
-      json['exp'],
-      json['foto'],
-      json['name'],
-      json['kab_kota']
-    );
+        json['id'],
+        json['userID'],
+        json['nama'],
+        json['deskripsi'],
+        json['harga'],
+        json['exp'],
+        json['foto'],
+        json['name'],
+        json['kab_kota']);
   }
 }

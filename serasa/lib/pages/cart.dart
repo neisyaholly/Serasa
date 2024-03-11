@@ -136,7 +136,10 @@ class _CartState extends State<Cart> {
                           itemCount: _keranjangs.length,
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
-                            Keranjang keranjang = _keranjangs[index];
+                            int reversedIndex = index < _keranjangs.length
+                                ? _keranjangs.length - 1 - index
+                                : 0;
+                            Keranjang keranjang = _keranjangs[reversedIndex];
                             // Find the matching DetailKeranjang where keranjangID matches id
                             DetailKeranjang detailKeranjang =
                                 _detailKeranjangs.firstWhere(

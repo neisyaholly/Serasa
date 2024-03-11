@@ -21,7 +21,6 @@ class _CommunityState extends State<Community> {
   final ScrollController _controller = ScrollController();
   bool _isVisible = true;
 
-
   List<ProdukKomunitas> _produkKomunitass = [];
 
   @override
