@@ -16,7 +16,6 @@ import 'package:serasa/service/http_service.dart';
 import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/classes/voucherUser.dart';
 import 'package:serasa/classes/bankSampah.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 
 User? currentUser;

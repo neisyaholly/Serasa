@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/detail_pesanan.dart';
-import 'package:serasa/classes/produk_resto.dart';
 
 class WidgetPesanan extends StatelessWidget {
   const WidgetPesanan(
