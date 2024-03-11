@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 'telp' => '0852',
                 'email' => 'ariya@gmail.com',
                 'password' => Hash::make('user2'),
-                'poin' => '67',
+                'poin' => '70',
                 'role' => '1',
                 'foto' => 'https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/pfp.png',
                 'created_at' => now(),

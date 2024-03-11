@@ -145,7 +145,8 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                             child: Text('Error: ${snapshot.error}'),
                           );
                         } else if (snapshot.hasData) {
-                          final List<RiwayatTukarSampah> riwayatList = snapshot.data!;
+                          final List<RiwayatTukarSampah> riwayatLists = snapshot.data!;
+                          final List<RiwayatTukarSampah> riwayatList = riwayatLists.where((riwayat) => riwayat.userID == currentUser!.id).toList();
                           return ListView.builder(
                             padding: const EdgeInsets.all(0),
                             itemCount: riwayatList.length,

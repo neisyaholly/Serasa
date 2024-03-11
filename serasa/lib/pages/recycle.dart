@@ -108,8 +108,9 @@ class _RecycleState extends State<Recycle> {
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
-                      final List<RiwayatTukarSampah> riwayatTukarSampah =
+                      final List<RiwayatTukarSampah> riwayatTukarSampahs =
                           snapshot.data!;
+                      final List<RiwayatTukarSampah> riwayatTukarSampah = riwayatTukarSampahs.where((riwayat) => riwayat.userID == currentUser!.id).toList();
                       totalWeight = riwayatTukarSampah.isNotEmpty
                           ? riwayatTukarSampah
                               .map<double>((e) => (e.berat ?? 0).toDouble())
@@ -433,8 +434,9 @@ class _RecycleState extends State<Recycle> {
                                   } else if (snapshot.hasError) {
                                     return Text('Error: ${snapshot.error}');
                                   } else if (snapshot.hasData) {
-                                    final List<RiwayatTukarSampah> riwayatList =
+                                    final List<RiwayatTukarSampah> riwayatLists =
                                         snapshot.data!;
+                                    final List<RiwayatTukarSampah> riwayatList = riwayatLists.where((riwayat) => riwayat.userID == currentUser!.id).toList();
                                     final top2RiwayatList =
                                         riwayatList.take(2).toList();
                                     return Column(
