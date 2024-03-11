@@ -28,15 +28,21 @@ class _RiwayatPenukaran extends State<RiwayatPenukaran> {
 
   void _fetchVouchers() async {
     List<Voucher> fetchedVouchers = await fetchVouchers();
-      setState(() {
-        _vouchers = fetchedVouchers;
+    setState(() {
+      _vouchers = fetchedVouchers;
     });
   }
+
   void _fetchVoucherUser() async {
     List<VoucherUser> fetchedVoucherUser = await fetchVoucherUser();
-      setState(() {
-        _voucherUser = fetchedVoucherUser;
+    setState(() {
+      _voucherUser = fetchedVoucherUser;
     });
+    _voucherUser = _voucherUser
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
   }
 
   @override
@@ -82,7 +88,8 @@ class _RiwayatPenukaran extends State<RiwayatPenukaran> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
+                padding:
+                    const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -142,7 +149,10 @@ class _RiwayatPenukaran extends State<RiwayatPenukaran> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: _vouchers.where((voucher) => _voucherUser.any((vu) => vu.voucherID == voucher.id && vu.terpakai == 1)).map((voucher){
+                  children: _vouchers
+                      .where((voucher) => _voucherUser.any((vu) =>
+                          vu.voucherID == voucher.id && vu.terpakai == 1))
+                      .map((voucher) {
                     return GestureDetector(
                       child: Image.network(
                         voucher.foto!,

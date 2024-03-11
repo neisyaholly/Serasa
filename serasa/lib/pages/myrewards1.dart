@@ -53,15 +53,21 @@ class _VoucherAktif extends State<VoucherAktif> {
 
   void _fetchVouchers() async {
     List<Voucher> fetchedVouchers = await fetchVouchers();
-      setState(() {
-        _vouchers = fetchedVouchers;
+    setState(() {
+      _vouchers = fetchedVouchers;
     });
   }
+
   void _fetchVoucherUser() async {
     List<VoucherUser> fetchedVoucherUser = await fetchVoucherUser();
-      setState(() {
-        _voucherUser = fetchedVoucherUser;
+    setState(() {
+      _voucherUser = fetchedVoucherUser;
     });
+    _voucherUser = _voucherUser
+        .where(
+          (detail) => detail.userID == currentUser!.id,
+        )
+        .toList();
   }
 
   @override
@@ -107,7 +113,8 @@ class _VoucherAktif extends State<VoucherAktif> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
+                padding:
+                    const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -167,17 +174,22 @@ class _VoucherAktif extends State<VoucherAktif> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: _vouchers.where((voucher) => _voucherUser.any((vu) => vu.voucherID == voucher.id && vu.terpakai == 0)).map((voucher){
+                  children: _vouchers
+                      .where((voucher) => _voucherUser.any((vu) =>
+                          vu.voucherID == voucher.id && vu.terpakai == 0))
+                      .map((voucher) {
                     return GestureDetector(
                       child: Image.network(
                         voucher.foto!,
                         width: 350,
                       ),
-                       onTap: () {
+                      onTap: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Skvoucher(vouchers: _vouchers, voucherID: voucher.id ?? 0),
+                            builder: (context) => Skvoucher(
+                                vouchers: _vouchers,
+                                voucherID: voucher.id ?? 0),
                           ),
                         );
                       },
