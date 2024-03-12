@@ -149,10 +149,14 @@ class _RiwayatPenukaran extends State<RiwayatPenukaran> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: _vouchers
-                      .where((voucher) => _voucherUser.any((vu) =>
-                          vu.voucherID == voucher.id && vu.terpakai == 1))
-                      .map((voucher) {
+                  // children: _vouchers
+                  //     .where((voucher) => _voucherUser.any((vu) =>
+                  //         vu.voucherID == voucher.id && vu.terpakai == 1))
+                  //     .map((voucher) {
+                  children:
+                      _voucherUser.where((vu) => vu.terpakai == 1).map((vu) {
+                    var voucher = _vouchers
+                        .firstWhere((voucher) => voucher.id == vu.voucherID);
                     return GestureDetector(
                       child: Image.network(
                         voucher.foto!,

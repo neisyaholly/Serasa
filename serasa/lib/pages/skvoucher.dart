@@ -15,9 +15,10 @@ import 'package:serasa/functions/functions.dart';
   // }
 
 class Skvoucher extends StatefulWidget {
+  final int vuID;
   final int voucherID;
   final List<Voucher> vouchers;
-  const Skvoucher({super.key, required this.vouchers, required this.voucherID});
+  const Skvoucher({super.key, required this.vuID, required this.vouchers, required this.voucherID});
 
   @override
   State<Skvoucher> createState() {
@@ -192,7 +193,7 @@ class _Skvoucher extends State<Skvoucher> {
                         width: 342,
                         child: ElevatedButton(
                           onPressed: () async{
-                            updateVoucherUsers(widget.voucherID);
+                            updateVoucherUsers(widget.vuID);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

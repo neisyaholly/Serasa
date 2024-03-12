@@ -174,10 +174,15 @@ class _VoucherAktif extends State<VoucherAktif> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  children: _vouchers
-                      .where((voucher) => _voucherUser.any((vu) =>
-                          vu.voucherID == voucher.id && vu.terpakai == 0))
-                      .map((voucher) {
+                  // children: _vouchers
+                  //     .where((voucher) => _voucherUser.any((vu) =>
+                  //         vu.voucherID == voucher.id && vu.terpakai == 0))
+                  //     .map((voucher) {
+                  children: _voucherUser
+                      .where((vu) => vu.terpakai == 0)
+                      .map((vu) {
+                    var voucher = _vouchers
+                        .firstWhere((voucher) => voucher.id == vu.voucherID);
                     return GestureDetector(
                       child: Image.network(
                         voucher.foto!,
@@ -188,6 +193,7 @@ class _VoucherAktif extends State<VoucherAktif> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => Skvoucher(
+                                vuID: vu.id!,
                                 vouchers: _vouchers,
                                 voucherID: voucher.id ?? 0),
                           ),

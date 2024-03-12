@@ -82,7 +82,10 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                   margin: const EdgeInsets.all(10),
                   width: 140,
                   height: 140,
-                  decoration: const BoxDecoration(color: Colors.amber),
+                  decoration: const BoxDecoration(
+                    color: Colors.amber,
+                    image: DecorationImage(image: NetworkImage('j'))
+                  ),
                 ),
                 Opacity(
                   opacity: 0,
