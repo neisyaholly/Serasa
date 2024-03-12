@@ -28,16 +28,6 @@ class _LoadingPageState extends State<LoadingPage> {
     _controller.setLooping(false);
     _controller.setVolume(0.0);
     _controller.play();
-
-    // _chewieController = ChewieController(
-    //   videoPlayerController: _videoPlayerController,
-    //   autoPlay: true,
-    //   looping: false,
-    //   showControls: false,
-    //   allowedScreenSleep: false,
-    //   deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-    //   // aspectRatio: _videoPlayerController.value.aspectRatio,
-    // );
   }
 
   @override

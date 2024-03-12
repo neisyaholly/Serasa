@@ -30,8 +30,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('halo');
-    print(widget.selectedPaymentMethod);
+    // print(widget.selectedPaymentMethod);
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       appBar: AppBar(
@@ -97,7 +96,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   _pembayarans.length,
                   (index) {
                     if (index == 0) {
-                      return SizedBox(); // Skip generating this item
+                      return const SizedBox();
                     }
                     return Container(
                       decoration: const BoxDecoration(

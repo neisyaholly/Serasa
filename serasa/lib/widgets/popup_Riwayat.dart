@@ -28,7 +28,7 @@ class _PopUpRiwayatState extends State<PopUpRiwayat> {
     String pembayaran = widget.popupParams['pembayaran'];
     print(nama);
     return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 70, left: 24, right: 24),
+      padding: const EdgeInsets.only(top: 20, bottom: 70, left: 24, right: 24),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       height: MediaQuery.of(context).size.height * 0.6,
@@ -79,7 +79,7 @@ class _PopUpRiwayatState extends State<PopUpRiwayat> {
           Container(
             height: jumlah.length * 20.0,
             child: ListView.builder(
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 itemCount: jumlah.length,
                 itemBuilder: (_, index) {
                   return Container(

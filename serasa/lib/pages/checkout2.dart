@@ -222,7 +222,7 @@ class _Checkout2 extends State<Checkout2> {
                                                         .kab_kota!
                                                         .indexOf(' ') +
                                                     1),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Poppins',
                                                 color: Colors.black)),
@@ -351,7 +351,7 @@ class _Checkout2 extends State<Checkout2> {
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 20, bottom: 25),
+                          padding: const EdgeInsets.only(top: 20, bottom: 25),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -395,7 +395,7 @@ class _Checkout2 extends State<Checkout2> {
                           color: const Color.fromARGB(49, 152, 152, 152),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 10),
+                          padding: const EdgeInsets.only(top: 15, bottom: 10),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -499,7 +499,7 @@ class _Checkout2 extends State<Checkout2> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    backgroundColor: Color(0xFFFFFFFF),
+                                    backgroundColor: const Color(0xFFFFFFFF),
                                     title: const Text(
                                       "Check Out",
                                       style: TextStyle(
@@ -545,7 +545,7 @@ class _Checkout2 extends State<Checkout2> {
                                                           FontWeight.w500),
                                                 ),
                                                 duration:
-                                                    const Duration(seconds: 2),
+                                                    Duration(seconds: 2),
                                               ),
                                             );
                                           } else {
@@ -567,12 +567,11 @@ class _Checkout2 extends State<Checkout2> {
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
-                                                  duration: const Duration(
+                                                  duration: Duration(
                                                       seconds: 2),
                                                 ),
                                               );
                                             } else {
-                                              print('WOI AH ELAH');
                                               final player = AudioPlayer();
                                               player.play(AssetSource(
                                                   'audios/cring.mp3'));

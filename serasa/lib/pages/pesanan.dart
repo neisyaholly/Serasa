@@ -115,10 +115,9 @@ class _PesananPageState extends State<PesananPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('halohalo ${_currentPesanans[5].id}');
-    print('Filtered Pesanan:');
+    // print('Filtered Pesanan:');
     _currentPesanans.forEach((pesanan) {
-      print('Pesanan ID: ${pesanan.id}, User ID: ${pesanan.userID}');
+      // print('Pesanan ID: ${pesanan.id}, User ID: ${pesanan.userID}');
     });
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
@@ -149,9 +148,7 @@ class _PesananPageState extends State<PesananPage> {
                                 top: 20, left: 30, right: 30),
                             height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width,
-                            // decoration: const BoxDecoration(color: Colors.amber),
                             child: Stack(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               alignment: Alignment.center,
                               children: [
                                 Container(
@@ -159,12 +156,11 @@ class _PesananPageState extends State<PesananPage> {
                                   child: FittedBox(
                                     fit: BoxFit.none,
                                     child: Container(
-                                      // color: Colors.black,
                                       width:
                                           _controller.value.size.width * 0.32,
                                       height:
                                           _controller.value.size.height * 0.32,
-                                      padding: EdgeInsetsDirectional.all(0),
+                                      padding: const EdgeInsetsDirectional.all(0),
                                       child: VideoPlayer(_controller),
                                     ),
                                   ),
@@ -229,7 +225,7 @@ class _PesananPageState extends State<PesananPage> {
                                     child: Stack(
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.only(bottom: 40),
+                                          padding: const EdgeInsets.only(bottom: 40),
                                           child: const Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -271,7 +267,7 @@ class _PesananPageState extends State<PesananPage> {
                                           right: 0,
                                           child: Container(
                                             // color: Colors.amber,
-                                            padding: EdgeInsets.only(top: 30),
+                                            padding: const EdgeInsets.only(top: 30),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -320,7 +316,7 @@ class _PesananPageState extends State<PesananPage> {
                                 ),
                                 Expanded(
                                   child: ListView.builder(
-                                    padding: EdgeInsets.all(0),
+                                    padding: const EdgeInsets.all(0),
                                     itemCount: _currentPesanans.length,
                                     scrollDirection: Axis.vertical,
                                     itemBuilder: (_, index) {
@@ -338,21 +334,17 @@ class _PesananPageState extends State<PesananPage> {
                                                           reversedIndex]
                                                       .id)
                                               .toList();
-                                      print("test");
                                       // print(detailPesanansPerPesanan[0].id);
                                       if (_currentPesanans[reversedIndex]
                                               .jenis ==
                                           0) {
                                         // Return WidgetPesanan with listProdukKomunitas
                                         // print(detailPesanansPerPesanan[0].id);
-                                        print("test Komunitas");
-
                                         List<ProdukKomunitas>
                                             infoProdukDetailPesanans = [];
 
                                         for (DetailPesanan detailPesanan
                                             in detailPesanansPerPesanan) {
-                                          // Find the matching ProdukKomunitas based on produkID
                                           ProdukKomunitas? produkKomunitas =
                                               _produkKomunitass.firstWhere(
                                                   (produk) =>
@@ -389,8 +381,6 @@ class _PesananPageState extends State<PesananPage> {
                                                       .qty!
                                                       .toDouble());
                                         }
-                                        // print(totalHarga);
-                                        // + ongkir
                                         totalHarga += subtotal;
                                         totalHarga +=
                                             _currentPesanans[reversedIndex]
@@ -446,13 +436,11 @@ class _PesananPageState extends State<PesananPage> {
                                           },
                                         );
                                       } else {
-                                        // Return WidgetPesanan with listProdukRestos
                                         List<ProdukResto>
                                             infoProdukDetailPesanans = [];
 
                                         for (DetailPesanan detailPesanan
                                             in detailPesanansPerPesanan) {
-                                          // Find the matching ProdukKomunitas based on produkID
                                           ProdukResto? produkResto =
                                               _produkRestos.firstWhere(
                                                   (produk) =>
@@ -484,11 +472,8 @@ class _PesananPageState extends State<PesananPage> {
                                                       .toDouble());
                                         }
                                         totalHarga += subtotal;
-                                        // Calculate tax
                                         double pajak = totalHarga * 0.11;
-                                        // Add tax to totalHarga
                                         totalHarga += pajak;
-                                        // + ongkir
                                         totalHarga +=
                                             _currentPesanans[reversedIndex]
                                                 .ongkir!;

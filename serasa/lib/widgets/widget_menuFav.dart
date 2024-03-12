@@ -36,7 +36,6 @@ class WidgetMenuFav extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                // color: Colors.amber, borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(image: NetworkImage(foto))),
             width: 75,
             height: 75,

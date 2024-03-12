@@ -26,11 +26,11 @@ class _TambahAlamatState extends State<TambahAlamat> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFFFFEF8),
       body: Container(
-        margin: EdgeInsets.only(top: 55),
+        margin: const EdgeInsets.only(top: 55),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -39,7 +39,8 @@ class _TambahAlamatState extends State<TambahAlamat> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const BottomNavigationBarExample(initialIndex: 4),
+                          builder: (context) =>
+                              const BottomNavigationBarExample(initialIndex: 4),
                         ),
                       );
                     },
@@ -146,15 +147,17 @@ class _TambahAlamatState extends State<TambahAlamat> {
                         child: TextField(
                           controller: _jalanController,
                           decoration: InputDecoration(
-                            fillColor: Color(0xFFFACFC7),
+                            fillColor: const Color(0xFFFACFC7),
                             filled: true,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Color(0xFFFACFC7)),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFFACFC7)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Color(0xFFFACFC7)),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFFFACFC7)),
                             ),
                             hintText: "contoh: Jl. Pakuan No.3",
                             hintStyle: TextStyle(

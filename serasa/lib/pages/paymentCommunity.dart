@@ -109,8 +109,8 @@ class _PaymentCommunityState extends State<PaymentCommunity> {
                             // print(widget.selectedPengambilanMethod);
                             if (widget.selectedPengambilanMethod == 'GoSend' &&
                                 index == 0) {
-                              return SizedBox
-                                  .shrink(); // Skip generating this item
+                              return const SizedBox
+                                  .shrink();
                             }
                             return Container(
                               decoration: const BoxDecoration(

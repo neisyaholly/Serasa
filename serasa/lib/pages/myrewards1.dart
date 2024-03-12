@@ -6,15 +6,6 @@ import 'package:serasa/functions/functions.dart';
 import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/classes/voucherUser.dart';
 
-// class Vouchers{
-//   final String imageUrl;
-//   Vouchers({required this.imageUrl});
-
-//   factory Vouchers.fromJson(Map<String, dynamic> json) {
-//     return Vouchers(imageUrl: json['foto']);
-//   }
-// }
-
 class VoucherAktif extends StatefulWidget {
   const VoucherAktif({super.key});
 
@@ -28,21 +19,6 @@ class _VoucherAktif extends State<VoucherAktif> {
   bool _isHovered = false;
   late List<Voucher> _vouchers = [];
   late List<VoucherUser> _voucherUser = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchVouchers().then((fetchedVouchers) {setState(() {
-  //     _vouchers = fetchedVouchers.cast<Voucher>();
-  //   });});
-  // }
-
-  // void _fetchVouchers() async {
-  //   final fetchedVouchers = await fetchVouchers();
-  //   setState(() {
-  //     _vouchers = fetchedVouchers.cast<Voucher>();
-  //   });
-  // }
 
   @override
   void initState() {
@@ -77,7 +53,7 @@ class _VoucherAktif extends State<VoucherAktif> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                const RiwayatPenukaran()), // Assuming Checkout is a StatelessWidget
+                const RiwayatPenukaran()),
       );
     }
 
@@ -107,7 +83,6 @@ class _VoucherAktif extends State<VoucherAktif> {
                         color: Color(0xFFED6055),
                         size: 20,
                       ),
-                      // style: TextButton.styleFrom(foregroundColor: Color.fromARGB(1, 237, 96, 85)),
                     ),
                   ],
                 ),
@@ -128,7 +103,7 @@ class _VoucherAktif extends State<VoucherAktif> {
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
-                                  15), // Adjust the value as needed
+                                  15),
                             ),
                             backgroundColor: _isHovered
                                 ? Colors.red
@@ -174,10 +149,6 @@ class _VoucherAktif extends State<VoucherAktif> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-                  // children: _vouchers
-                  //     .where((voucher) => _voucherUser.any((vu) =>
-                  //         vu.voucherID == voucher.id && vu.terpakai == 0))
-                  //     .map((voucher) {
                   children: _voucherUser
                       .where((vu) => vu.terpakai == 0)
                       .map((vu) {

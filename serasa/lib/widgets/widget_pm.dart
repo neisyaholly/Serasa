@@ -17,7 +17,6 @@ class WidgetPM extends StatefulWidget {
   final String foto;
   final int initialQuantity;
   final ValueChanged<int> onQuantityChanged;
-  // final void Function(int) onQuantityChanged;
 
   @override
   State<WidgetPM> createState() => _WidgetPMState();
@@ -32,7 +31,6 @@ class _WidgetPMState extends State<WidgetPM> {
     super.initState();
     qty = widget.initialQuantity;
   }
-  // int qty = 0;
 
   void incrementQty() {
     setState(() {
@@ -65,7 +63,7 @@ class _WidgetPMState extends State<WidgetPM> {
             color: const Color(0xFFEDBDBD).withOpacity(0.3),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: const Offset(0, 2), // changes position of shadow
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -86,7 +84,6 @@ class _WidgetPMState extends State<WidgetPM> {
               width: 10,
             ),
             Container(
-              // color: Colors.black,
               width: MediaQuery.of(context).size.width / 2 + 25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -5,7 +5,7 @@ import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/tambahAlamat.dart';
 
 class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
+  const AddressPage({super.key});
 
   @override
   State<AddressPage> createState() => _AddressPageState();
@@ -36,41 +36,6 @@ class _AddressPageState extends State<AddressPage> {
         orElse: () => Alamat(-1, "", "", "", "", "", "", "", -1, -1));
     _selectedAddress = selectedAlamat.id.toString();
   }
-
-  // Future<void> _loadSelectedAddress() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     _selectedAddress = prefs.getString('selectedAddress') ?? '';
-  //   });
-  // }
-
-  // Future<void> _saveSelectedAddress(String addressId) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('selectedAddress', addressId);
-  // }
-
-  // List<Map<String, String>> addresses = [
-  //   {
-  //     'name': 'Nathasya',
-  //     'address': 'Jl. Pakuan No. 3, Kab.Bogor, Jawa Barat, ID 16810',
-  //     'phone': '+62123456789'
-  //   },
-  //   {
-  //     'name': 'Nathasya',
-  //     'address': 'Jl. Pakuan No. 4, Kab.Bogor, Jawa Barat, ID 16810',
-  //     'phone': '+62987654321'
-  //   },
-  //   {
-  //     'name': 'Nathasya',
-  //     'address': 'Jl. Pakuan No. 1, Kab.Bogor, Jawa Barat, ID 16810',
-  //     'phone': '+62111222333'
-  //   },
-  //   {
-  //     'name': 'Nathasya',
-  //     'address': 'Jl. Pakuan No. 2, Kab.Bogor, Jawa Barat, ID 16810',
-  //     'phone': '+62111222333'
-  //   },
-  // ];
 
   @override
   Widget build(BuildContext context) {

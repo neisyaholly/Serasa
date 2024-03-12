@@ -6,7 +6,7 @@ import 'package:serasa/widgets/popup_Reward.dart';
 import 'package:serasa/functions/functions.dart';
 
 class Rewards extends StatefulWidget {
-  const Rewards({Key? key}) : super(key: key);
+  const Rewards({super.key});
 
   @override
   State<Rewards> createState() {
@@ -38,13 +38,11 @@ class _Rewards extends State<Rewards> {
 
 Voucher? selectedVoucher;
 
-  // Function to set selectedVoucher
   void setSelectedVoucher(Voucher voucher) {
     setState(() {
       selectedVoucher = voucher;
     });
   }
-
 
   bool isPopUpShown = false; // State variable to track popup visibility
 
@@ -59,25 +57,19 @@ Voucher? selectedVoucher;
 
   void closePopUp() {
     setState(() {
-      isPopUpShown = false; // Set isPopUpShown to false to close the popup
+      isPopUpShown = false; 
     });
   }
 
 void _handleYesButtonClick(Voucher? voucher) async {
   if (voucher != null) {
     try {
-      // Create voucher user entry
       await createVoucherUserEntry(voucher, currentUser!.id!);
 
-      // Update user's points
       int updatedPoints = currentUser!.poin! - voucher.poin!;
       await updateUserPoin(currentUser!.id!, updatedPoints);
 
-      // Fetch vouchers again after updating
       _fetchVouchers();
-
-      // Close the popup after executing the logic
-      print('tes');
       togglePopUpVisibility();
     } catch (e) {
       print('Error handling voucher: $e');

@@ -3,17 +3,6 @@ import 'package:serasa/classes/voucher.dart';
 import 'package:serasa/pages/myrewards1.dart';
 import 'package:serasa/functions/functions.dart';
 
-  //  Future <void> updateVoucherUser(int voucherID) async {
-  //   final Database database = await openDatabase('serasa.db');
-  //   await database.update(  
-  //     'voucher_users',
-  //     {'terpakai': 1},
-  //     where: 'voucherID = ?',
-  //     whereArgs: [voucherID],
-  //   );
-  //   await database.close();
-  // }
-
 class Skvoucher extends StatefulWidget {
   final int vuID;
   final int voucherID;

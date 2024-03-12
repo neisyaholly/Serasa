@@ -147,7 +147,7 @@ class _PilihRestoState extends State<PilihResto> {
                       child: Stack(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             height: 325,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
@@ -423,7 +423,6 @@ class _PilihRestoState extends State<PilihResto> {
                             (produk) => produk.id == detail.produkID,
                             orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
                           );
-                          // Check if the matching product belongs to the same resto
                           return matchingProduk != null &&
                               matchingProduk.restoID == widget.resto.id;
                         },

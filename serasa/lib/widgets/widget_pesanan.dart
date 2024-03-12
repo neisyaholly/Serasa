@@ -66,7 +66,6 @@ class WidgetPesanan extends StatelessWidget {
               width: 10,
             ),
             Container(
-              // decoration: const BoxDecoration(color: Colors.amber),
               width: MediaQuery.of(context).size.width * 0.59,
               height: MediaQuery.of(context).size.width * 0.18,
               child: Column(

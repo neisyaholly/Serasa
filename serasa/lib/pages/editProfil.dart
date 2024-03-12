@@ -21,11 +21,11 @@ class _EditProfilState extends State<EditProfil> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFFFFEF8),
       body: Container(
-        margin: EdgeInsets.only(top: 55),
+        margin: const EdgeInsets.only(top: 55),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -174,15 +174,15 @@ class _EditProfilState extends State<EditProfil> {
                         child: TextField(
                           controller: _emailController,
                           decoration: InputDecoration(
-                            fillColor: Color(0xFFFACFC7),
+                            fillColor: const Color(0xFFFACFC7),
                             filled: true,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Color(0xFFFACFC7)),
+                              borderSide: const BorderSide(color: Color(0xFFFACFC7)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Color(0xFFFACFC7)),
+                              borderSide: const BorderSide(color: Color(0xFFFACFC7)),
                             ),
                             hintText: "Ketik emailmu di sini",
                             hintStyle: TextStyle(

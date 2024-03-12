@@ -54,7 +54,7 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF74B06D),
+      backgroundColor: const Color(0xFF74B06D),
       body: Column(
         children: [
           Container(
@@ -63,8 +63,7 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
               children: <Widget>[
                 Center(
                   child: Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: 500,
+                      width: 400,
                       height: 120,
                       decoration: const BoxDecoration(
                         // color: Colors.amber,

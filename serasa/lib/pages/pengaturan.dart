@@ -20,7 +20,7 @@ class _PengaturanState extends State<Pengaturan> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFEF8),
       body: Container(
-        margin: EdgeInsets.only(top: 55),
+        margin: const EdgeInsets.only(top: 55),
         child: Column(
           children: [
             Container(
@@ -56,7 +56,7 @@ class _PengaturanState extends State<Pengaturan> {
                     opacity: 0,
                     child: IconButton(
                       onPressed: () {},
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       icon: const Icon(
                         Icons.arrow_back,
                         color: Color(0xFFED6055),
@@ -91,7 +91,7 @@ class _PengaturanState extends State<Pengaturan> {
                     alignment: Alignment.centerRight,
                     child: CupertinoSwitch(
                       value: isSwitched,
-                      activeColor: Color(0xFFED6055),
+                      activeColor: const Color(0xFFED6055),
                       onChanged: (bool? value) {
                         setState(() {
                           isSwitched = value ?? false;

@@ -46,7 +46,6 @@ class _WidgetCartState extends State<WidgetCart> {
       onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 7),
-        // color: Colors.amber,
         child: Container(
           margin: const EdgeInsets.only(top: 10, bottom: 10),
           decoration: BoxDecoration(
@@ -57,7 +56,7 @@ class _WidgetCartState extends State<WidgetCart> {
                   color: Colors.black.withOpacity(0.25),
                   spreadRadius: 0,
                   blurRadius: 4,
-                  offset: const Offset(0, 4), // changes position of shadow
+                  offset: const Offset(0, 4),
                 ),
               ],
               border: Border.all(color: const Color(0xFFFACFC6))),
@@ -78,7 +77,7 @@ class _WidgetCartState extends State<WidgetCart> {
               ),
               Container(
                 // decoration: const BoxDecoration(color: Colors.amber),
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width * 0.56,
                 height: MediaQuery.of(context).size.width * 0.24,
                 child: Column(

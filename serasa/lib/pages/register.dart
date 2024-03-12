@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/functions/functions.dart';
-// import 'package:serasa/HOMEPAGE/home.dart';
 import 'package:serasa/pages/login.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:video_player/video_player.dart';
@@ -479,7 +478,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               FocusScope.of(context).unfocus();
                               User? user = await registerUser(name, tglLahir,
                                   telp, email, password, confirmPassword);
-
                               // print(name + " - " + tglLahir + " - " + telp + " - " + email + " - " + password + " - " + confirmPassword);
                               if (user is User) {
                                 // ignore: use_build_context_synchronously

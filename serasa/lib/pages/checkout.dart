@@ -31,7 +31,6 @@ class Checkout extends StatefulWidget {
   }
 }
 
-//biar onpressed button back nya ga error
 void sementara() {
   return;
 }
@@ -53,7 +52,6 @@ class _Checkout extends State<Checkout> {
     selectedPaymentIndex = 1;
     widget.selectedPaymentMethod = 'GoPay';
     addQuantities();
-    // convertToDetailPesanan();
   }
 
   void _fetchData() async {
@@ -94,6 +92,8 @@ class _Checkout extends State<Checkout> {
 
       if (quantities[index] < produkResto.qty!) {
         quantities[index] = quantities[index] + 1;
+        widget.detailkeranjangs[index].qty =
+            widget.detailkeranjangs[index].qty! + 1;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -110,8 +110,10 @@ class _Checkout extends State<Checkout> {
 
   void decrementQty(int index) {
     setState(() {
-      if (quantities[index] > 1) {
+      if (quantities[index] > 0) {
         quantities[index] = quantities[index] - 1;
+        widget.detailkeranjangs[index].qty =
+            widget.detailkeranjangs[index].qty! - 1;
       }
     });
   }
@@ -148,7 +150,9 @@ class _Checkout extends State<Checkout> {
   double calculateListViewHeight() {
     double totalHeight = 0;
     for (int i = 0; i < widget.detailkeranjangs.length; i++) {
-      totalHeight += calculateItemHeight(i);
+      if (widget.detailkeranjangs[i].qty != 0) {
+        totalHeight += calculateItemHeight(i);
+      }
     }
     return totalHeight;
   }
@@ -161,10 +165,6 @@ class _Checkout extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
-    // print('test');
-    // print(_pembayarans[0].jenis);
-    // print(widget.detailkeranjangs[0].qty);
-    // print(quantities[0]);
     return Scaffold(
         backgroundColor: const Color(0xFFFFFEF8),
         body: _isLoading
@@ -176,7 +176,6 @@ class _Checkout extends State<Checkout> {
                 child: SingleChildScrollView(
                   child: Center(
                     child: Column(
-                      // mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(
                           height: 15,
@@ -188,6 +187,7 @@ class _Checkout extends State<Checkout> {
                             children: [
                               IconButton(
                                 onPressed: () {
+                                  updateKeranjang(widget.detailkeranjangs);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -233,27 +233,22 @@ class _Checkout extends State<Checkout> {
                         Container(
                           width: 400,
                           height: calculateListViewHeight(),
-                          margin: EdgeInsets.symmetric(horizontal: 40),
-                          // decoration: BoxDecoration(color: Colors.amber),
+                          margin: const EdgeInsets.symmetric(horizontal: 40),
                           child: Expanded(
                             child: ListView.builder(
                                 padding: const EdgeInsets.only(top: 5),
                                 itemCount: widget.detailkeranjangs.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (_, index) {
+                                  if (quantities[index] == 0)
+                                    return const SizedBox(height: 0);
                                   ProdukResto produkResto =
                                       _produkRestos.firstWhere(
                                     (detail) =>
                                         detail.id ==
                                         widget.detailkeranjangs[index].produkID,
-                                    orElse: () => ProdukResto(
-                                        -1,
-                                        -1,
-                                        "",
-                                        "",
-                                        -1,
-                                        -1,
-                                        ""), // Default value if not found
+                                    orElse: () =>
+                                        ProdukResto(-1, -1, "", "", -1, -1, ""),
                                   );
 
                                   coprodukRestos.add(produkResto);
@@ -261,10 +256,8 @@ class _Checkout extends State<Checkout> {
                                   return Column(
                                     children: [
                                       Container(
-                                        // margin:
-                                        //     const EdgeInsets.only(left: 35, right: 35),
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 10),
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -274,7 +267,6 @@ class _Checkout extends State<Checkout> {
                                               height: 100,
                                               child: Image.network(
                                                 produkResto.foto!,
-                                                // width: 100,
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
@@ -304,7 +296,6 @@ class _Checkout extends State<Checkout> {
                                                     height: 17,
                                                   ),
                                                   Container(
-                                                    // color: Colors.amber,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -351,7 +342,6 @@ class _Checkout extends State<Checkout> {
                                                             children: [
                                                               Container(
                                                                 width: 35,
-                                                                // color: Colors.blue,
                                                                 child:
                                                                     IconButton(
                                                                         padding: const EdgeInsets
@@ -376,7 +366,6 @@ class _Checkout extends State<Checkout> {
                                                                 alignment:
                                                                     Alignment
                                                                         .center,
-                                                                // color: Colors.amber,
                                                                 width: 20,
                                                                 child: Column(
                                                                   mainAxisAlignment:
@@ -394,7 +383,6 @@ class _Checkout extends State<Checkout> {
                                                               ),
                                                               Container(
                                                                 width: 35,
-                                                                // color: Colors.blue,
                                                                 child:
                                                                     IconButton(
                                                                         padding: const EdgeInsets
@@ -431,7 +419,7 @@ class _Checkout extends State<Checkout> {
                                       Container(
                                         height: 1.5,
                                         width: 345,
-                                        margin: EdgeInsets.only(top: 5),
+                                        margin: const EdgeInsets.only(top: 5),
                                         color: const Color.fromARGB(
                                             49, 152, 152, 152),
                                       ),
@@ -633,7 +621,7 @@ class _Checkout extends State<Checkout> {
                           height: 25,
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 35),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -714,7 +702,6 @@ class _Checkout extends State<Checkout> {
                           padding: const EdgeInsets.symmetric(horizontal: 35),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text("Total",
                                   style: TextStyle(
@@ -821,121 +808,123 @@ class _Checkout extends State<Checkout> {
                           width: 300,
                           child: ElevatedButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: Color(0xFFFFFFFF),
-                                    title: const Text(
-                                      "Check Out",
+                              bool hasOngoingPesanan = _pesanans
+                                  .where((pesanan) =>
+                                      pesanan.userID == currentUser!.id)
+                                  .any((pesanan) => pesanan.selesai == 0);
+                              if (subtotal == 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Kamu tidak memiliki produk yang dapat dipesan.',
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    content: const Text(
-                                      "Apakah Anda yakin ingin membeli pesanan ini?",
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } else if (hasOngoingPesanan) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Kamu sedang memiliki pesanan yang "Dalam Proses".',
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                        },
-                                        child: const Text("Batal",
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color(0xFFFFFFFF),
+                                      title: const Text(
+                                        "Check Out",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      content: const Text(
+                                        "Apakah Anda yakin ingin membeli pesanan ini?",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text("Batal",
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Color(0xFFED6055),
+                                                  fontWeight: FontWeight.w500)),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                              final player = AudioPlayer();
+                                              player.play(AssetSource(
+                                                  'audios/cring.mp3'));
+                                              Pesanan? pesanan =
+                                                  await checkOutPesanan(
+                                                      currentUser!.id,
+                                                      widget.resto.id,
+                                                      selectedPaymentIndex + 1,
+                                                      ongkosKirim,
+                                                      1,
+                                                      0);
+                                              List<dynamic> detailPs =
+                                                  await checkOutDetailPesananResto(
+                                                      pesanan!.id,
+                                                      coprodukRestos,
+                                                      quantities);
+
+                                              hapusKeranjang(widget
+                                                  .detailkeranjangs[0]
+                                                  .keranjangID!);
+                                              hapusDetailKeranjang(
+                                                  widget.detailkeranjangs);
+                                              print(
+                                                  'tes ${coprodukRestos.length}');
+                                              if (detailPs.isNotEmpty) {
+                                                // ignore: use_build_context_synchronously
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const BottomNavigationBarExample(
+                                                            initialIndex: 2),
+                                                  ),
+                                                );
+                                              } else {
+                                                print(
+                                                    "Detail Keranjangs list is empty");
+                                              }
+                                            
+                                          },
+                                          child: const Text(
+                                            "Check Out",
                                             style: TextStyle(
                                                 fontFamily: 'Poppins',
                                                 color: Color(0xFFED6055),
-                                                fontWeight: FontWeight.w500)),
-                                      ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          bool hasOngoingPesanan = _pesanans
-                                              .where((pesanan) =>
-                                                  pesanan.userID ==
-                                                  currentUser!.id)
-                                              .any((pesanan) =>
-                                                  pesanan.selesai == 0);
-                                          if (hasOngoingPesanan) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'Kamu sedang memiliki pesanan yang dalam proses..',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                duration:
-                                                    const Duration(seconds: 2),
-                                              ),
-                                            );
-                                          } else {
-                                            final player = AudioPlayer();
-                                            player.play(AssetSource(
-                                                'audios/cring.mp3'));
-                                            print('WOI AH EEK TEST');
-                                            // print('WOI AH EEK ${currentUser!.id}');
-                                            // print('WOI AH EEK ${widget.resto.id}');
-                                            Pesanan? pesanan =
-                                                await checkOutPesanan(
-                                                    currentUser!.id,
-                                                    widget.resto.id,
-                                                    selectedPaymentIndex + 1,
-                                                    ongkosKirim,
-                                                    1,
-                                                    0);
-
-                                            // print('WOI AH EEK h ${pesanan!.id}');
-                                            // print('WOI AH EEK ${coprodukRestos[1].nama}');
-                                            // print('WOI AH EEK ${quantities[0]}');
-                                            List<dynamic> detailPs =
-                                                await checkOutDetailPesananResto(
-                                                    pesanan!.id,
-                                                    coprodukRestos,
-                                                    quantities);
-
-                                            hapusKeranjang(widget
-                                                .detailkeranjangs[0]
-                                                .keranjangID!);
-                                            hapusDetailKeranjang(
-                                                widget.detailkeranjangs);
-                                            print(
-                                                'WOI AH EEK length ${coprodukRestos.length}');
-                                            if (detailPs.isNotEmpty) {
-                                              // ignore: use_build_context_synchronously
-                                              FocusScope.of(context).unfocus();
-                                              // ignore: use_build_context_synchronously
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const BottomNavigationBarExample(
-                                                          initialIndex: 2),
-                                                ),
-                                              );
-                                            } else {
-                                              print(
-                                                  "Detail Keranjangs list is empty");
-                                            }
-                                          }
-                                        },
-                                        child: const Text(
-                                          "Check Out",
-                                          style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Color(0xFFED6055),
-                                              fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

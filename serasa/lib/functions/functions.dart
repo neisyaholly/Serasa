@@ -120,18 +120,20 @@ Future<dynamic> checkOutDetailPesananResto(
     pesananID, List<ProdukResto> produkRestos, List<int> quantities) async {
   List<dynamic> result = [];
   for (int i = 0; i < produkRestos.length;) {
-    DetailPesanan? detail =
-        DetailPesanan(null, pesananID, produkRestos[i].id, quantities[i]);
-    dynamic request = createDetailPesanan(detail);
-    updateQuantityProdukResto(produkRestos[i].id!, quantities[i]);
-    i++;
-    if (request != null) {
-      print("Detail Pesanan added Successfully!");
-      result.add(request);
-    } else {
-      print("Failed To Checkout Detail Pesanan!");
-      result.add(null);
+    if (quantities[i] > 0) {
+      DetailPesanan? detail =
+          DetailPesanan(null, pesananID, produkRestos[i].id, quantities[i]);
+      dynamic request = createDetailPesanan(detail);
+      updateQuantityProdukResto(produkRestos[i].id!, quantities[i]);
+      if (request != null) {
+        print("Detail Pesanan added Successfully!");
+        result.add(request);
+      } else {
+        print("Failed To Checkout Detail Pesanan!");
+        result.add(null);
+      }
     }
+    i++;
   }
   if (result.any((element) => element == null)) {
     return [];
@@ -270,6 +272,29 @@ Future<dynamic> buatDetailKeranjang(List<ProdukResto> produkResto,
       updateQtyDetail(dk.id!, newQty);
       result.add(dk);
     }
+  }
+  if (result.any((element) => element == null)) {
+    return [];
+  }
+  return result;
+}
+
+Future<dynamic> updateKeranjang(List<DetailKeranjang> dk) async {
+  List<dynamic> result = [];
+  int count = 0;
+  int keranjangID = dk[0].keranjangID!;
+
+  for (int i = 0; i < dk.length; i++) {
+    if (dk[i].qty == 0){
+      deleteDetailKeranjang(dk[i].id!);
+      count++;
+    } else if (dk[i].qty! > 0) {
+      updateQtyDetail(dk[i].id!, dk[i].qty!);
+      result.add(dk);
+    }
+  }
+  if(count == dk.length){
+    deleteKeranjang(keranjangID); 
   }
   if (result.any((element) => element == null)) {
     return [];
@@ -537,7 +562,7 @@ Future<dynamic> updateUserPoin(id, poin) async {
         request.foto);
     print("Poin Updated Successfully!");
     return request;
-  }else{
+  } else {
     throw Exception('Failed to update user poin');
   }
 }

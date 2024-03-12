@@ -29,7 +29,7 @@ class WidgetRestoTerdekat extends StatelessWidget {
               color: Colors.black.withOpacity(0.2),
               spreadRadius: 0.5,
               blurRadius: 2,
-              offset: const Offset(-0.5, 4), // changes position of shadow
+              offset: const Offset(-0.5, 4),
             ),
           ],
           border: Border.all(color: const Color(0xFFFACFC6), width: 1)),
@@ -38,7 +38,6 @@ class WidgetRestoTerdekat extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                // color: Colors.amber, borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(image: NetworkImage(logo))),
             width: 75,
             height: 75,

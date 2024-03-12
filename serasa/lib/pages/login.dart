@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serasa/classes/user.dart';
 import 'package:serasa/functions/functions.dart';
-// import 'package:serasa/HOMEPAGE/home.dart';
 import 'package:serasa/pages/navbar.dart';
 import 'package:serasa/pages/register.dart';
 import 'package:video_player/video_player.dart';
@@ -46,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 0),
+              margin: const EdgeInsets.only(top: 0),
               width: _controller.value.size.width *0.30,
               height: _controller.value.size.height * 0.26,
               child: VideoPlayer(_controller)),
@@ -201,9 +200,6 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             final email = _emailController.text;
                             final password = _passwordController.text;
-
-                            // print(email + " - " + password);
-
                             User? user = await loginUser(email, password);
                             if (user is User) {
                               // ignore: use_build_context_synchronously

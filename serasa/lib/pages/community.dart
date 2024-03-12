@@ -131,7 +131,7 @@ class _CommunityState extends State<Community> {
                         const Padding(
                           padding: EdgeInsets.only(
                               bottom:
-                                  3.0), // Adjust the bottom padding as needed
+                                  3.0),
                           child: Icon(
                             Icons.location_on,
                             color: Color(0xFFE45C50),
@@ -176,9 +176,6 @@ class _CommunityState extends State<Community> {
                         itemBuilder: (context, index) {
                           ProdukKomunitas produkKomunitas =
                               _produkKomunitass[index];
-                          print("woi");
-                          // print(produkKomunitas.id);
-                          print(_produkKomunitass[0].id);
                           return GestureDetector(
                             child: WidgetCommunity(
                                 nama: produkKomunitas.nama!,

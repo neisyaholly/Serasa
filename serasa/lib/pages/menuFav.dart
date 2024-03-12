@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
-import 'package:serasa/widgets/test.dart';
 import 'package:serasa/widgets/widget_menuFav.dart';
 
 class MenuFav extends StatefulWidget {
@@ -104,9 +102,7 @@ class _MenuFavState extends State<MenuFav> {
                     child: Transform.rotate(
                       angle: 1.57079632679, // 180 degrees in radians
                       child: InkWell(
-                          onTap: () {
-                            Get.to(() => Test());
-                          },
+                          onTap: () {},
                           child: const Icon(Icons.search,
                               color: Colors.black, size: 20)),
                     ),
@@ -164,7 +160,6 @@ class _MenuFavState extends State<MenuFav> {
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBarExample(),
     );
   }
 }

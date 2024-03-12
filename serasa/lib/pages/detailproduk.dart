@@ -80,19 +80,19 @@ class _Detailproduk extends State<Detailproduk> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     right: 50.0, top: 15.0, left: 40.0, bottom: 5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(produk.nama!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700)),
                     Text(
                       produk.harga!.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500),
@@ -101,19 +101,19 @@ class _Detailproduk extends State<Detailproduk> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     right: 50.0, top: 5.0, left: 40.0, bottom: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Tanggal Kedaluwarsa",
+                    const Text("Tanggal Kedaluwarsa",
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.normal)),
                     Text(
                       produk.exp!,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.normal),
@@ -134,11 +134,11 @@ class _Detailproduk extends State<Detailproduk> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person_outlined,
                           size: 30,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Align(
@@ -148,13 +148,13 @@ class _Detailproduk extends State<Detailproduk> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Penjual",
+                              const Text("Penjual",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.normal)),
                               Text(produk.name!,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500)),
@@ -198,7 +198,7 @@ class _Detailproduk extends State<Detailproduk> {
                           Container(
                             width: 100,
                             height: 35,
-                            margin: EdgeInsets.only(top: 5),
+                            margin: const EdgeInsets.only(top: 5),
                             child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
@@ -246,7 +246,7 @@ class _Detailproduk extends State<Detailproduk> {
               ),
               Container(
                 width: 400,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     right: 40.0, top: 20.0, left: 40.0, bottom: 80.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

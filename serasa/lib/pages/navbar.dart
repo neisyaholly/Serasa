@@ -7,8 +7,7 @@ import 'package:serasa/pages/recycle.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
   final int initialIndex;
-  const BottomNavigationBarExample({Key? key, required this.initialIndex})
-      : super(key: key);
+  const BottomNavigationBarExample({super.key, required this.initialIndex});
 
   @override
   State<BottomNavigationBarExample> createState() =>
@@ -20,8 +19,6 @@ class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
   int _selectedIndex;
   _BottomNavigationBarExampleState(this._selectedIndex);
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     Recycle(),
