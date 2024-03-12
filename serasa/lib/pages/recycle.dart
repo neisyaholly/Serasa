@@ -30,11 +30,10 @@ class _RecycleState extends State<Recycle> {
     _riwayatTukarSampahFuture = fetchRiwayatTukarSampah();
     _controller = VideoPlayerController.asset('assets/videos/r.mp4')
       ..initialize().then((_) {
-        setState(() {}); // Ini opsional, tergantung kebutuhan Anda
-        _controller.setLooping(true); // Set looping video
-        _controller.play(); // Play video secara otomatis setelah diinisialisasi
+        setState(() {}); 
+        _controller.setLooping(true); 
+        _controller.play(); 
       });
-    // _bankSampahFuture = fetchBankSampahFromAPI();
   }
 
   @override
@@ -526,5 +525,10 @@ class _RecycleState extends State<Recycle> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
