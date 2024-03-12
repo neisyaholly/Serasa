@@ -495,83 +495,55 @@ class _Checkout2 extends State<Checkout2> {
                           width: MediaQuery.of(context).size.width * 1,
                           child: ElevatedButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color(0xFFFFFFFF),
-                                    title: const Text(
-                                      "Check Out",
+                              bool hasOngoingPesanan = _pesanans
+                                  .where((pesanan) =>
+                                      pesanan.userID == currentUser!.id)
+                                  .any((pesanan) => pesanan.selesai == 0);
+                              if (hasOngoingPesanan) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Kamu sedang memiliki pesanan yang "Dalam Proses".',
                                       style: TextStyle(
                                           fontFamily: 'Poppins',
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    content: const Text(
-                                      "Apakah Anda yakin ingin membeli pesanan ini?",
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                        },
-                                        child: const Text("Batal",
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                color: Color(0xFFED6055),
-                                                fontWeight: FontWeight.w500)),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color(0xFFFFFFFF),
+                                      title: const Text(
+                                        "Check Out",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          bool hasOngoingPesanan = _pesanans
-                                              .where((pesanan) =>
-                                                  pesanan.userID ==
-                                                  currentUser!.id)
-                                              .any((pesanan) =>
-                                                  pesanan.selesai == 0);
-                                          if (hasOngoingPesanan) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'Kamu sedang memiliki pesanan yang dalam proses..',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                duration:
-                                                    Duration(seconds: 2),
-                                              ),
-                                            );
-                                          } else {
-                                            // print("woi");
-                                            // print(coDetailPesanan.pesananID);
-                                            // print(_pesanans.length + 1);
-                                            bool hasOngoingPesanan =
-                                                _pesanans.any((pesanan) =>
-                                                    pesanan.selesai == 0);
-                                            if (hasOngoingPesanan) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                    'Kamu sedang memiliki pesanan yang dalam proses..',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                  duration: Duration(
-                                                      seconds: 2),
-                                                ),
-                                              );
-                                            } else {
+                                      content: const Text(
+                                        "Apakah Anda yakin ingin membeli pesanan ini?",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Close the dialog
+                                          },
+                                          child: const Text("Batal",
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Color(0xFFED6055),
+                                                  fontWeight: FontWeight.w500)),
+                                        ),
+                                        TextButton(
+                                            onPressed: () async {
                                               final player = AudioPlayer();
                                               player.play(AssetSource(
                                                   'audios/cring.mp3'));
@@ -605,22 +577,19 @@ class _Checkout2 extends State<Checkout2> {
                                                   ),
                                                 );
                                               }
-                                            }
-                                            ;
-                                          }
-                                        },
-                                        child: const Text(
-                                          "Check Out",
-                                          style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Color(0xFFED6055),
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                                            },
+                                            child: const Text(
+                                              "Check Out",
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Color(0xFFED6055),
+                                                  fontWeight: FontWeight.w500),
+                                            )),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

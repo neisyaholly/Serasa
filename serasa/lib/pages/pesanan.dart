@@ -574,4 +574,9 @@ class _PesananPageState extends State<PesananPage> {
             ),
     );
   }
+   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }

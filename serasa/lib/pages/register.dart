@@ -208,10 +208,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                   _selectDate(context);
                                 },
                                 controller: _tglLahirController,
-                                // controller: TextEditingController(
-                                //   text:
-                                //       '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                                // ),
                                 decoration: const InputDecoration(
                                   labelText: 'Pilih Tanggal',
                                   suffixIcon: Icon(Icons.arrow_drop_down_sharp),
