@@ -23,7 +23,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFFFFEF8),
       body: Container(
         margin: const EdgeInsets.only(top: 55),
@@ -70,420 +70,424 @@ class _TambahAlamatState extends State<TambahAlamat> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15),
+                  child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Nama Alamat",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Nama Alamat",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _namaController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Dorm Kuliah",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 20,
                       ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _namaController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Dorm Kuliah",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Jalan",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _jalanController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Jl. Pakuan No.3",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Kelurahan",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _kelController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Sumur Batu",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Kecamatan",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _kecController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Babakan Madang",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Kabupaten/Kota",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _kabkotaController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Kab. Bogor",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Provinsi",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _provinsiController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: Jawa Barat",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Kode Pos",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 40,
+                            child: TextField(
+                              controller: _kodeposController,
+                              decoration: InputDecoration(
+                                fillColor: const Color(0xFFFACFC7),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      const BorderSide(color: Color(0xFFFACFC7)),
+                                ),
+                                hintText: "contoh: ID 16810",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final nama = _namaController.text;
+                          final jalan = _jalanController.text;
+                          final kel = _kelController.text;
+                          final kec = _kecController.text;
+                          final kabkota = _kabkotaController.text;
+                          final provinsi = _provinsiController.text;
+                          final kodepos = _kodeposController.text;
+                          final userID = currentUser!.id!;
+                
+                          FocusScope.of(context).unfocus();
+                          Alamat? alamat = await addAlamat(nama, jalan, kel, kec,
+                              kabkota, provinsi, kodepos, userID);
+                
+                          if (alamat is Alamat) {
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddressPage(),
+                              ),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: const MaterialStatePropertyAll(
+                            Color(0xFFE45C50),
+                          ),
+                          foregroundColor: const MaterialStatePropertyAll(
+                            Color(0xFFFFFAFA),
+                          ),
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          fixedSize: const MaterialStatePropertyAll(
+                            Size(140, 38),
+                          ),
+                          textStyle: const MaterialStatePropertyAll(
+                            TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.zero),
                         ),
+                        child: const Text('Simpan'),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Jalan",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _jalanController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Jl. Pakuan No.3",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Kelurahan",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _kelController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Sumur Batu",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Kecamatan",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _kecController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Babakan Madang",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Kabupaten/Kota",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _kabkotaController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Kab. Bogor",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Provinsi",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _provinsiController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: Jawa Barat",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Kode Pos",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40,
-                        child: TextField(
-                          controller: _kodeposController,
-                          decoration: InputDecoration(
-                            fillColor: const Color(0xFFFACFC7),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Color(0xFFFACFC7)),
-                            ),
-                            hintText: "contoh: ID 16810",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                              fontFamily: 'Poppins',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final nama = _namaController.text;
-                      final jalan = _jalanController.text;
-                      final kel = _kelController.text;
-                      final kec = _kecController.text;
-                      final kabkota = _kabkotaController.text;
-                      final provinsi = _provinsiController.text;
-                      final kodepos = _kodeposController.text;
-                      final userID = currentUser!.id!;
-
-                      FocusScope.of(context).unfocus();
-                      Alamat? alamat = await addAlamat(nama, jalan, kel, kec,
-                          kabkota, provinsi, kodepos, userID);
-
-                      if (alamat is Alamat) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AddressPage(),
-                          ),
-                        );
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: const MaterialStatePropertyAll(
-                        Color(0xFFE45C50),
-                      ),
-                      foregroundColor: const MaterialStatePropertyAll(
-                        Color(0xFFFFFAFA),
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      fixedSize: const MaterialStatePropertyAll(
-                        Size(140, 38),
-                      ),
-                      textStyle: const MaterialStatePropertyAll(
-                        TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.zero),
-                    ),
-                    child: const Text('Simpan'),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
