@@ -137,7 +137,7 @@ class _Post extends State<Post> {
                       onPressed: () {
                         openCamera(context);
                       },
-                      child: Text('Open Camera'),
+                      child: const Text('Open Camera'),
                     ),
                 
                       _imageFile != null
@@ -151,21 +151,21 @@ class _Post extends State<Post> {
                                 _imageFile!, fit: BoxFit.fill,
                                 ),
                               ),
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10,),
                             ],
                           ) 
-                          : SizedBox(),
+                          : const SizedBox(),
                 Container(
                   height: 1.5,
                   width: 350,
                   color: const Color.fromARGB(39, 0, 0, 0),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Nama",
+                      const Text("Nama",
                           style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',
@@ -174,7 +174,7 @@ class _Post extends State<Post> {
                         width: 350,
                         child: TextField(
                           controller: _namaController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: 'Ketik nama produkmu di sini',
                               hintStyle: TextStyle(
                                   fontSize: 14,
@@ -192,18 +192,18 @@ class _Post extends State<Post> {
                   color: const Color.fromARGB(39, 0, 0, 0),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15, left: 30),
+                  padding: const EdgeInsets.only(top: 15, left: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Harga",
+                      const Text("Harga",
                           style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500)),
                       Row(
                         children: [
-                          Text("Rp ",
+                          const Text("Rp ",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
@@ -212,7 +212,7 @@ class _Post extends State<Post> {
                             width: 330,
                             child: TextField(
                               controller: _hargaController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   hintText: 'Ketik harga produkmu di sini',
                                   hintStyle: TextStyle(
                                       fontSize: 14,
@@ -286,22 +286,22 @@ class _Post extends State<Post> {
                   color: const Color.fromARGB(67, 152, 152, 152),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15, left: 30, bottom: 15),
+                  padding: const EdgeInsets.only(top: 15, left: 30, bottom: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Lokasi",
+                      const Text("Lokasi",
                           style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500)),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
                         children: [
-                          Icon(Icons.location_on),
-                          SizedBox(
+                          const Icon(Icons.location_on),
+                          const SizedBox(
                             width: 5,
                           ),
                           SizedBox(
@@ -310,7 +310,7 @@ class _Post extends State<Post> {
                               _produkKomunitass.isNotEmpty
                                   ? _produkKomunitass[4].kab_kota!
                                   : 'Tidak ada produk',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 10,
                                   fontWeight: FontWeight.w100),
@@ -328,7 +328,7 @@ class _Post extends State<Post> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 20),
+                      const EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -337,7 +337,7 @@ class _Post extends State<Post> {
                               fontSize: 14,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500)),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Container(
@@ -362,7 +362,7 @@ class _Post extends State<Post> {
                         child: TextField(
                           controller: _deskripsiController,
                           maxLines: 5, // Set the maximum number of lines
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Ketik deskripsi produk',
                             border: OutlineInputBorder(
                               borderRadius:
@@ -414,6 +414,7 @@ class _Post extends State<Post> {
                           userID, nama, harga, exp, deskripsi, foto);
 
                       if (pk is ProdukKomunitas) {
+                        // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -441,7 +442,7 @@ class _Post extends State<Post> {
                             fontWeight: FontWeight.bold)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],

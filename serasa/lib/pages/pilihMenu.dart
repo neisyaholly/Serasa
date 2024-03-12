@@ -186,7 +186,8 @@ class _PilihRestoState extends State<PilihResto> {
                                   margin: const EdgeInsets.only(
                                       left: 30, right: 30, top: 10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
@@ -287,13 +288,15 @@ class _PilihRestoState extends State<PilihResto> {
                                       ),
                                       SizedBox(
                                         width:
-                                            MediaQuery.of(context).size.width * 1,
+                                            MediaQuery.of(context).size.width *
+                                                1,
                                         height: 35,
                                         child: TextField(
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
-                                                    vertical: 2, horizontal: 10),
+                                                    vertical: 2,
+                                                    horizontal: 10),
                                             filled: true,
                                             hintText: 'Search',
                                             hintStyle: const TextStyle(
@@ -312,7 +315,8 @@ class _PilihRestoState extends State<PilihResto> {
                                               angle:
                                                   1.57079632679, // 180 degrees in radians
                                               child: const Icon(Icons.search,
-                                                  color: Colors.black, size: 20),
+                                                  color: Colors.black,
+                                                  size: 20),
                                             ),
                                           ),
                                           onTap: () {},
@@ -377,28 +381,38 @@ class _PilihRestoState extends State<PilihResto> {
                     ),
                   ),
                   onTap: () async {
-                    List<DetailKeranjang> detailKeranjangs =
-                        await fetchDetailKeranjangs();
-                    bool productExists = _produkRestos.any((produk) =>
-                        detailKeranjangs
-                            .any((detail) => detail.produkID == produk.id));
-                    bool restoExists = detailKeranjangs.any((detail) {
-                      ProdukResto? matchingProduk = _produkRestos.firstWhere(
-                        (produk) => produk.id == detail.produkID,
-                        orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
-                      );
-                      return matchingProduk != null &&
-                          matchingProduk.restoID == widget.resto.id;
-                    });
-                    if (!productExists && !restoExists) {
-                      Keranjang? keranjang =
-                          await buatKeranjang(currentUser!.id!);
-                      if (keranjang != null) {
+                    List<Keranjang> keranjangss = await fetchKeranjangs();
+                    List<Keranjang> keranjangs = keranjangss
+                        .where((detail) => detail.userID == currentUser!.id!)
+                        .toList();
+                    if (keranjangs.isNotEmpty) {
+                      List<DetailKeranjang> detailKeranjangss =
+                          await fetchDetailKeranjangs();
+                      List<DetailKeranjang> detailKeranjangs = [];
+                      for (Keranjang keranjang in keranjangs) {
+                        List<DetailKeranjang> filteredDetails =
+                            detailKeranjangss
+                                .where((detail) =>
+                                    detail.keranjangID == keranjang.id)
+                                .toList();
+                        detailKeranjangs.addAll(filteredDetails);
+                      }
+                      bool productExists = _produkRestos.any((produk) =>
+                          detailKeranjangs
+                              .any((detail) => detail.produkID == produk.id));
+                      bool restoExists = detailKeranjangs.any((detail) {
+                        ProdukResto? matchingProduk = _produkRestos.firstWhere(
+                            (produk) => produk.id == detail.produkID,
+                            orElse: () =>
+                                ProdukResto(-1, -1, "", "", -1, -1, ""));
+                        return matchingProduk != null &&
+                            matchingProduk.restoID == widget.resto.id;
+                      });
+                      if (!productExists && !restoExists) {
+                        Keranjang? keranjang =
+                            await buatKeranjang(currentUser!.id!);
                         List<dynamic> detailKs = await buatDetailKeranjang(
-                          _produkRestos,
-                          keranjang.id!,
-                          quantities,
-                        );
+                            _produkRestos, keranjang!.id!, quantities);
                         if (detailKs.isNotEmpty) {
                           // ignore: use_build_context_synchronously
                           FocusScope.of(context).unfocus();
@@ -412,39 +426,75 @@ class _PilihRestoState extends State<PilihResto> {
                         } else {
                           print("Detail Keranjangs list is empty");
                         }
-                      } else {
-                        print("Failed to create keranjang");
-                      }
-                    } else if (restoExists) {
-                      DetailKeranjang? detailKeranjang =
-                          detailKeranjangs.firstWhere(
-                        (detail) {
-                          ProdukResto? matchingProduk = _produkRestos.firstWhere(
-                            (produk) => produk.id == detail.produkID,
-                            orElse: () => ProdukResto(-1, -1, "", "", -1, -1, ""),
-                          );
+                      } else if (restoExists) {
+                        DetailKeranjang? detailKeranjang =
+                            detailKeranjangs.firstWhere((detail) {
+                          ProdukResto? matchingProduk =
+                              _produkRestos.firstWhere(
+                                  (produk) => produk.id == detail.produkID,
+                                  orElse: () =>
+                                      ProdukResto(-1, -1, "", "", -1, -1, ""));
                           return matchingProduk != null &&
                               matchingProduk.restoID == widget.resto.id;
-                        },
-                        orElse: () => DetailKeranjang(-1, -1, -1, -1),
-                      );
-                      List<dynamic> detailKs = await buatDetailKeranjang(
-                        _produkRestos,
-                        detailKeranjang.keranjangID!,
-                        quantities,
-                      );
-                      if (detailKs.isNotEmpty) {
-                        // ignore: use_build_context_synchronously
-                        FocusScope.of(context).unfocus();
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Cart(),
-                          ),
-                        );
-                      } else {
-                        print("Detail Keranjangs list is empty");
+                        }, orElse: () => DetailKeranjang(-1, -1, -1, -1));
+                        List<dynamic> detailKs = await buatDetailKeranjang(
+                            _produkRestos,
+                            detailKeranjang.keranjangID!,
+                            quantities);
+                        if (detailKs.isNotEmpty) {
+                          // ignore: use_build_context_synchronously
+                          FocusScope.of(context).unfocus();
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Cart(),
+                            ),
+                          );
+                        } else {
+                          print("Detail Keranjangs list is empty");
+                        }
+                      }
+                    } else {
+                      Keranjang? keranjang =
+                          await buatKeranjang(currentUser!.id!);
+                      if (keranjang != null) {
+                        List<DetailKeranjang> detailKeranjangss =
+                            await fetchDetailKeranjangs();
+                        List<DetailKeranjang> detailKeranjangs =
+                            detailKeranjangss
+                                .where((detail) =>
+                                    detail.keranjangID == keranjang.id!)
+                                .toList();
+                        bool productExists = _produkRestos.any((produk) =>
+                            detailKeranjangs
+                                .any((detail) => detail.produkID == produk.id));
+                        bool restoExists = detailKeranjangs.any((detail) {
+                          ProdukResto? matchingProduk =
+                              _produkRestos.firstWhere(
+                                  (produk) => produk.id == detail.produkID,
+                                  orElse: () =>
+                                      ProdukResto(-1, -1, "", "", -1, -1, ""));
+                          return matchingProduk != null &&
+                              matchingProduk.restoID == widget.resto.id;
+                        });
+                        if (!productExists && !restoExists) {
+                          List<dynamic> detailKs = await buatDetailKeranjang(
+                              _produkRestos, keranjang.id!, quantities);
+                          if (detailKs.isNotEmpty) {
+                            // ignore: use_build_context_synchronously
+                            FocusScope.of(context).unfocus();
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Cart(),
+                              ),
+                            );
+                          } else {
+                            print("Detail Keranjangs list is empty");
+                          }
+                        }
                       }
                     }
                   }),

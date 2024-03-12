@@ -207,7 +207,8 @@ Future<List<ProdukKomunitas>> fetchAllProdukKomunitass() async {
   }
 }
 
-Future<dynamic> addProdukKomunitas(userID, nama, harga, exp, deskripsi, foto) async {
+Future<dynamic> addProdukKomunitas(
+    userID, nama, harga, exp, deskripsi, foto) async {
   ProdukKomunitas pk = ProdukKomunitas(
       null, userID, nama, deskripsi, harga, exp, foto, null, null);
   dynamic request = await createProdukKomunitas(pk);
@@ -248,7 +249,17 @@ Future<dynamic> buatKeranjang(userID) async {
 Future<dynamic> buatDetailKeranjang(List<ProdukResto> produkResto,
     int keranjangID, List<int> quantities) async {
   List<dynamic> result = [];
-  List<DetailKeranjang> detailKeranjangs = await fetchDetailKeranjangs();
+  List<Keranjang> keranjangss = await fetchKeranjangs();
+  List<Keranjang> keranjangs =
+      keranjangss.where((detail) => detail.userID == currentUser!.id!).toList();
+  List<DetailKeranjang> detailKeranjangss = await fetchDetailKeranjangs();
+  List<DetailKeranjang> detailKeranjangs = [];
+  for (Keranjang keranjang in keranjangs) {
+    List<DetailKeranjang> filteredDetails = detailKeranjangss
+        .where((detail) => detail.keranjangID == keranjang.id)
+        .toList();
+    detailKeranjangs.addAll(filteredDetails);
+  }
 
   for (int i = 0; i < produkResto.length; i++) {
     bool productExists =
@@ -285,7 +296,7 @@ Future<dynamic> updateKeranjang(List<DetailKeranjang> dk) async {
   int keranjangID = dk[0].keranjangID!;
 
   for (int i = 0; i < dk.length; i++) {
-    if (dk[i].qty == 0){
+    if (dk[i].qty == 0) {
       deleteDetailKeranjang(dk[i].id!);
       count++;
     } else if (dk[i].qty! > 0) {
@@ -293,8 +304,8 @@ Future<dynamic> updateKeranjang(List<DetailKeranjang> dk) async {
       result.add(dk);
     }
   }
-  if(count == dk.length){
-    deleteKeranjang(keranjangID); 
+  if (count == dk.length) {
+    deleteKeranjang(keranjangID);
   }
   if (result.any((element) => element == null)) {
     return [];
