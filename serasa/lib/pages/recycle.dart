@@ -110,7 +110,11 @@ class _RecycleState extends State<Recycle> {
                     } else {
                       final List<RiwayatTukarSampah> riwayatTukarSampahs =
                           snapshot.data!;
-                      final List<RiwayatTukarSampah> riwayatTukarSampah = riwayatTukarSampahs.where((riwayat) => riwayat.userID == currentUser!.id).toList();
+                      final List<RiwayatTukarSampah> riwayatTukarSampah =
+                          riwayatTukarSampahs
+                              .where((riwayat) =>
+                                  riwayat.userID == currentUser!.id)
+                              .toList();
                       totalWeight = riwayatTukarSampah.isNotEmpty
                           ? riwayatTukarSampah
                               .map<double>((e) => (e.berat ?? 0).toDouble())
@@ -412,8 +416,13 @@ class _RecycleState extends State<Recycle> {
                                 } else if (snapshot.hasError) {
                                   return Text('Error: ${snapshot.error}');
                                 } else if (snapshot.hasData) {
-                                  final List<RiwayatTukarSampah> riwayatList =
+                                  final List<RiwayatTukarSampah> riwayatLists =
                                       snapshot.data!;
+                                  final List<RiwayatTukarSampah> riwayatList =
+                                      riwayatLists
+                                          .where((riwayat) =>
+                                              riwayat.userID == currentUser!.id)
+                                          .toList();
                                   final top2RiwayatList =
                                       riwayatList.take(2).toList();
                                   return Column(
@@ -426,15 +435,16 @@ class _RecycleState extends State<Recycle> {
                                         ),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           boxShadow: [
                                             BoxShadow(
                                               color: const Color(0xFFED6055)
                                                   .withOpacity(0.3),
                                               spreadRadius: 0,
                                               blurRadius: 4,
-                                              offset: const Offset(
-                                                  0, 0), // changes position of shadow
+                                              offset: const Offset(0,
+                                                  0), // changes position of shadow
                                             ),
                                           ],
                                         ),
@@ -448,14 +458,12 @@ class _RecycleState extends State<Recycle> {
                                                   ? DateFormat(
                                                           'MMMM dd, yyyy HH:mm')
                                                       .format(DateTime.parse(
-                                                          riwayat
-                                                              .created_at!))
+                                                          riwayat.created_at!))
                                                   : 'No Date',
                                               style: const TextStyle(
                                                   fontSize: 13,
                                                   fontFamily: 'Poppins',
-                                                  fontWeight:
-                                                      FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                             const SizedBox(height: 5),
                                             Row(
@@ -476,10 +484,8 @@ class _RecycleState extends State<Recycle> {
                                                   style: const TextStyle(
                                                     fontSize: 15,
                                                     fontFamily: 'Poppins',
-                                                    fontWeight:
-                                                        FontWeight.w700,
-                                                    color:
-                                                        Color(0xFF1D8C35),
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xFF1D8C35),
                                                   ),
                                                 )
                                               ],
@@ -496,16 +502,16 @@ class _RecycleState extends State<Recycle> {
                             const SizedBox(
                               height: 10,
                             ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-             ],
         ),
-      ),
-    ),
       ),
     );
   }
