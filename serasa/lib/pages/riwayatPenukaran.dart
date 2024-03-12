@@ -59,44 +59,51 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
         children: [
           Container(
             margin: const EdgeInsets.only(top: 55, left: 15, right: 15),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BottomNavigationBarExample(initialIndex: 1),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 500,
+                      height: 120,
+                      decoration: const BoxDecoration(
+                        // color: Colors.amber,
+                        image: DecorationImage(image: NetworkImage('https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/headerIjo.png'),fit: BoxFit.cover)
                       ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Color(0xFFFFFEF8),
-                    size: 20,
-                  ),
+                    ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  width: 140,
-                  height: 140,
-                  decoration: const BoxDecoration(
-                    color: Colors.amber,
-                    image: DecorationImage(image: NetworkImage('j'))
-                  ),
-                ),
-                Opacity(
-                  opacity: 0,
-                  child: IconButton(
-                    onPressed: () {},
+                Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const BottomNavigationBarExample(initialIndex: 1),
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Color(0xFFED6055),
+                      color: Color(0xFFFFFEF8),
+                      size: 20,
                     ),
                   ),
-                ),
+                  Opacity(
+                    opacity: 0,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFFED6055),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               ],
             ),
           ),
@@ -141,22 +148,33 @@ class _RiwayatPenukaranSampahState extends State<RiwayatPenukaranSampah> {
                     child: FutureBuilder<List<RiwayatTukarSampah>>(
                       future: _riwayatFuture,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Container();
                         } else if (snapshot.hasError) {
                           return Center(
                             child: Text('Error: ${snapshot.error}'),
                           );
                         } else if (snapshot.hasData) {
-                          final List<RiwayatTukarSampah> riwayatLists = snapshot.data!;
-                          final List<RiwayatTukarSampah> riwayatList = riwayatLists.where((riwayat) => riwayat.userID == currentUser!.id).toList();
+                          final List<RiwayatTukarSampah> riwayatLists =
+                              snapshot.data!;
+                          final List<RiwayatTukarSampah> riwayatList =
+                              riwayatLists
+                                  .where((riwayat) =>
+                                      riwayat.userID == currentUser!.id)
+                                  .toList();
                           return ListView.builder(
                             padding: const EdgeInsets.all(0),
                             itemCount: riwayatList.length,
                             itemBuilder: (context, index) {
                               final riwayat = riwayatList[index];
-                              final DateTime? createdAt = riwayat.created_at != null ? DateTime.parse(riwayat.created_at!) : null;
-                              final formattedDate = createdAt != null ? "${createdAt.day} ${_getMonthName(createdAt.month)}, ${createdAt.year}" : '';
+                              final DateTime? createdAt =
+                                  riwayat.created_at != null
+                                      ? DateTime.parse(riwayat.created_at!)
+                                      : null;
+                              final formattedDate = createdAt != null
+                                  ? "${createdAt.day} ${_getMonthName(createdAt.month)}, ${createdAt.year}"
+                                  : '';
                               final jumlah = riwayat.berat ?? 0;
                               final poin = jumlah * 10;
 
