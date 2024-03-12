@@ -77,14 +77,13 @@ void _handleYesButtonClick(Voucher? voucher) async {
       _fetchVouchers();
 
       // Close the popup after executing the logic
+      print('tes');
       togglePopUpVisibility();
     } catch (e) {
       print('Error handling voucher: $e');
     }
   }
 }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +278,9 @@ void _handleYesButtonClick(Voucher? voucher) async {
                   decoration: BoxDecoration(color: Colors.grey.withOpacity(0.8)),
                   child: Center(
                     child: Container(
-                      child: PopUpReward(closePopUp: closePopUp, handleYesButtonClick: _handleYesButtonClick, voucher: selectedVoucher!),
+                      child: selectedVoucher != null 
+                      ? PopUpReward(closePopUp: closePopUp, handleYesButtonClick: _handleYesButtonClick, voucher: selectedVoucher!)
+                      : Container(),
                     ),
                   ),
                 ),

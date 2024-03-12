@@ -648,3 +648,39 @@ Future<List<String>> getVoucherImageUrls() async {
     throw Exception('Failed to load voucher image URLs');
   }
 }
+
+Future<void> createVoucherUserEntry(Voucher voucher, int userId) async {
+  final response = await http.post(
+    Uri.parse("$url/create-voucher-user"), // Update the URL
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(<String, dynamic>{
+      "voucherID": voucher.id,
+      "userID": userId,
+      "terpakai": 0, // Set the 'terpakai' value to 0
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to create voucher user entry');
+  }
+}
+
+Future<dynamic> updateUserPoins(user) async {
+  final response = await http.post(
+    Uri.parse("$url/update-user-poin/"),
+    headers: <String, String>{
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode(user),
+  );
+
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  }else if (response.statusCode != 200) {
+    throw Exception('Failed to update user poin');
+  }
+}

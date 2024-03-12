@@ -129,4 +129,19 @@ class UserController extends Controller
             return response()->json(['message' => 'Failed to delete user: ' . $e->getMessage()], 500);
         }
     }
+
+    public function updateUserPoin(Request $request)
+    {
+        try {
+            // Validate request data if necessary
+
+            $user = User::findOrFail($request->id);
+            $user->poin = $request->input('poin');
+            $user->save();
+
+            return response()->json($user, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

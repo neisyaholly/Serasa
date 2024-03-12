@@ -403,47 +403,43 @@ class _RecycleState extends State<Recycle> {
                             const SizedBox(
                               height: 15,
                             ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 10,
-                                left: 20,
-                                right: 15,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFFED6055)
-                                        .withOpacity(0.3),
-                                    spreadRadius: 0,
-                                    blurRadius: 4,
-                                    offset: const Offset(
-                                        0, 0), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: FutureBuilder<List<RiwayatTukarSampah>>(
-                                future: _riwayatTukarSampahFuture,
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Container();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
-                                  } else if (snapshot.hasData) {
-                                    final List<RiwayatTukarSampah> riwayatLists =
-                                        snapshot.data!;
-                                    final List<RiwayatTukarSampah> riwayatList = riwayatLists.where((riwayat) => riwayat.userID == currentUser!.id).toList();
-                                    final top2RiwayatList =
-                                        riwayatList.take(2).toList();
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: top2RiwayatList.map((riwayat) {
-                                        return Column(
+                            FutureBuilder<List<RiwayatTukarSampah>>(
+                              future: _riwayatTukarSampahFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (snapshot.hasData) {
+                                  final List<RiwayatTukarSampah> riwayatList =
+                                      snapshot.data!;
+                                  final top2RiwayatList =
+                                      riwayatList.take(2).toList();
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: top2RiwayatList.map((riwayat) {
+                                      return Container(
+                                        margin: const EdgeInsets.only(
+                                          bottom: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color(0xFFED6055)
+                                                  .withOpacity(0.3),
+                                              spreadRadius: 0,
+                                              blurRadius: 4,
+                                              offset: const Offset(
+                                                  0, 0), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -452,13 +448,16 @@ class _RecycleState extends State<Recycle> {
                                                   ? DateFormat(
                                                           'MMMM dd, yyyy HH:mm')
                                                       .format(DateTime.parse(
-                                                          riwayat.created_at!))
+                                                          riwayat
+                                                              .created_at!))
                                                   : 'No Date',
                                               style: const TextStyle(
                                                   fontSize: 13,
                                                   fontFamily: 'Poppins',
-                                                  fontWeight: FontWeight.w500),
+                                                  fontWeight:
+                                                      FontWeight.w500),
                                             ),
+                                            const SizedBox(height: 5),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -477,34 +476,36 @@ class _RecycleState extends State<Recycle> {
                                                   style: const TextStyle(
                                                     fontSize: 15,
                                                     fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Color(0xFF1D8C35),
+                                                    fontWeight:
+                                                        FontWeight.w700,
+                                                    color:
+                                                        Color(0xFF1D8C35),
                                                   ),
                                                 )
                                               ],
                                             ),
                                           ],
-                                        );
-                                      }).toList(),
-                                    );
-                                  }
-                                  return Container();
-                                },
-                              ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  );
+                                }
+                                return Container();
+                              },
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
+             ],
         ),
+      ),
+    ),
       ),
     );
   }

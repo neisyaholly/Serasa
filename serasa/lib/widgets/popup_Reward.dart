@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:serasa/classes/voucher.dart';
+import 'package:serasa/functions/functions.dart';
 
 class PopUpReward extends StatefulWidget {
   const PopUpReward({super.key, required this.closePopUp, required this.handleYesButtonClick, required this.voucher});
@@ -20,7 +23,7 @@ Voucher? get voucher => widget.voucher; // Define getter for voucher
   try {
     if (widget.voucher != null) {
       // Call the function to handle the Yes button click with the voucher
-      widget.handleYesButtonClick(widget.voucher);
+      widget.handleYesButtonClick(widget.voucher!);
     } else {
       // Handle null case
       print('Voucher is null');

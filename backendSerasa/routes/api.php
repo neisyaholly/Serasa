@@ -62,3 +62,6 @@ Route::put('/update-quantityProdukKomunitas/{id}', [ProdukKomunitasController::c
 Route::put('/update-quantityProdukResto/{id}/{qty}', [RestoController::class,'updateQuantityProdukResto']);
 Route::delete('/deleteKeranjang/{id}', [KeranjangController::class, 'deleteKeranjang']);
 Route::delete('/deleteDetailKeranjang/{id}', [KeranjangController::class, 'deleteDetailKeranjang']);
+Route::put('/update-voucher-user/{id}', [VoucherController::class, 'updateVoucherUser']);
+Route::post('/create-voucher-user', [VoucherController::class, 'createVoucherUserEntry']);
+Route::post('/update-user-poin', [UserController::class, 'updateUserPoin']);

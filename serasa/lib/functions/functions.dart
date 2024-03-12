@@ -509,7 +509,7 @@ Future<void> createVoucherUserEntry(Voucher voucher, int userId) async {
       "Accept": "application/json",
     },
     body: jsonEncode(<String, dynamic>{
-      "id": voucher.id,
+      "voucherID": voucher.id,
       "userID": userId,
       "terpakai": 0, // Set the 'terpakai' value to 0
     }),
@@ -520,19 +520,24 @@ Future<void> createVoucherUserEntry(Voucher voucher, int userId) async {
   }
 }
 
-Future<void> updateUserPoin(int userId, int poin) async {
-  final response = await put(
-    Uri.parse("$url/update-user-poin/$userId"),
-    headers: <String, String>{
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    body: jsonEncode(<String, dynamic>{
-      "poin": poin, // Set the updated poin value
-    }),
-  );
+Future<dynamic> updateUserPoin(id, poin) async {
+  User user = User(id, null, null, null, null, null, poin, null, null);
+  dynamic request = await updateUserPoins(user);
 
-  if (response.statusCode != 200) {
+  if (request is User) {
+    currentUser = User(
+        request.id,
+        request.name,
+        request.tglLahir,
+        request.telp,
+        request.email,
+        request.password,
+        request.poin,
+        request.role,
+        request.foto);
+    print("Poin Updated Successfully!");
+    return request;
+  }else{
     throw Exception('Failed to update user poin');
   }
 }
