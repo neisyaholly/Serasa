@@ -133,34 +133,25 @@ class _Post extends State<Post> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 18.0, bottom: 35.0),
-                  child: Container(
-                    width: 350,
-                    height: 180,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ElevatedButton(
+                ElevatedButton(
                       onPressed: () {
                         openCamera(context);
                       },
                       child: Text('Open Camera'),
                     ),
-                  ),
-                ),
                 
                       _imageFile != null
                           ?
                           Column(
                             children: [
-                              Image.file(
-                              _imageFile!,
-                              height: 300,
-                              width: 300,
-                            ),
-                          Text(_imageUrl!),
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.2,
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Image.file(
+                                _imageFile!, fit: BoxFit.fill,
+                                ),
+                              ),
+                              SizedBox(height: 10,),
                             ],
                           ) 
                           : SizedBox(),
@@ -417,10 +408,10 @@ class _Post extends State<Post> {
                       final harga = int.tryParse(_hargaController.text);
                       final exp = _expController.text;
                       final deskripsi = _deskripsiController.text;
-                      // final imageUrl = _imageUrl;
+                      const foto = "https://raw.githubusercontent.com/neisyaholly/Serasa/main/serasa/assets/images/produk_komunitas/sotokuning.png";
                       FocusScope.of(context).unfocus();
                       ProdukKomunitas? pk = await addProdukKomunitas(
-                          userID, nama, harga, exp, deskripsi);
+                          userID, nama, harga, exp, deskripsi, foto);
 
                       if (pk is ProdukKomunitas) {
                         Navigator.pushReplacement(

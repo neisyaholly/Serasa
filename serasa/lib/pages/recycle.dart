@@ -7,6 +7,7 @@ import 'package:serasa/pages/riwayatPenukaran.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/service/http_service.dart';
 import 'package:intl/intl.dart';
+import 'package:video_player/video_player.dart';
 
 class Recycle extends StatefulWidget {
   const Recycle({super.key});
@@ -21,10 +22,18 @@ class _RecycleState extends State<Recycle> {
       fetchBankSampahFromAPI();
   double totalWeight = 0.0;
 
+  late VideoPlayerController _controller;
+
   @override
   void initState() {
     super.initState();
     _riwayatTukarSampahFuture = fetchRiwayatTukarSampah();
+    _controller = VideoPlayerController.asset('assets/videos/r.mp4')
+      ..initialize().then((_) {
+        setState(() {}); // Ini opsional, tergantung kebutuhan Anda
+        _controller.setLooping(true); // Set looping video
+        _controller.play(); // Play video secara otomatis setelah diinisialisasi
+      });
     // _bankSampahFuture = fetchBankSampahFromAPI();
   }
 
@@ -53,11 +62,14 @@ class _RecycleState extends State<Recycle> {
 
                 // Jumbotron
                 Container(
-                  width: 350,
                   height: 150,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.amber),
+                      borderRadius: BorderRadius.circular(10),),
+                  child: Container(
+                    width: _controller.value.size.width * 0.2,
+                    height: _controller.value.size.height,
+                    child: VideoPlayer(_controller)
+                    ),
                 ),
                 const SizedBox(height: 20),
 

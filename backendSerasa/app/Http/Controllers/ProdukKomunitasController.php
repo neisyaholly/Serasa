@@ -41,6 +41,7 @@ class ProdukKomunitasController extends Controller
             $pk->exp = $R->exp;
             $pk->deskripsi = $R->deskripsi;
             $pk->qty = 1;
+            $pk->foto = $R->foto;
             $pk->save();
             $response = ['status' => 200, 'pk' => $pk, 'message' => 'Successfully!'];
             return response()->json($pk, 200);

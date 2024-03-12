@@ -207,9 +207,9 @@ Future<List<ProdukKomunitas>> fetchAllProdukKomunitass() async {
   }
 }
 
-Future<dynamic> addProdukKomunitas(userID, nama, harga, exp, deskripsi) async {
+Future<dynamic> addProdukKomunitas(userID, nama, harga, exp, deskripsi, foto) async {
   ProdukKomunitas pk = ProdukKomunitas(
-      null, userID, nama, deskripsi, harga, exp, null, null, null);
+      null, userID, nama, deskripsi, harga, exp, foto, null, null);
   dynamic request = await createProdukKomunitas(pk);
   print("asdf");
   if (request is ProdukKomunitas) {
