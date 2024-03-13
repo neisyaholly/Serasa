@@ -45,10 +45,10 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 0),
-              width: _controller.value.size.width *0.30,
-              height: _controller.value.size.height * 0.26,
-              child: VideoPlayer(_controller)),
+                margin: const EdgeInsets.only(top: 0),
+                width: _controller.value.size.width * 0.30,
+                height: _controller.value.size.height * 0.26,
+                child: VideoPlayer(_controller)),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(left: 35, right: 35),
@@ -296,5 +296,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

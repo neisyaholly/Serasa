@@ -8,7 +8,7 @@ import 'package:serasa/classes/produk_resto.dart';
 import 'package:serasa/classes/resto.dart';
 import 'package:serasa/functions/functions.dart';
 import 'package:serasa/pages/navbar.dart';
-import 'package:serasa/service/http_service.dart';
+// import 'package:serasa/service/http_service.dart';
 import 'package:serasa/widgets/popup_Riwayat.dart';
 import 'package:serasa/widgets/widget_pesanan.dart';
 import 'package:video_player/video_player.dart';
@@ -160,7 +160,8 @@ class _PesananPageState extends State<PesananPage> {
                                           _controller.value.size.width * 0.32,
                                       height:
                                           _controller.value.size.height * 0.32,
-                                      padding: const EdgeInsetsDirectional.all(0),
+                                      padding:
+                                          const EdgeInsetsDirectional.all(0),
                                       child: VideoPlayer(_controller),
                                     ),
                                   ),
@@ -182,7 +183,8 @@ class _PesananPageState extends State<PesananPage> {
                                       final player = AudioPlayer();
                                       player.play(
                                           AssetSource('audios/hiyaw.mp3'));
-                                      updatePesanan(_currentPesanans.length);
+                                      updateeJenisPesanan(
+                                          _currentPesanans.length);
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -225,7 +227,8 @@ class _PesananPageState extends State<PesananPage> {
                                     child: Stack(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.only(bottom: 40),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 40),
                                           child: const Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -267,7 +270,8 @@ class _PesananPageState extends State<PesananPage> {
                                           right: 0,
                                           child: Container(
                                             // color: Colors.amber,
-                                            padding: const EdgeInsets.only(top: 30),
+                                            padding:
+                                                const EdgeInsets.only(top: 30),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -574,7 +578,8 @@ class _PesananPageState extends State<PesananPage> {
             ),
     );
   }
-   @override
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();

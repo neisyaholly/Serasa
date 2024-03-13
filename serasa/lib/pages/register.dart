@@ -481,7 +481,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const BottomNavigationBarExample(initialIndex: 0),
+                                        const BottomNavigationBarExample(
+                                            initialIndex: 0),
                                   ),
                                 );
                               } else {
@@ -571,5 +572,11 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
