@@ -453,7 +453,7 @@ Future<dynamic> addPoinQR(userID, poin) async {
   }
 }
 
-void updateeJenisPesanan(int id) async {
+void updateSelesaiPesanan(int id) async {
   try {
     updatePesanan(id);
     print('Pesanan arrived successfully');
