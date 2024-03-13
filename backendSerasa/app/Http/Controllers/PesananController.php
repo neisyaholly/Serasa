@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 
 class PesananController extends Controller
 {
-    //bikin function buat pesanan, detailpesanan, sama pembayaran di sinii. jangan lupa routesnya
-
     public function createPesanan(Request $request){
         try{
             $pesanan = new Pesanan();
@@ -39,8 +37,9 @@ class PesananController extends Controller
         }
     }
 
-    public function updatePesanan(Request $R, Int $id){
+    public function updatePesanan(Int $id){
         $pesanan = Pesanan::where('id', $id)->update(['selesai'=>1]);
+        return response()->json($pesanan, 200);
     }
 
     public function getPembayaran(){

@@ -455,7 +455,7 @@ Future<dynamic> addPoinQR(userID, poin) async {
 
 void updateSelesaiPesanan(int id) async {
   try {
-    updatePesanan(id);
+    await updatePesanan(id);
     print('Pesanan arrived successfully');
   } catch (e) {
     print('Error updating confirmation arrived pesanan : $e');
