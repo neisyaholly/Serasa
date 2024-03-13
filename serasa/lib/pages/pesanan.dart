@@ -183,8 +183,8 @@ class _PesananPageState extends State<PesananPage> {
                                       final player = AudioPlayer();
                                       player.play(
                                           AssetSource('audios/hiyaw.mp3'));
-                                      updateeJenisPesanan(
-                                          _currentPesanans.length);
+                                         Pesanan lagiJalan = _currentPesanans.firstWhere((pesanan) => pesanan.selesai == 0, orElse: () => Pesanan(-1, -1, -1, -1, -1, -1, -1));
+                                      updateeJenisPesanan(lagiJalan.id!);
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
